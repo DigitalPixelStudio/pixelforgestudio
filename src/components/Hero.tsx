@@ -3,13 +3,9 @@ import { useEffect, useRef } from "react";
 import { SITE } from "@/lib/site";
 import Reveal from "./Reveal";
 
-const PARTICLES = Array.from({ length: 24 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: 2 + Math.random() * 3,
-  delay: Math.random() * 8,
-  duration: 8 + Math.random() * 8,
+const PARTICLES = Array.from({ length: 30 }, (_, i) => ({
+  id: i, x: Math.random() * 100, y: Math.random() * 100,
+  size: 1.5 + Math.random() * 3, delay: Math.random() * 8, duration: 8 + Math.random() * 10,
 }));
 
 export default function Hero() {
@@ -27,14 +23,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-[100vh] overflow-hidden flex items-center justify-center pt-24 pb-16">
-      {/* Cursor glow */}
+    <section className="relative min-h-screen overflow-hidden flex items-center justify-center pt-24 pb-16 hex-bg">
       <div ref={glowRef} className="cursor-glow hidden md:block" />
 
       {/* Orbs */}
-      <div className="orb absolute top-[15%] left-[10%] h-[300px] w-[300px] bg-[var(--accent)] opacity-20" />
-      <div className="orb-reverse absolute bottom-[20%] right-[8%] h-[250px] w-[250px] bg-[var(--accent2)] opacity-15" />
-      <div className="orb absolute top-[60%] left-[50%] h-[200px] w-[200px] bg-[var(--accent3)] opacity-10" />
+      <div className="orb absolute top-[10%] left-[8%] h-[350px] w-[350px] bg-[var(--accent)] opacity-15" />
+      <div className="orb-reverse absolute bottom-[15%] right-[5%] h-[300px] w-[300px] bg-[var(--accent2)] opacity-12" />
+      <div className="orb absolute top-[55%] left-[45%] h-[200px] w-[200px] bg-[var(--accent4)] opacity-10" />
+      <div className="orb-reverse absolute top-[30%] right-[30%] h-[180px] w-[180px] bg-[var(--accent3)] opacity-8" />
 
       {/* Particles */}
       <div className="particles-layer">
@@ -43,9 +39,9 @@ export default function Hero() {
         ))}
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[900px] px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-[1000px] px-6 text-center">
         <Reveal>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-4 py-2 text-[13px] font-semibold text-[var(--accent2)]">
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/10 px-5 py-2.5 text-[13px] font-semibold text-[var(--accent2)]">
             <span className="h-2 w-2 rounded-full bg-[var(--accent2)] animate-breathe" />
             Available for new projects
           </div>
@@ -53,39 +49,44 @@ export default function Hero() {
 
         <Reveal delay={100}>
           <h1 className="hero-apple text-white">
-            We Forge<br />
-            <span className="gradient-text-glow">Digital Excellence</span>
+            <span className="text-[1.2em] font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] via-[var(--accent2)] to-[var(--accent4)]" style={{ fontSize: "clamp(3.2rem, 9vw, 7rem)" }}>
+              {SITE.name}
+            </span>
+            <br />
+            We Build Websites That
+            <br />
+            <span className="gradient-text-glow animate-breathe">Make You Famous</span>
           </h1>
         </Reveal>
 
         <Reveal delay={200}>
-          <p className="hero-sub mx-auto mt-6">
-            Full-stack website development studio in Bangalore. Custom websites, e-commerce stores, PWAs, AI chatbots — built to convert and scale.
+          <p className="hero-sub mx-auto mt-8">
+            Hyper-modern website development agency in Bangalore. Custom websites, e-commerce, PWAs, AI chatbots — built with cutting-edge tech at 30% less than market rates.
           </p>
         </Reveal>
 
         <Reveal delay={300}>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <a href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge!%20I%27d%20like%20to%20start%20a%20project." target="_blank" rel="noopener noreferrer" className="cta-primary">
-              Start Your Project
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <a href={`https://wa.me/${SITE.whatsapp}?text=Hi%20Pixel%20Studio!%20I%27d%20like%20to%20start%20a%20project.`} target="_blank" rel="noopener noreferrer" className="cta-primary text-[15px] !px-8 !py-4">
+              🚀 Start Your Project
             </a>
-            <a href="#work" className="cta-outline">
+            <a href="#work" className="cta-outline text-[15px] !px-8 !py-4">
               See Our Work
             </a>
           </div>
         </Reveal>
 
         <Reveal delay={400}>
-          <div className="mt-16 grid grid-cols-2 gap-6 sm:grid-cols-4">
+          <div className="mt-20 grid grid-cols-2 gap-6 sm:grid-cols-4">
             {[
               { n: SITE.projectsCompleted, l: "Projects Done" },
               { n: SITE.satisfactionRate, l: "Client Satisfaction" },
               { n: SITE.clientsServed, l: "Happy Clients" },
-              { n: SITE.yearsActive, l: "Years Experience" },
+              { n: "30%", l: "Cheaper Than Market" },
             ].map((s) => (
-              <div key={s.l} className="text-center">
-                <div className="text-[28px] font-bold text-white sm:text-[36px]">{s.n}</div>
-                <div className="mt-1 text-[12px] text-white/50">{s.l}</div>
+              <div key={s.l} className="perspective-1200 card-3d rounded-[20px] bg-white/[0.03] p-5 border border-white/[0.06]">
+                <div className="text-[32px] font-black text-white sm:text-[40px]">{s.n}</div>
+                <div className="mt-1 text-[12px] font-medium text-white/45">{s.l}</div>
               </div>
             ))}
           </div>

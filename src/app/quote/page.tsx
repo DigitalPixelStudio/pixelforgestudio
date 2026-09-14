@@ -6,7 +6,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Get a Quote — Pixel Forge",
+  title: "Get a Quote — Pixel Studio",
   description: `Tell us about your project and get a custom quote within 24 hours. ${SITE.phone}`,
 };
 

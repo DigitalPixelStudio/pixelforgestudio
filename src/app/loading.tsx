@@ -3,7 +3,7 @@ export default function Loading() {
     <div className="flex min-h-[60vh] items-center justify-center bg-[var(--bg)]">
       <div className="flex items-center gap-3">
         <span className="grid h-12 w-12 animate-pulse place-items-center rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent2)] text-[22px]">⚡</span>
-        <span className="text-[14px] font-semibold text-white/60">Loading Pixel Forge…</span>
+        <span className="text-[14px] font-semibold text-white/55">Loading Pixel Studio…</span>
       </div>
     </div>
   );

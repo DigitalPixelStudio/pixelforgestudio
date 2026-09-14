@@ -14,10 +14,7 @@ export default function ContactPage() {
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim().length < 2 || phone.trim().length < 10 || msg.trim().length < 5) return;
-    window.open(
-      `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`📋 New Contact Enquiry\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💬 Message: ${msg}`)}`,
-      "_blank", "noopener,noreferrer"
-    );
+    window.open(`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`📋 Contact Enquiry\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n💬 Message: ${msg}`)}`, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -27,11 +24,11 @@ export default function ContactPage() {
       <section className="section-apple">
         <div className="mx-auto max-w-[600px] px-6">
           <h1 className="section-title font-apple text-white text-center">Get in <span className="gradient-text-glow">Touch</span></h1>
-          <p className="section-subtitle mx-auto mt-4 text-center">Fill out the form below and we&apos;ll get back to you within 24 hours via WhatsApp.</p>
+          <p className="section-subtitle mx-auto mt-4 text-center">Fill out the form below and we&apos;ll get back to you within 24 hours.</p>
           <form onSubmit={submit} className="mt-10 space-y-4">
-            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className="w-full rounded-xl border border-white/10 bg-[var(--bg-card)] px-4 py-3.5 text-[14px] text-white outline-none placeholder:text-white/30 focus:border-[var(--accent)]/50" />
-            <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone number" className="w-full rounded-xl border border-white/10 bg-[var(--bg-card)] px-4 py-3.5 text-[14px] text-white outline-none placeholder:text-white/30 focus:border-[var(--accent)]/50" />
-            <textarea value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Tell us about your project..." rows={5} className="w-full resize-none rounded-xl border border-white/10 bg-[var(--bg-card)] px-4 py-3.5 text-[14px] text-white outline-none placeholder:text-white/30 focus:border-[var(--accent)]/50" />
+            <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" className="w-full rounded-2xl border border-white/10 bg-[var(--bg-card)] px-5 py-3.5 text-[14px] text-white outline-none placeholder:text-white/25 focus:border-[var(--accent)]/50 transition-colors" />
+            <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone number" className="w-full rounded-2xl border border-white/10 bg-[var(--bg-card)] px-5 py-3.5 text-[14px] text-white outline-none placeholder:text-white/25 focus:border-[var(--accent)]/50 transition-colors" />
+            <textarea value={msg} onChange={(e) => setMsg(e.target.value)} placeholder="Tell us about your project..." rows={5} className="w-full resize-none rounded-2xl border border-white/10 bg-[var(--bg-card)] px-5 py-3.5 text-[14px] text-white outline-none placeholder:text-white/25 focus:border-[var(--accent)]/50 transition-colors" />
             <button type="submit" className="cta-primary w-full">Send Message</button>
           </form>
         </div>
