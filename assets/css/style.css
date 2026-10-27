@@ -668,3 +668,63 @@ header.nav .brand-mark img{object-fit:contain !important}
 @media(max-width:900px){
   header.nav .brand-mark{width:46px !important;height:32px !important;padding:3px !important}
 }
+
+/* ==========================================================================
+   v6 fixes
+   ========================================================================== */
+
+/* 1. --ink-2 was clobbered to near-white by a legacy alias → invisible menu */
+:root{--ink-2:#3A4A45 !important}
+.mnav a{color:#1B2A26 !important;font-weight:500 !important}
+.mnav a:hover{color:var(--green-deep) !important}
+.mnav .btn,.mnav .btn:hover{color:#fff !important}
+.mnav{background:#fff !important}
+
+/* 2. footer side-by-side on mobile */
+@media(max-width:680px){
+  .f-grid{
+    grid-template-columns:1fr 1fr !important;
+    gap:26px 20px !important;
+  }
+  .f-brand{grid-column:1 / -1 !important}
+  .f-col h5{margin-bottom:10px !important}
+  .f-col a{padding:4px 0 !important;font-size:.82rem !important}
+}
+@media(max-width:380px){
+  .f-grid{grid-template-columns:1fr !important}
+}
+
+/* 3. hero tracker card */
+.track{
+  border:1px solid var(--line-2);border-radius:var(--radius-lg);background:#fff;
+  box-shadow:var(--shadow-lg);padding:30px 28px;margin-top:48px;
+}
+.track-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:24px}
+.track-top .k{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--green-deep);display:block;margin-bottom:8px}
+.track-top h3{font-size:1.28rem;letter-spacing:-.03em;margin:0}
+.track-day{
+  flex:none;text-align:center;border-left:1px solid var(--line);padding-left:18px;
+}
+.track-day b{display:block;font-family:'Space Grotesk';font-size:1.9rem;line-height:1;color:var(--green-deep);letter-spacing:-.03em}
+.track-day span{font-size:.6rem;color:var(--muted-2);letter-spacing:.1em;text-transform:uppercase}
+.track-steps{display:grid;gap:0}
+.tstep{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}
+.tstep:last-child{border-bottom:0;padding-bottom:0}
+.tstep .dot{
+  width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:var(--green);color:#fff;font-size:.66rem;font-weight:700;
+}
+.tstep .dot.wait{background:var(--green-wash);color:var(--green-deep);border:1px solid rgba(11,122,97,.3)}
+.tstep .dot svg{width:12px;height:12px;stroke:#fff;fill:none;stroke-width:3}
+.tstep .body{flex:1;min-width:0}
+.tstep .body b{display:block;font-size:.86rem;font-weight:600;color:var(--ink)}
+.tstep .body span{display:block;font-size:.72rem;color:var(--muted-2);margin-top:1px}
+.tstep .when{font-family:'JetBrains Mono',monospace;font-size:.64rem;color:var(--muted-2);flex:none}
+.tstep .when.now{color:var(--green-deep)}
+@media(max-width:680px){
+  .track{padding:24px 20px;margin-top:36px}
+  .track-top{flex-direction:column;gap:14px}
+  .track-day{border-left:0;padding-left:0;text-align:left;display:flex;align-items:baseline;gap:8px}
+  .track-day b{font-size:1.5rem}
+}
