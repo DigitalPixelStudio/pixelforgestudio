@@ -72,6 +72,13 @@
   function $(s, c) { return (c || document).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
 
+  /* ---------- PWA service worker ---------- */
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () { /* silent */ });
+    });
+  }
+
   /* ---------- theme dock (only with ?themes=1) ---------- */
   if (window.location.search.indexOf('themes') > -1) {
     var dock = document.getElementById('themedock');
