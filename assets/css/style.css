@@ -714,3 +714,214 @@ main,footer,header.nav{position:relative;z-index:2}
 .chip{background:#fff;border-color:var(--line-2);color:var(--ash)}
 /* nav glass on light */
 header.nav.scrolled{background:rgba(247,244,237,.86);border-bottom-color:var(--line)}
+
+/* ==========================================================================
+   V3 — WHITE + GOLD · premium motion · breathing type
+   ========================================================================== */
+
+:root{
+  --ink:#FFFFFF;--ink-2:#FCFAF5;--steel:#FFFFFF;--steel-2:#F7F3EA;
+  --line:#E9E3D5;--line-2:#D5CCB8;
+  --ember:#A8842C;--ember-soft:#D4AF37;--ember-dim:#6B5410;--ember-rgb:201,162,39;
+  --bone:#131110;--ash:#565044;--ash-2:#877F70;
+  --btn-fg:#141210;
+  --card-line:rgba(201,162,39,.55);
+  --gold:#D4AF37;--gold-deep:#A8842C;--gold-pale:#F3E4B8;
+}
+body{background:#fff;color:var(--bone)}
+body::before{opacity:.012}
+.sec-alt{background:linear-gradient(180deg,#FDFBF6,#F8F4EB)}
+
+/* kill the drifting grid — it read as a moving line */
+.grid-bg{animation:none !important;opacity:.28 !important;
+  -webkit-mask-image:radial-gradient(ellipse 60% 50% at 50% 0%,#000 10%,transparent 70%);
+          mask-image:radial-gradient(ellipse 60% 50% at 50% 0%,#000 10%,transparent 70%)}
+
+/* ---------- BRAND — much larger ---------- */
+header.nav .brand{font-size:1.95rem !important;letter-spacing:-.045em !important;font-weight:700 !important;gap:13px !important}
+header.nav .brand small{font-size:.68rem !important;letter-spacing:.26em !important;margin-top:2px !important}
+header.nav .brand-mark{width:44px !important;height:44px !important;border-radius:13px !important}
+header.nav .brand-mark svg{width:23px !important;height:23px !important}
+.nav-in{height:84px !important}
+footer .brand{font-size:1.5rem !important}
+footer .brand small{font-size:.6rem !important}
+@media(max-width:640px){
+  header.nav .brand{font-size:1.35rem !important}
+  header.nav .brand-mark{width:36px !important;height:36px !important}
+  .nav-in{height:70px !important}
+}
+
+/* ---------- GOLD GRADIENTS ---------- */
+.hero-title .grad{
+  background:linear-gradient(100deg,#A8842C 0%,#D4AF37 22%,#F3E4B8 44%,#D4AF37 66%,#A8842C 100%);
+  background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:goldFlow 8s linear infinite;
+  filter:drop-shadow(0 8px 26px rgba(201,162,39,.28));
+}
+@keyframes goldFlow{from{background-position:0 0}to{background-position:-260% 0}}
+.stat b em{background:linear-gradient(150deg,#A8842C,#D4AF37 60%,#F3E4B8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow .dot{background:var(--gold);box-shadow:0 0 12px var(--gold)}
+.sec-head .num{color:var(--gold-deep)}
+.sec-head .num::after{background:var(--gold)}
+
+/* buttons: gold with dark engraved text */
+.btn-primary{background:linear-gradient(140deg,#D4AF37,#B8912C);color:#141210 !important;
+  box-shadow:0 12px 30px -12px rgba(201,162,39,.75);font-weight:700}
+.btn-primary:hover{background:linear-gradient(140deg,#E3C25A,#C9A227);transform:translateY(-3px);
+  box-shadow:0 20px 44px -14px rgba(201,162,39,.85)}
+.btn-ghost{border-color:var(--line-2);color:var(--bone)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-deep);background:rgba(201,162,39,.06)}
+.pcard .tag{background:linear-gradient(140deg,#D4AF37,#B8912C);color:#141210}
+.card:hover{border-color:rgba(201,162,39,.55);box-shadow:0 24px 54px -26px rgba(120,95,20,.42)}
+.card .ico{background:linear-gradient(150deg,rgba(201,162,39,.18),rgba(201,162,39,.04));border-color:rgba(201,162,39,.32)}
+.card .ico svg{stroke:var(--gold-deep)}
+
+/* ---------- BREATHING TYPE ---------- */
+.hero-title{
+  font-size:clamp(2.8rem,7.2vw,5.8rem) !important;
+  line-height:.94 !important;letter-spacing:-.042em !important;
+  animation:breathe 9s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{letter-spacing:-.042em}
+  50%{letter-spacing:-.028em}
+}
+.hero-sub{font-size:clamp(1.05rem,1.55vw,1.25rem) !important;color:var(--ash) !important;line-height:1.7 !important}
+h2{font-size:clamp(2rem,4vw,3.3rem) !important;letter-spacing:-.035em !important}
+.sec-head h2{line-height:1.04 !important}
+.brand:hover{letter-spacing:-.02em !important;transition:letter-spacing .5s var(--ease)}
+
+/* word reveal — slower, softer, with a slight scale */
+.hero-title .w{animation-duration:1.15s !important;animation-timing-function:cubic-bezier(.16,1,.3,1) !important}
+@keyframes wordIn{to{opacity:1;transform:none;filter:blur(0)}}
+
+/* ---------- MOTION LAYER ---------- */
+.rv{opacity:0;transform:translateY(46px) scale(.985);
+    transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+
+/* headings clip-reveal */
+.reveal-h{clip-path:inset(0 0 105% 0);transform:translateY(18px);opacity:0;
+  transition:clip-path 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),opacity .7s}
+.reveal-h.in{clip-path:inset(0 0 -15% 0);transform:none;opacity:1}
+
+/* gold sweep across section headings */
+.sec-head h2{position:relative}
+.sec-head.rv.in h2::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(105deg,transparent 38%,rgba(212,175,55,.28) 50%,transparent 62%);
+  background-size:260% 100%;animation:shine 1.6s var(--ease) .3s 1;
+}
+@keyframes shine{from{background-position:130% 0}to{background-position:-130% 0}}
+
+/* cards lift + tilt */
+.card,.pcard,.pcard-l,.tile{transform-style:preserve-3d;will-change:transform}
+.card:hover{transform:translateY(-6px) !important}
+.pcard:hover{transform:translateY(-7px) !important}
+.pcard-l:hover{transform:translateY(-6px) !important}
+
+/* image parallax */
+.par{will-change:transform;transition:transform .1s linear}
+
+/* magnetic buttons */
+.btn{position:relative;overflow:hidden}
+.btn::after{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .45s;
+  background:radial-gradient(120px circle at var(--bx,50%) var(--by,50%),rgba(255,255,255,.55),transparent 62%);
+}
+.btn-primary:hover::after{opacity:.9}
+
+/* marquee faster + gold */
+.marquee{border-color:var(--line);background:#FDFBF6}
+.marquee span{color:#A29A88}
+.marquee span:nth-child(even){color:var(--gold)}
+
+/* gold ambient orbs (softer on white) */
+.bg i:nth-child(1){background:radial-gradient(circle,rgba(212,175,55,.20),transparent 68%)}
+.bg i:nth-child(2){background:radial-gradient(circle,rgba(201,162,39,.14),transparent 68%)}
+.bg i:nth-child(3){background:radial-gradient(circle,rgba(212,175,55,.11),transparent 68%)}
+.bg i:nth-child(4){background:radial-gradient(circle,rgba(243,228,184,.22),transparent 70%)}
+
+/* floating drift on hero chips + mock */
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.hero .mock{animation:floaty 7s ease-in-out infinite}
+
+/* page index — bigger, gold numbered */
+.pgrid{grid-template-columns:repeat(3,1fr) !important;gap:16px !important}
+.pcard-l{padding:26px !important;background:#fff}
+.pcard-l .pn{color:var(--gold) !important;font-size:.7rem !important}
+.pcard-l h4{font-size:1.12rem !important}
+.pcard-l:hover{border-color:var(--gold) !important;box-shadow:0 26px 50px -26px rgba(120,95,20,.45) !important}
+.pcard-l:hover .arw{stroke:var(--gold-deep)}
+
+/* scroll cursor glow */
+.cursor-glow{
+  position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(212,175,55,.13),transparent 65%);
+  transform:translate(-50%,-50%);transition:opacity .4s;opacity:0;
+}
+@media(hover:hover){.cursor-glow{opacity:1}}
+
+/* reduced motion */
+@media(prefers-reduced-motion:reduce){
+  .hero-title,.hero .mock,.hero-title .grad{animation:none !important}
+  .rv{opacity:1;transform:none}
+}
+
+
+/* ---------- V3 overrides win over the ivory block ---------- */
+[data-theme="ivory"] .hero-title .grad,
+[data-theme] .hero-title .grad,
+html .hero-title .grad{
+  background:linear-gradient(100deg,#A8842C 0%,#D4AF37 20%,#F3E4B8 42%,#D4AF37 64%,#A8842C 100%) !important;
+  background-size:260% 100% !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;
+  filter:drop-shadow(0 8px 26px rgba(201,162,39,.30)) !important;
+}
+.still [data-theme] .hero-title .grad,.still .hero-title .grad{background-position:0 0 !important;animation:none !important}
+[data-theme="ivory"] .stat b em,html .stat b em{
+  background:linear-gradient(150deg,#A8842C,#D4AF37 58%,#F3E4B8) !important;
+  -webkit-background-clip:text !important;background-clip:text !important;color:transparent !important;
+}
+[data-theme="ivory"] .eyebrow,html .eyebrow{background:#fff !important;border-color:var(--line-2) !important;color:var(--ash) !important}
+[data-theme="ivory"] .chip,html .chip{background:#fff !important;border-color:var(--line-2) !important;color:var(--ash) !important}
+[data-theme="ivory"] .btn-primary,html .btn-primary{color:#141210 !important}
+
+
+/* ---------- V3.1 fixes ---------- */
+/* gradient line animates as a block — background-clip survives */
+.hero-title .grad.grad-block{
+  display:inline-block;opacity:0;transform:translateY(30px);
+  animation:gradIn 1.15s cubic-bezier(.16,1,.3,1) .25s forwards, goldFlow 8s linear 1.4s infinite;
+}
+@keyframes gradIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.still .grad-block{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important}
+
+/* content is only hidden when JS is running */
+html:not(.js) .rv,html:not(.js) .hero-title .w,html:not(.js) .grad-block{opacity:1 !important;transform:none !important;filter:none !important;animation:none !important}
+html:not(.js) .reveal-h{clip-path:none !important;opacity:1 !important;transform:none !important}
+
+/* safety net: if the observer never fires, reveal after 2.5s */
+.rv{transition-delay:0s}
+
+
+/* ---------- V3.2 hero gradient line: wrapper animates, span paints ---------- */
+.grad-wrap{display:inline-block;opacity:0;transform:translateY(30px);
+  animation:gradIn 1.2s cubic-bezier(.16,1,.3,1) .22s forwards}
+@keyframes gradIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.still .grad-wrap{opacity:1 !important;transform:none !important;animation:none !important}
+html:not(.js) .grad-wrap{opacity:1 !important;transform:none !important;animation:none !important}
+.grad-wrap .grad{display:inline}
+
+
+/* ---------- V3.3 hero entrance: transitions + JS class (robust) ---------- */
+.hero-title .w,.grad-wrap{
+  display:inline-block;
+  transition:opacity 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),filter 1.05s cubic-bezier(.16,1,.3,1);
+}
+.js .hero-title .w{opacity:0;transform:translateY(34px);filter:blur(8px);animation:none !important}
+.js .hero-title .w.in{opacity:1;transform:none;filter:blur(0)}
+.js .grad-wrap{opacity:0;transform:translateY(30px);animation:none !important}
+.js .grad-wrap.in{opacity:1;transform:none}
+.hero-title .grad{animation:goldFlow 9s linear infinite}
+.still .hero-title .w,.still .grad-wrap{opacity:1 !important;transform:none !important;filter:none !important;transition:none !important}
