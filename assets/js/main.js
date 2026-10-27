@@ -379,7 +379,7 @@
       if (moRow) moRow.style.display = monthlyTotal ? 'flex' : 'none';
 
       // whatsapp message
-      var msg = 'Hi Faisal, I built a package on your website.\n\n';
+      var msg = 'Hi Pixel Forge Studio, I built a package on your website.\n\n';
       msg += 'Building: ' + CORE_LABEL[state.core] + ' — ' + TIER_LABEL[state.tier] + ' (' + inr(corePrice) + ')\n';
       var chosen = ADDONS.filter(function (a) { return state.addons[a.id]; });
       if (chosen.length) {
@@ -431,26 +431,95 @@
     render();
   }
 
-  /* ---------- AI bot widget (Phase 1 demo — no API key wired yet) ---------- */
+  /* ---------- AI assistant (knowledge-base matcher) ---------- */
   var botBtn = $('#botbtn');
   if (botBtn) {
-    var botPanel = $('#botpanel');
-    var botLog = $('#botlog');
-    var botForm = $('#botform');
-    var botInput = $('#botinput');
+    var botPanel = $('#botpanel'), botLog = $('#botlog'),
+        botForm = $('#botform'), botInput = $('#botinput');
 
-    var RULES = [
-      { k: ['price', 'cost', 'charge', 'kitna', 'rate'], a: 'Websites start at ₹9,999. Most local businesses choose the ₹19,999–₹29,999 range, which includes the AI assistant. Want me to walk you through what is included?' },
-      { k: ['7 day', 'seven day', 'how long', 'time', 'kitne din'], a: 'Seven days from the day we have your content and photos. The design preview arrives in 48 hours, before you pay anything.' },
-      { k: ['ai', 'bot', 'chatbot'], a: 'Every website includes an AI assistant trained on your business — services, prices, timings. It answers customers at 11pm when you are asleep.' },
-      { k: ['crm'], a: 'Our CRM starts at ₹74,999 and includes an AI assistant inside it. That is roughly a fifth of what agencies charge for the same thing.' },
-      { k: ['app', 'android', 'ios'], a: 'Apps start at ₹89,999 for Android, ₹1,39,999 for both stores with AI built in.' },
-      { k: ['own', 'ownership', 'code'], a: 'You own everything — the code, the repository, the domain, the hosting, every account. No lock-in, ever.' },
-      { k: ['mockup', 'free', 'sample'], a: 'Yes — we design your homepage free, in 48 hours, before any payment. If you do not like it, you keep it and we part as friends.' },
-      { k: ['seo', 'google'], a: 'Local SEO is ₹19,999 a month and includes Google Business Profile posts, content and citations.' },
-      { k: ['whatsapp'], a: 'WhatsApp Business setup is ₹4,999. The WhatsApp AI bot is ₹34,999, or ₹14,999 for the API setup alone.' },
-      { k: ['hello', 'hi', 'hey'], a: 'Hello. I am the Pixel Forge assistant. Ask me about pricing, timelines, or what is included — or tap WhatsApp to speak to Faisal directly.' }
+    var KB = [
+      { t:'price cost pricing charge rate budget expensive cheap how much',
+        a:'Websites start at ₹9,999 (one page, Google listing, WhatsApp). A proper business site is ₹19,999 to ₹49,999. CRM starts at ₹74,999 and apps at ₹89,999. Tell me your business and I will point you to the right one.' },
+      { t:'website web site page site',
+        a:'Website tiers: Essential ₹19,999 (5 pages), Professional ₹29,999 (adds the AI assistant and PWA), Complete ₹49,999 (all listings, reviews, reporting), Elite ₹89,999 (custom build). Which fits you?' },
+      { t:'crm customer relationship leads pipeline sales',
+        a:'CRM starts at ₹74,999 with leads, pipeline, quotes, GST invoices and an AI assistant inside it. RisonAI charges ₹3 to ₹7 lakh for the same thing — that comparison is worth remembering.' },
+      { t:'app application android ios mobile play store',
+        a:'Apps start at ₹89,999 for Android, ₹1,39,999 for both stores. Login, payments, push notifications and the AI assistant are included.' },
+      { t:'seven 7 days time timeline how long fast quick delivery launch',
+        a:'Seven days from the moment we have your content and photos. The design preview arrives in 48 hours, before you pay anything. If we miss the date because of us, the project fee is refunded.' },
+      { t:'free mockup sample demo preview trial try design',
+        a:'Yes — we design a real homepage for your business, free, within 48 hours. No card, no commitment. If you do not like it you keep it and we part as friends.' },
+      { t:'own ownership code files source repo domain hosting account mine',
+        a:'You own everything: the code, the repository, the domain, the hosting, analytics, Google Ads — all registered in your name. No lock-in and no fee to keep your own site.' },
+      { t:'hidden cost extra charge surprise fee gst tax',
+        a:'No hidden costs. Every price on the site includes design, deployment, SSL and three months of care. Prices exclude 18% GST, which is stated openly.' },
+      { t:'ai bot assistant chatbot automation intelligent',
+        a:'Every website from Professional upward includes an AI assistant trained on your business — services, prices, timings. It answers customers at 11pm, captures their number, and hands off to you on WhatsApp when unsure.' },
+      { t:'whatsapp business api verified meta catalogue',
+        a:'WhatsApp Business setup is ₹4,999. The WhatsApp Business API is ₹14,999, and the WhatsApp AI bot is ₹34,999. We can also set up your catalogue and quick replies.' },
+      { t:'google business profile gmb maps listing local seo',
+        a:'Google Business Profile setup is ₹4,999 — claim, verification, categories, photos. Local SEO is ₹19,999 a month and includes posts, content and citations.' },
+      { t:'justdial indiamart sulekha directory listing marketplace',
+        a:'Justdial ₹2,999 · IndiaMART ₹4,999 (platform fee at cost) · Sulekha ₹2,499. All eight listings together, plus WhatsApp and Google, is ₹24,999 as the Complete Online Profile.' },
+      { t:'seo search ranking google rank keywords organic',
+        a:'Local SEO ₹19,999 a month, SEO Growth ₹29,999 a month. Both include conversion tracking so you can see which enquiries actually became customers.' },
+      { t:'ads advertising ppc google ads meta facebook instagram campaign',
+        a:'Google Ads setup ₹4,999, management ₹14,999 a month. Google plus Meta together is ₹24,999 a month. Bing is ₹2,999 — almost nobody in Bangalore offers that.' },
+      { t:'payment pay instalment emi split advance refund',
+        a:'50% to start and 50% on launch. Stacks and apps are split across milestones. Refunds follow the published policy — the free mockup is always free.' },
+      { t:'guarantee refund late delay promise warranty',
+        a:'For a single website or CRM, live by the agreed date or the fee is refunded. For apps and stacks it is milestone-based: miss one by more than seven days and that milestone is waived.' },
+      { t:'care maintenance support after launch ongoing monthly',
+        a:'Three months of care is included free on every project — uptime, backups, security and updates. After that it continues from ₹2,499 a month, and only if you want it. No auto-renewal.' },
+      { t:'kannada language local regional english',
+        a:'We can build in Kannada as well as English — content, and the AI assistant. For most Bangalore businesses that matters more than people expect.' },
+      { t:'portfolio work example case study proof client reviews',
+        a:'Our live case study is Red Apple Mobile Repair in Indiranagar — 4.9 stars, 767 reviews, website and Google Ads with full conversion tracking, live in seven days. You can open it right now.' },
+      { t:'about who you founder company studio registered trust',
+        a:'Pixel Forge Studio is a Bengaluru studio registered with the Ministry of MSME — Udyam UDYAM-KA-03-0460058, verifiable on the government portal. Trading since October 2023.' },
+      { t:'address office location where based bengaluru bangalore',
+        a:'No 53, 5th House B Street, Shivajinagar, Broadway, Bengaluru 560051. Most work is done remotely with calls and screen shares.' },
+      { t:'contact call phone talk human speak person whatsapp',
+        a:'Tap the green WhatsApp button and our team replies — usually within five minutes during business hours, 10am to 7pm Monday to Saturday.' },
+      { t:'stack bundle all three package deal discount save',
+        a:'Startup ₹1,49,999 · Growth ₹2,24,999 · Scale ₹3,11,999 · Elite ₹4,99,999. Any two of website, CRM and app together gets 12% off the combined list price.' },
+      { t:'tripwire entry starter small first basic minimum',
+        a:'The entry product is ₹9,999 — one page, Google Business Profile and WhatsApp setup, live in five days. Bought separately that is ₹19,997.' },
+      { t:'hosting server speed performance fast lighthouse',
+        a:'Sites are built static-first and score 95+ on Lighthouse, loading under two seconds on a mid-range phone. Speed is part of the build, not an upgrade.' },
+      { t:'hostile competitor other agency compare difference why you',
+        a:'Agencies charge ₹40,000 to ₹1,50,000 and take three to six weeks. Freelancers vanish. We publish our prices, show you the design first, and hand over everything in seven days.' },
+      { t:'hello hi hey good morning namaste',
+        a:'Hello. I am the Pixel Forge Studio assistant. Ask me about pricing, timelines, what is included, or our work — or tap WhatsApp and our team will reply.' }
     ];
+
+    var STOP = {'the':1,'a':1,'an':1,'is':1,'are':1,'do':1,'you':1,'i':1,'to':1,'of':1,'for':1,'and':1,'in':1,'on':1,'it':1,'me':1,'my':1,'we':1,'can':1,'what':1,'how':1,'will':1,'would':1,'please':1,'need':1,'want':1,'get':1,'have':1};
+
+    function score(q) {
+      var words = q.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(function(w){return w && !STOP[w];});
+      var best = null, bestScore = 0;
+      KB.forEach(function (item) {
+        var hits = 0, matched = 0;
+        words.forEach(function (w) {
+          if (w.length >= 3 && item.t.indexOf(w) > -1) { hits += w.length; matched++; }
+        });
+        // prefer more distinct matched words, then longer matches
+        var sc = matched * 10 + hits;
+        if (sc > bestScore) { bestScore = sc; best = item; }
+      });
+      return bestScore >= 13 ? best : null;
+    }
+
+    var lastTopic = null;
+    function answer(q) {
+      var hit = score(q);
+      if (hit) { lastTopic = hit; return hit.a; }
+      if (lastTopic) {
+        return 'I am not certain about that one. Ask me about pricing, timelines, ownership, AI, WhatsApp or SEO — or tap WhatsApp below and our team will answer directly.';
+      }
+      return 'I can help with pricing, timelines, what is included, and how handover works. Try asking "how much for a website" or tap WhatsApp to talk to our team.';
+    }
 
     function push(text, who) {
       var d = document.createElement('div');
@@ -460,20 +529,29 @@
       botLog.scrollTop = botLog.scrollHeight;
     }
 
-    function answer(q) {
-      var low = q.toLowerCase();
-      for (var i = 0; i < RULES.length; i++) {
-        for (var j = 0; j < RULES[i].k.length; j++) {
-          if (low.indexOf(RULES[i].k[j]) > -1) return RULES[i].a;
-        }
-      }
-      return 'I am not certain about that one. Tap WhatsApp below and Faisal will answer directly — usually within five minutes during business hours.';
+    var chips = ['Pricing','How long?','AI included?','Free mockup'];
+    function pushChips() {
+      var w = document.createElement('div');
+      w.className = 'bchips';
+      chips.forEach(function (c) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.textContent = c;
+        b.addEventListener('click', function () {
+          push(c, 'me');
+          setTimeout(function () { push(answer(c), 'bot'); }, 320);
+          w.remove();
+        });
+        w.appendChild(b);
+      });
+      botLog.appendChild(w);
+      botLog.scrollTop = botLog.scrollHeight;
     }
 
     botBtn.addEventListener('click', function () {
       botPanel.classList.toggle('open');
       if (botPanel.classList.contains('open') && !botLog.childElementCount) {
-        push('Hello — I am the Pixel Forge assistant. Ask me about pricing, timelines or what is included.', 'bot');
+        push('Hello — I am the Pixel Forge Studio assistant. I can answer pricing, timelines, ownership and what is included. What would you like to know?', 'bot');
+        pushChips();
       }
       if (botPanel.classList.contains('open')) botInput.focus();
     });
@@ -485,7 +563,7 @@
         if (!v) return;
         push(v, 'me');
         botInput.value = '';
-        setTimeout(function () { push(answer(v), 'bot'); }, 420);
+        setTimeout(function () { push(answer(v), 'bot'); }, 380);
       });
     }
   }
