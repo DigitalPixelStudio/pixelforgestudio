@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="gold">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Packages & pricing | Pixel Forge Studio</title>
+<meta name="description" content="Website, CRM and app packages from ₹9,999. Build your own package and see the price live.">
+<meta name="theme-color" content="#0A0908">
+<meta property="og:title" content="Packages & pricing | Pixel Forge Studio">
+<meta property="og:description" content="Website, CRM and app packages from ₹9,999. Build your own package and see the price live.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pixelforgestudio.com/packages.html">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://pixelforgestudio.com/packages.html">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="assets/img/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="packages.html">
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M4 20 L12 4 L20 20"/><path d="M8 14 H16"/></svg></span>
+      <span>Pixel Forge<small>Studio · Bengaluru</small></span>
+    </a>
+    <nav class="links"><a href="index.html" class="">Home</a><a href="services.html" class="">Services</a><a href="packages.html" class="on">Packages</a><a href="add-ons.html" class="">Add-ons</a><a href="work.html" class="">Work</a><a href="about.html" class="">About</a><a href="process.html" class="">Process</a><a href="faq.html" class="">FAQ</a><a href="contact.html" class="">Contact</a></nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary btn-sm" href="contact.html">Free mockup</a>
+      <button class="burger" id="burger" aria-label="Menu"><i></i><i></i><i></i></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" style="padding:64px 0 40px">
+  <div class="grid-bg"></div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <span class="eyebrow"><span class="dot"></span>Packages</span>
+    <h1 class="hero-title" style="font-size:clamp(2.2rem,4.6vw,3.6rem)">Published prices.<br><span class="grad">No surprises.</span></h1>
+    <p class="hero-sub">Build your own package below, or pick a stack. Every price includes design, deployment, SSL and three months of care.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding-top:16px">
+  <div class="wrap">
+    <div class="trip rv">
+      <div>
+        <span class="mono" style="color:var(--ember)">Entry · the only discounted product we sell</span>
+        <h3 style="margin-top:8px">Tripwire — one page, Google listing, WhatsApp. Five days.</h3>
+        <p>Bought separately this is ₹19,997. It is capped at one page and one revision, and it converts to a full build within 60 days with 70% of it credited back.</p>
+      </div>
+      <div class="amt">₹9,999<small>one-time</small></div>
+    </div>
+
+    <div class="cfg" id="cfg">
+      <div>
+        <div class="cfg-step">
+          <div class="lbl"><i>1</i>What are you building?</div>
+          <div class="opts" id="cfg-core">
+            <label class="opt"><input type="radio" name="core" value="website" checked>
+          <span class="opt-body"><span class="opt-t">Website</span><span class="opt-d">Five to ten pages, AI assistant, mobile-first</span></span>
+          <span class="opt-p">from ₹19,999</span></label>
+            <label class="opt"><input type="radio" name="core" value="crm" >
+          <span class="opt-body"><span class="opt-t">CRM</span><span class="opt-d">Leads, pipeline, quotes, AI inside</span></span>
+          <span class="opt-p">from ₹74,999</span></label>
+            <label class="opt"><input type="radio" name="core" value="app" >
+          <span class="opt-body"><span class="opt-t">App</span><span class="opt-d">Android or both stores, AI built in</span></span>
+          <span class="opt-p">from ₹89,999</span></label>
+          </div>
+        </div>
+        <div class="cfg-step">
+          <div class="lbl"><i>2</i>Pick your tier</div>
+          <div class="opts" id="cfg-tier">
+            <label class="opt"><input type="radio" name="tier" value="essential" >
+          <span class="opt-body"><span class="opt-t">Essential</span><span class="opt-d">The core product, done properly</span></span>
+          <span class="opt-p" data-tierprice="essential">—</span></label>
+            <label class="opt"><input type="radio" name="tier" value="professional" checked>
+          <span class="opt-body"><span class="opt-t">Professional</span><span class="opt-d">Adds the AI assistant and presence</span></span>
+          <span class="opt-p" data-tierprice="professional">—</span></label>
+            <label class="opt"><input type="radio" name="tier" value="complete" >
+          <span class="opt-body"><span class="opt-t">Complete</span><span class="opt-d">Everything, plus reporting</span></span>
+          <span class="opt-p" data-tierprice="complete">—</span></label>
+            <label class="opt"><input type="radio" name="tier" value="elite" >
+          <span class="opt-body"><span class="opt-t">Elite</span><span class="opt-d">Custom build, SLA, dedicated</span></span>
+          <span class="opt-p" data-tierprice="elite">—</span></label>
+          </div>
+        </div>
+        <div class="cfg-step">
+          <div class="lbl"><i>3</i>Add what you need</div>
+          <div class="opts" id="cfg-addons"></div>
+        </div>
+        <div class="cfg-step">
+          <div class="lbl"><i>4</i>Monthly growth (optional)</div>
+          <div class="opts" id="cfg-monthly"></div>
+        </div>
+      </div>
+      <aside class="sum">
+        <h4>Your build</h4>
+        <div id="sum-lines"><div class="sum-empty">Pick a package to begin.</div></div>
+        <div class="sum-tot">
+          <div><span>One-time</span><b id="sum-total">₹0</b></div>
+          <div id="sum-monthly-row" style="display:none"><span>Monthly</span><b class="mo" id="sum-monthly">—</b></div>
+        </div>
+        <a class="btn btn-primary btn-block" id="sum-send" href="#" target="_blank" rel="noopener" style="margin-top:14px">Send on WhatsApp</a>
+        <p style="font-size:.66rem;color:var(--ash-2);text-align:center;margin:10px 0 0">No payment here. We reply with a written quote.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="num">Stacks</span><h2>Or take all three, and save.</h2><p>Buying the website, CRM and app together is cheaper than buying them one at a time — and one team, one timeline.</p></div>
+    <div class="price-grid">
+      <div class="pcard  rv" data-d="0">
+        
+        <h4>Startup Stack</h4>
+        <div class="amt">₹1,49,999<small> one-time</small></div>
+        <p style="font-size:.76rem;color:var(--ash-2);margin:0">Website Essential + CRM Essential + App Essential</p>
+        <ul><li>8–10 weeks · 5 pages, no site bot, CRM max 5 users, Android only, one revision round</li></ul>
+        <a class="btn btn-ghost btn-block btn-sm" style="margin-top:16px" href="contact.html">Discuss this</a>
+      </div>
+      <div class="pcard hot rv" data-d="70">
+        <span class='tag'>Most booked</span>
+        <h4>Growth Stack</h4>
+        <div class="amt">₹2,24,999<small> one-time</small></div>
+        <p style="font-size:.76rem;color:var(--ash-2);margin:0">Website + CRM + App — all Professional</p>
+        <ul><li>10–12 weeks · AI bot on site, PWA, both app stores, 3-month care</li></ul>
+        <a class="btn btn-primary btn-block btn-sm" style="margin-top:16px" href="contact.html">Discuss this</a>
+      </div>
+      <div class="pcard  rv" data-d="140">
+        
+        <h4>Scale Stack</h4>
+        <div class="amt">₹3,11,999<small> one-time</small></div>
+        <p style="font-size:.76rem;color:var(--ash-2);margin:0">Website + CRM + App — all Complete</p>
+        <ul><li>12–14 weeks · all 8 listings, reviews pack, reports, CMS</li></ul>
+        <a class="btn btn-ghost btn-block btn-sm" style="margin-top:16px" href="contact.html">Discuss this</a>
+      </div>
+      <div class="pcard  rv" data-d="210">
+        
+        <h4>Elite Stack</h4>
+        <div class="amt">₹4,99,999<small> one-time</small></div>
+        <p style="font-size:.76rem;color:var(--ash-2);margin:0">Website + CRM + App — all Elite</p>
+        <ul><li>12–16 weeks · custom build, ERP, multi-role, 4-hour SLA</li></ul>
+        <a class="btn btn-ghost btn-block btn-sm" style="margin-top:16px" href="contact.html">Discuss this</a>
+      </div></div>
+  </div>
+</section>
+
+
+<section class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="num">Full price list</span><h2>Every number, on one screen.</h2><p>Nothing hidden behind a quote form. These are the prices.</p></div>
+    <table class="cmp">
+      <thead><tr><th>Core product</th><th>Essential</th><th>Professional</th><th>Complete</th><th>Elite</th></tr></thead>
+      <tbody>
+        <tr><td>Website</td><td class="yes">₹19,999</td><td class="yes">₹29,999</td><td class="yes">₹49,999</td><td class="yes">₹89,999</td></tr>
+        <tr><td>CRM</td><td class="yes">₹74,999</td><td class="yes">₹1,09,999</td><td class="yes">₹1,49,999</td><td class="yes">₹2,99,999</td></tr>
+        <tr><td>App</td><td class="yes">₹89,999</td><td class="yes">₹1,39,999</td><td class="yes">₹1,99,999</td><td class="yes">₹3,99,999</td></tr>
+        <tr><td>Entry — Tripwire (one page + Google + WhatsApp)</td><td class="yes">₹9,999</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin:34px 0 12px">Bundles — all three cores together</h3>
+    <table class="cmp">
+      <thead><tr><th>Stack</th><th>Tiers included</th><th>Bought separately</th><th>Bundle price</th><th>You save</th></tr></thead>
+      <tbody>
+        <tr><td>Startup</td><td>All Essential</td><td>₹1,84,997</td><td class="yes">₹1,49,999</td><td>₹34,998</td></tr>
+        <tr><td>Growth</td><td>All Professional</td><td>₹2,79,997</td><td class="yes">₹2,24,999</td><td>₹54,998</td></tr>
+        <tr><td>Scale</td><td>All Complete</td><td>₹3,99,997</td><td class="yes">₹3,11,999</td><td>₹87,998</td></tr>
+        <tr><td>Elite</td><td>All Elite</td><td>₹7,89,997</td><td class="yes">₹4,99,999</td><td>₹2,89,998</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin:34px 0 12px">Any two cores</h3>
+    <p style="color:var(--ash);font-size:.9rem;margin-bottom:14px">Pick two of Website, CRM and App — <strong style="color:var(--ember)">12% off</strong> the combined list price.</p>
+    <table class="cmp">
+      <thead><tr><th>Combination</th><th>List</th><th>Bundle</th></tr></thead>
+      <tbody>
+        <tr><td>Website + CRM — Essential</td><td>₹94,998</td><td class="yes">₹83,999</td></tr>
+        <tr><td>Website + CRM — Professional</td><td>₹1,39,998</td><td class="yes">₹1,23,999</td></tr>
+        <tr><td>Website + CRM — Complete</td><td>₹1,99,998</td><td class="yes">₹1,75,999</td></tr>
+        <tr><td>Website + CRM — Elite</td><td>₹3,89,998</td><td class="yes">₹3,43,999</td></tr>
+        <tr><td>Website + App — Essential</td><td>₹1,09,998</td><td class="yes">₹96,999</td></tr>
+        <tr><td>CRM + App — Essential</td><td>₹1,64,998</td><td class="yes">₹1,45,999</td></tr>
+      </tbody>
+    </table>
+
+    <p style="color:var(--ash-2);font-size:.82rem;margin-top:20px">All prices exclude 18% GST. Every build includes design, deployment, SSL and three months of care. Add-ons and retainers are listed on the <a href="add-ons.html" style="color:var(--ember)">Add-ons</a> page.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="num">Compare</span><h2>What sits inside each tier.</h2></div>
+    <table class="cmp">
+      <thead><tr><th>Feature</th><th>Essential</th><th>Professional</th><th>Complete</th><th>Elite</th></tr></thead>
+      <tbody>
+        <tr><td>Custom design</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>AI assistant</td><td class="no">—</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>App install (PWA)</td><td class="no">—</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Google Business Profile</td><td class="no">—</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>All 8 directory listings</td><td class="no">—</td><td class="no">—</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Reviews &amp; reputation pack</td><td class="no">—</td><td class="no">—</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Monthly reporting</td><td class="no">—</td><td class="no">—</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+        <tr><td>Care included</td><td>3 months</td><td>3 months</td><td>3 months</td><td>6 months</td></tr>
+        <tr><td>Delivery</td><td>7 days</td><td>10 days</td><td>14 days</td><td>4–6 weeks</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="index.html" class="brand">
+          <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M4 20 L12 4 L20 20"/><path d="M8 14 H16"/></svg></span>
+          <span>Pixel Forge<small>Studio · Bengaluru</small></span>
+        </a>
+        <p>Modern websites, Forged In 7 Days. Studio-grade design and modern engineering — and everything is yours.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M15 3h-3a4 4 0 0 0-4 4v3H5v4h3v7h4v-7h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></a>
+          <a href="#" aria-label="Google Business"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></a>
+        </div>
+      </div>
+      <div class="f-col"><h5>Build</h5>
+        <a href="services.html">Services</a><a href="packages.html">Packages</a>
+        <a href="add-ons.html">Add-ons</a><a href="process.html">Process</a></div>
+      <div class="f-col"><h5>Studio</h5>
+        <a href="work.html">Our work</a><a href="about.html">About</a>
+        <a href="faq.html">FAQ</a><a href="contact.html">Contact</a></div>
+      <div class="f-col"><h5>Legal</h5>
+        <a href="privacy.html">Privacy Policy</a><a href="refund.html">Refund Policy</a>
+        <a href="terms.html">Terms of Service</a></div>
+    </div>
+    <div class="f-bot">
+      <span>© 2026 Pixel Forge Studio · No 53, 5th House B Street, Shivajinagar, Broadway, Bengaluru 560051</span>
+      <span>Udyam Registered · UDYAM-KA-03-0460058 · hello@pixelforgestudio.com</span>
+    </div>
+  </div>
+</footer>
+<a class="wa" href="https://wa.me/919620024812?text=Hi%20Faisal%2C%20I%20want%20a%20website." target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.2 14.8l-.4-.2-2.6.7.7-2.5-.2-.4A8 8 0 0 1 12 4zm-3 4c-.3 0-.7.1-.9.4-.3.4-.8 1-.8 1.9s.7 1.9 1 2.3c.3.4 1.6 2.5 4 3.4 2 .8 2.4.6 2.9.6.4 0 1.3-.5 1.5-1s.2-1 .2-1.1c-.1-.1-.3-.2-.6-.3l-1.4-.7c-.2-.1-.4-.1-.5.1l-.6.8c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-1.9-1.2 7 7 0 0 1-1.3-1.6c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.1-.3 0-.5l-.6-1.4c-.1-.3-.3-.3-.5-.3z"/></svg>
+  WhatsApp
+</a>
+<div class="botwrap">
+  <div class="botpanel" id="botpanel">
+    <div class="bot-head">
+      <span class="av"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 13h.01M15 13h.01"/></svg></span>
+      <span><b>Pixel Forge Assistant</b><small>● Online · replies instantly</small></span>
+    </div>
+    <div class="botlog" id="botlog"></div>
+    <form class="botform" id="botform">
+      <input id="botinput" placeholder="Ask about pricing, timelines…" autocomplete="off">
+      <button type="submit" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </form>
+    <div class="bot-foot"><a href="https://wa.me/919620024812" target="_blank" rel="noopener">Talk to Faisal on WhatsApp →</a></div>
+  </div>
+  <button class="botbtn" id="botbtn" aria-label="Open assistant"><svg viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M12 3v4M9 13h.01M15 13h.01"/></svg></button>
+</div>
+<div class="themedock" id="themedock">
+  <button data-t="ember" style="background:#E8590C" title="Ember"></button>
+  <button data-t="brass" style="background:#C9A227" title="Brass"></button>
+  <button data-t="teal"  style="background:#14B8A6" title="Teal"></button>
+  <button data-t="cobalt" style="background:#4F7DFF" title="Cobalt"></button>
+  <button data-t="copper" style="background:#B87333" title="Copper"></button>
+  <button data-t="ivory" style="background:#F7F4ED" title="Ivory"></button>
+</div>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
