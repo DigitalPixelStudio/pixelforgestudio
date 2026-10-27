@@ -728,3 +728,15 @@ header.nav .brand-mark img{object-fit:contain !important}
   .track-day{border-left:0;padding-left:0;text-align:left;display:flex;align-items:baseline;gap:8px}
   .track-day b{font-size:1.5rem}
 }
+
+/* ---------- one-page anchors: clear the sticky nav ---------- */
+section[id]{scroll-margin-top:86px}
+html{scroll-behavior:smooth}
+
+/* one-pager: rhythm between folded sections */
+#services,#packages,#addons,#work,#about,#process,#faq,#contact{
+  border-top:1px solid var(--line);
+}
+#work{background:var(--paper-2)}
+#faq{background:var(--paper-2)}
+#contact{background:var(--paper-2)}
