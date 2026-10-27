@@ -651,3 +651,20 @@ header.nav.scrolled{
   background-image:radial-gradient(circle, rgba(11,122,97,.16) 1px, transparent 1px);
   background-size:16px 16px;opacity:.5;
 }
+
+/* ---------- real logo ---------- */
+.brand-mark{
+  background:#fff !important;
+  border:1px solid var(--line-2) !important;
+  padding:3px !important;
+  box-shadow:0 4px 14px -8px rgba(9,60,48,.4) !important;
+  overflow:hidden;
+}
+.brand-mark img{width:100% !important;height:100% !important;object-fit:contain !important;display:block}
+
+/* logo chip: wider to suit the wide anvil mark */
+header.nav .brand-mark{width:58px !important;height:40px !important;border-radius:11px !important;padding:4px !important}
+header.nav .brand-mark img{object-fit:contain !important}
+@media(max-width:900px){
+  header.nav .brand-mark{width:46px !important;height:32px !important;padding:3px !important}
+}
