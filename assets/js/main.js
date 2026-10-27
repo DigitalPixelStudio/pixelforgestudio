@@ -72,6 +72,71 @@
   function $(s, c) { return (c || document).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
 
+  /* ---------- MOTION ENGINE ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1. cursor glow
+  if (!reduce && window.matchMedia('(hover: hover)').matches) {
+    var cg = document.createElement('div');
+    cg.className = 'cursor-glow';
+    document.body.appendChild(cg);
+    var cx = 0, cy = 0, tx = 0, ty = 0;
+    window.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; }, { passive: true });
+    (function loop() {
+      cx += (tx - cx) * 0.09; cy += (ty - cy) * 0.09;
+      cg.style.left = cx + 'px'; cg.style.top = cy + 'px';
+      requestAnimationFrame(loop);
+    })();
+  }
+
+  // 2. magnetic buttons
+  if (!reduce) {
+    $$('.btn').forEach(function (b) {
+      b.addEventListener('mousemove', function (e) {
+        var r = b.getBoundingClientRect();
+        var mx = e.clientX - r.left, my = e.clientY - r.top;
+        b.style.setProperty('--bx', mx + 'px');
+        b.style.setProperty('--by', my + 'px');
+        b.style.transform = 'translate(' + ((mx - r.width / 2) * 0.06) + 'px,' +
+                            ((my - r.height / 2) * 0.12 - 3) + 'px)';
+      });
+      b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+    });
+  }
+
+  // 3. card 3D tilt
+  if (!reduce && window.matchMedia('(hover: hover)').matches) {
+    $$('.card,.pcard,.pcard-l,.tile').forEach(function (c) {
+      c.addEventListener('mousemove', function (e) {
+        var r = c.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        c.style.transform = 'perspective(900px) rotateY(' + (px * 5) + 'deg) rotateX(' +
+                            (-py * 5) + 'deg) translateY(-5px)';
+      });
+      c.addEventListener('mouseleave', function () { c.style.transform = ''; });
+    });
+  }
+
+  // 4. scroll parallax on ambient orbs + hero mock
+  if (!reduce) {
+    var orbs = $$('.bg i');
+    var mock = $('.hero .mock');
+    var last = -1;
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY;
+      if (Math.abs(y - last) < 2) return;
+      last = y;
+      orbs.forEach(function (o, i) {
+        o.style.marginTop = (y * (0.05 + i * 0.035)) + 'px';
+      });
+      if (mock && y < 900) mock.style.marginTop = (56 - y * 0.06) + 'px';
+    }, { passive: true });
+  }
+
+  // 5. heading clip-reveal for section heads
+  $$('.sec-head').forEach(function (h) { h.classList.add('reveal-h'); });
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
@@ -129,6 +194,19 @@
     });
   }
 
+  /* ---------- hero entrance (staggered) ---------- */
+  var heroEnter = function () {
+    var words = $$('.hero-title .w');
+    words.forEach(function (w, i) {
+      setTimeout(function () { w.classList.add('in'); }, 90 + i * 85);
+    });
+    var gw = $('.grad-wrap');
+    if (gw) setTimeout(function () { gw.classList.add('in'); }, 90 + words.length * 85 + 60);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(heroEnter, 40); });
+  } else { setTimeout(heroEnter, 40); }
+
   /* ---------- reveal on scroll ---------- */
   var rvEls = $$('.rv');
   if (STILL) { rvEls.forEach(function (el) { el.classList.add('in'); }); }
@@ -146,6 +224,15 @@
   } else {
     rvEls.forEach(function (el) { el.classList.add('in'); });
   }
+
+  /* ---------- safety net: never leave content invisible ---------- */
+  setTimeout(function () {
+    document.documentElement.classList.add('safetyNet');
+    $$('.rv').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 1.2) el.classList.add('in');
+    });
+  }, 2200);
 
   /* ---------- counters ---------- */
   var counters = $$('[data-count]');
