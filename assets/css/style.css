@@ -572,3 +572,31 @@ html:not(.js) .rv{opacity:1;transform:none}
 .tile-body h4{color:#fff !important;text-shadow:0 1px 6px rgba(0,0,0,.7)}
 .tile-body p{color:rgba(255,255,255,.86) !important;text-shadow:0 1px 5px rgba(0,0,0,.7)}
 .tile img{filter:saturate(.92)}
+
+/* ---------- v5.1: kill the nav hairline + mobile float overlap ---------- */
+header.nav{border-bottom:0 !important;box-shadow:none}
+header.nav.scrolled{
+  border-bottom:0 !important;
+  box-shadow:0 1px 0 rgba(9,60,48,.06), 0 8px 24px -18px rgba(9,60,48,.35);
+}
+/* no stray rules anywhere */
+.sec,.hero,.offer,.pipe,.trip{overflow:hidden}
+.sec-head p{border:0 !important}
+
+/* mobile: floats must not cover content */
+@media(max-width:680px){
+  body{padding-bottom:78px}
+  .wa{padding:11px 15px;font-size:.78rem;right:12px;bottom:12px;box-shadow:0 10px 26px -10px rgba(31,168,85,.7)}
+  .wa svg{width:17px;height:17px}
+  .botwrap{right:12px;bottom:66px}
+  .botbtn{width:46px;height:46px;border-radius:14px}
+  .botbtn svg{width:20px;height:20px}
+  .botpanel{width:calc(100vw - 24px);right:-2px;bottom:58px}
+  .botlog{height:250px}
+}
+
+/* mobile: one floating action only — WhatsApp converts, the bot can wait */
+@media(max-width:680px){
+  .botwrap{display:none !important}
+  body{padding-bottom:70px}
+}
