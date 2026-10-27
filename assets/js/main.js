@@ -378,24 +378,62 @@
       var moRow = $('#sum-monthly-row');
       if (moRow) moRow.style.display = monthlyTotal ? 'flex' : 'none';
 
-      // whatsapp message
-      var msg = 'Hi Pixel Forge Studio, I built a package on your website.\n\n';
-      msg += 'Building: ' + CORE_LABEL[state.core] + ' — ' + TIER_LABEL[state.tier] + ' (' + inr(corePrice) + ')\n';
+      // ---------- full lead message ----------
+      var now = new Date();
+      var ref = 'PF-' + String(now.getDate()).padStart(2,'0') + String(now.getMonth()+1).padStart(2,'0') + '-' +
+                String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+      var stamp = now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) + ', ' +
+                  now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}) + ' IST';
+
+      var TIER_NOTE = {
+        website:{essential:'5 pages, mobile-first, SEO basics, WhatsApp',professional:'Adds AI assistant, PWA, Google Business, 2 socials',complete:'10 pages, all 8 listings, reviews pack, analytics, reporting',elite:'Custom Next.js build, everything included, 6 months care'},
+        crm:{essential:'Pipeline, contacts, quotes, AI bot, 5 users',professional:'Adds GST invoices, dashboards, mobile PWA',complete:'Adds WhatsApp API, presence bundle, email + SMS',elite:'Custom build, multi-role, ERP integration, SLA'},
+        app:{essential:'Android, login, payments, push, AI',professional:'Both stores, richer UI, analytics',complete:'Both stores, admin panel, presence bundle',elite:'Platform build, real-time, multi-role, SLA'}
+      };
+
+      var L = [];
+      L.push('*NEW ENQUIRY — Pixel Forge Studio*');
+      L.push('Ref: ' + ref);
+      L.push('');
+      L.push('*WHAT THEY WANT*');
+      L.push(CORE_LABEL[state.core] + ' — ' + TIER_LABEL[state.tier] + '  (' + inr(corePrice) + ')');
+      L.push('_' + (TIER_NOTE[state.core] && TIER_NOTE[state.core][state.tier] || '') + '_');
+
       var chosen = ADDONS.filter(function (a) { return state.addons[a.id]; });
       if (chosen.length) {
-        msg += '\nAdd-ons:\n' + chosen.map(function (a) { return '- ' + a.name + ' (' + inr(a.price) + ')'; }).join('\n') + '\n';
+        L.push('');
+        L.push('*ADD-ONS*');
+        chosen.forEach(function (a) { L.push('• ' + a.name + ' — ' + inr(a.price)); });
       }
+
       var chosenM = MONTHLY.filter(function (a) { return state.monthly[a.id]; });
       if (chosenM.length) {
-        msg += '\nMonthly:\n' + chosenM.map(function (a) { return '- ' + a.name + ' (' + inr(a.price) + '/mo)'; }).join('\n') + '\n';
+        L.push('');
+        L.push('*MONTHLY*');
+        chosenM.forEach(function (a) { L.push('• ' + a.name + ' — ' + inr(a.price) + '/mo'); });
       }
-      msg += '\nOne-time total: ' + inr(oneTime);
-      if (monthlyTotal) msg += '\nMonthly total: ' + inr(monthlyTotal) + '/mo';
-      msg += '\n\nPlease share next steps.';
+
+      var gst = Math.round(oneTime * 0.18);
+      L.push('');
+      L.push('*TOTALS*');
+      L.push('One-time: ' + inr(oneTime));
+      if (monthlyTotal) L.push('Monthly: ' + inr(monthlyTotal) + '/mo');
+      L.push('GST 18%: ' + inr(gst));
+      L.push('*Grand total: ' + inr(oneTime + gst) + '*');
+
+      L.push('');
+      L.push('*TIMELINE*');
+      L.push('Design preview in 48 hours · Live in 7 days from content');
+
+      L.push('');
+      L.push('_Sent from ' + (location.pathname.split('/').pop() || 'index.html') + ' · ' + stamp + '_');
+
+      var msg = L.join('\n');
 
       var send = $('#sum-send');
       if (send) {
         send.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+        send.setAttribute('data-msg', msg);
       }
     }
 
