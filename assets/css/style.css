@@ -534,7 +534,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 30px;background:var(--ink
 /* theme dock — only shows with ?themes=1 */
 .themedock{position:fixed;left:18px;bottom:18px;z-index:95;display:none;gap:7px;padding:9px;border-radius:14px;
   background:rgba(10,9,8,.92);border:1px solid #2E2822;backdrop-filter:blur(14px);box-shadow:0 18px 40px -14px #000}
-.themedock.on{display:flex}
+.themedock.on{display:none}
 .themedock button{width:26px;height:26px;border-radius:50%;border:2px solid transparent;transition:.2s}
 .themedock button:hover{transform:scale(1.12)}
 .themedock button.cur{border-color:#F5F1EA}
@@ -593,3 +593,124 @@ footer{border-top:1px solid var(--line);padding:56px 0 30px;background:var(--ink
 .trip .amt{font-family:'Space Grotesk';font-size:2rem;letter-spacing:-.03em;text-align:right;white-space:nowrap}
 .trip .amt small{display:block;font-size:.66rem;color:var(--ash-2);font-family:'Inter';letter-spacing:0;font-weight:400;margin-top:2px}
 @media(max-width:640px){.trip{grid-template-columns:1fr;gap:14px}.trip .amt{text-align:left}}
+
+
+/* ==========================================================================
+   IVORY LOCK — single universal palette, maximum legibility
+   ========================================================================== */
+:root{
+  --ink:#F7F4ED;--ink-2:#FFFFFF;--steel:#FFFFFF;--steel-2:#F1ECE2;
+  --line:#E2DBCE;--line-2:#CFC6B5;
+  --ember:#B4441B;--ember-soft:#D9612F;--ember-dim:#7A2E06;--ember-rgb:180,68,27;
+  --bone:#191613;--ash:#57503F;--ash-2:#7D7566;
+  --btn-fg:#FFFFFF;
+  --screen:#141110;--screen-2:#1E1917;
+  --card-line:rgba(180,68,27,.45);
+}
+body{background:var(--ink);color:var(--bone)}
+body::before{opacity:.018}
+.grid-bg{opacity:.5}
+.tile img{filter:grayscale(.18) brightness(.84)}
+.bmsg.me{color:#fff}
+.hero-title .grad{
+  background:linear-gradient(100deg,#B4441B 0%,#D9612F 24%,#E8A57B 46%,#D9612F 68%,#B4441B 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+/* soft paper texture so white never feels clinical */
+.sec-alt{background:linear-gradient(180deg,#FCFAF5,#F5F0E6)}
+
+/* ---------- 2. AMBIENT BACKGROUND ---------- */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg i{position:absolute;border-radius:50%;filter:blur(64px);display:block;will-change:transform}
+.bg i:nth-child(1){width:640px;height:640px;top:-220px;left:-140px;
+  background:radial-gradient(circle,rgba(180,68,27,.20),transparent 68%);animation:drift 28s ease-in-out infinite}
+.bg i:nth-child(2){width:520px;height:520px;top:26%;right:-180px;
+  background:radial-gradient(circle,rgba(217,97,47,.15),transparent 68%);animation:drift 34s ease-in-out infinite -9s}
+.bg i:nth-child(3){width:700px;height:700px;bottom:-280px;left:16%;
+  background:radial-gradient(circle,rgba(180,68,27,.11),transparent 68%);animation:drift 40s ease-in-out infinite -18s}
+.bg i:nth-child(4){width:420px;height:420px;top:58%;left:6%;
+  background:radial-gradient(circle,rgba(232,165,123,.14),transparent 70%);animation:drift 31s ease-in-out infinite -24s}
+@keyframes drift{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  33%{transform:translate3d(46px,-34px,0) scale(1.09)}
+  66%{transform:translate3d(-34px,28px,0) scale(.94)}
+}
+.grid-bg{animation:gridShift 70s linear infinite}
+@keyframes gridShift{to{background-position:72px 72px}}
+
+/* ---------- 3. TYPE EFFECTS ---------- */
+.brand{font-size:1.34rem !important;letter-spacing:-.03em}
+.brand small{font-size:.66rem !important;letter-spacing:.2em !important;color:var(--ash-2) !important}
+.brand-mark{width:38px !important;height:38px !important;border-radius:11px !important}
+.brand-mark svg{width:20px !important;height:20px !important}
+
+/* animated underline on nav */
+nav.links a::before{
+  content:'';position:absolute;left:0;right:0;bottom:-6px;height:1.5px;
+  background:var(--ember);transform:scaleX(0);transform-origin:left;
+  transition:transform .38s var(--ease);
+}
+nav.links a:hover::before,nav.links a.on::before{transform:scaleX(1)}
+nav.links a.on::after{display:none}
+
+/* heading shine sweep on reveal */
+.sec-head h2,.hero-title{position:relative}
+.rv.in .sec-head h2::after,.sec-head.rv.in h2::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 40%,rgba(180,68,27,.13) 50%,transparent 60%);
+  background-size:250% 100%;animation:shine 1.5s var(--ease) .25s 1;
+}
+@keyframes shine{from{background-position:120% 0}to{background-position:-120% 0}}
+
+/* section number: draws in */
+.sec-head .num::after{background:var(--ember)}
+
+/* chips + cards lift more visibly on light */
+.card:hover{box-shadow:0 18px 44px -22px rgba(60,40,25,.45)}
+.pcard:hover{box-shadow:0 20px 46px -22px rgba(60,40,25,.42)}
+.btn-primary{box-shadow:0 10px 26px -12px rgba(180,68,27,.55)}
+.btn-primary:hover{box-shadow:0 16px 34px -12px rgba(180,68,27,.62)}
+
+/* stat numerals: ember gradient */
+.stat b em{
+  background:linear-gradient(160deg,var(--ember),var(--ember-soft));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ---------- 4. PAGE INDEX GRID ---------- */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pcard-l{
+  display:block;padding:22px;border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--steel);transition:.3s var(--ease);position:relative;overflow:hidden;
+}
+.pcard-l:hover{transform:translateY(-3px);border-color:rgba(180,68,27,.5);box-shadow:0 18px 40px -22px rgba(60,40,25,.4)}
+.pcard-l .pn{font-family:'JetBrains Mono';font-size:.62rem;color:var(--ember);letter-spacing:.16em}
+.pcard-l h4{font-family:'Space Grotesk';font-size:1.02rem;margin:9px 0 6px}
+.pcard-l p{font-size:.8rem;color:var(--ash);margin:0;line-height:1.5}
+.pcard-l .arw{
+  position:absolute;top:20px;right:20px;width:18px;height:18px;stroke:var(--ash-2);
+  fill:none;stroke-width:2;transition:.3s;
+}
+.pcard-l:hover .arw{stroke:var(--ember);transform:translate(3px,-3px)}
+@media(max-width:1000px){.pgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.pgrid{grid-template-columns:1fr}}
+
+/* sections sit above the ambient layer */
+main,footer,header.nav{position:relative;z-index:2}
+
+/* ---------- dark panels keep light text (ivory safety) ---------- */
+.mock-prev .big{color:#F5F1EA !important}
+.mock-prev .lbl{color:#8A8178 !important}
+.mock-prev .bar{background:#2E2822 !important}
+.mock-prev .bar.a{background:linear-gradient(90deg,var(--ember),var(--ember-soft)) !important}
+.mock-prev .pill{color:#fff !important}
+.mock-url{color:#8A8178 !important;background:#080706 !important;border-color:#2E2822 !important}
+.tile-body h4{color:#F5F1EA !important}
+.tile-body p{color:#C4BAAE !important}
+.mock-bar{border-bottom-color:#2E2822 !important}
+.mock-code{border-right-color:#2E2822 !important}
+/* hero eyebrow + chips legible on ivory */
+.eyebrow{color:var(--ash);background:#fff;border-color:var(--line-2)}
+.chip{background:#fff;border-color:var(--line-2);color:var(--ash)}
+/* nav glass on light */
+header.nav.scrolled{background:rgba(247,244,237,.86);border-bottom-color:var(--line)}
