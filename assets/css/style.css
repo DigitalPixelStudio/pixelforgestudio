@@ -2670,3 +2670,73 @@ footer{background:#06070B !important;border-top:1px solid rgba(255,255,255,.06) 
 .nav-cta .navtoggle,.nav-cta .hamb,.nav-cta button{
   flex:none;width:40px;height:40px;min-width:40px;
 }
+
+/* value grid */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vitem{background:rgba(18,20,29,.9);border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;padding:24px 22px;transition:transform .3s,border-color .3s,box-shadow .3s}
+.vitem:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.5);
+  box-shadow:0 22px 54px -30px rgba(139,92,246,.85)}
+.vn{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:#5A6178;
+  border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:2px 7px;display:inline-block;margin-bottom:12px}
+.vitem h4{font-size:1rem;margin:0 0 8px;letter-spacing:-.02em;color:#F8FAFC}
+.vitem p{font-size:.82rem;line-height:1.6;color:#94A3B8;margin:0}
+@media(max-width:900px){.vgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.vgrid{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   v36 — bigger header, fixed founding card
+   ========================================================================== */
+
+/* HEADER: bigger logo + bigger name */
+.nav-in{padding:14px 0 !important;gap:16px !important}
+.brand-mark,header.nav .brand-mark{
+  width:64px !important;height:64px !important;border-radius:16px !important;
+}
+.brand-mark img,header.nav .brand-mark img{
+  width:50px !important;height:auto !important;
+}
+.brand-name,header.nav .brand-name{
+  font-size:1.62rem !important;font-weight:700 !important;letter-spacing:-.035em !important;
+  line-height:1 !important;
+}
+@media(max-width:900px){
+  .nav-in{padding:12px 0 !important;gap:12px !important}
+  .brand-mark,header.nav .brand-mark{width:54px !important;height:54px !important;border-radius:13px !important}
+  .brand-mark img,header.nav .brand-mark img{width:42px !important}
+  .brand-name,header.nav .brand-name{font-size:1.22rem !important}
+}
+@media(max-width:420px){
+  .brand-mark,header.nav .brand-mark{width:46px !important;height:46px !important}
+  .brand-mark img,header.nav .brand-mark img{width:35px !important}
+  .brand-name,header.nav .brand-name{font-size:1rem !important;max-width:120px}
+}
+
+/* FOUNDING CARD: was a cramped 2-col squeeze — stack it properly */
+.founding-grid{grid-template-columns:1fr !important;gap:28px !important}
+.founding-grid > div:first-child h2{max-width:none !important;font-size:clamp(1.6rem,3.4vw,2.4rem) !important}
+.founding-grid > div:first-child p{max-width:70ch !important;font-size:.95rem !important;line-height:1.7 !important}
+.founding-grid > div:last-child{max-width:520px}
+@media(min-width:900px){
+  .founding-grid{grid-template-columns:1.25fr .75fr !important;gap:44px !important;align-items:center !important}
+  .founding-grid > div:first-child h2{font-size:clamp(1.8rem,3vw,2.6rem) !important}
+}
+.offer{padding:44px 40px !important}
+@media(max-width:600px){.offer{padding:30px 22px !important}}
+
+/* small screens: drop the CTA so the full company name fits */
+@media(max-width:600px){
+  .nav-cta .btn,.nav-cta > a:not(.navtoggle):not(.hamb){
+    display:none !important;
+  }
+  .brand-name,header.nav .brand-name{
+    max-width:none !important;overflow:visible !important;text-overflow:clip !important;
+    font-size:1.16rem !important;
+  }
+  .brand{gap:11px !important}
+}
+@media(max-width:380px){
+  .brand-name,header.nav .brand-name{font-size:1.02rem !important}
+  .brand-mark,header.nav .brand-mark{width:42px !important;height:42px !important}
+  .brand-mark img,header.nav .brand-mark img{width:32px !important}
+}
