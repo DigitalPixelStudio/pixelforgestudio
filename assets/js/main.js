@@ -118,19 +118,22 @@
     });
   }
 
-  // 4. scroll parallax on ambient orbs + hero mock
+  // 4. scroll parallax — rAF-throttled, transform only (no layout thrash)
   if (!reduce) {
     var orbs = $$('.bg i');
     var mock = $('.hero .mock');
-    var last = -1;
+    var ticking = false, lastY = 0;
+    var paint = function () {
+      var y = lastY;
+      for (var i = 0; i < orbs.length; i++) {
+        orbs[i].style.transform = 'translate3d(0,' + (y * (0.05 + i * 0.035)).toFixed(1) + 'px,0)';
+      }
+      if (mock && y < 900) mock.style.transform = 'translate3d(0,' + (56 - y * 0.06).toFixed(1) + 'px,0)';
+      ticking = false;
+    };
     window.addEventListener('scroll', function () {
-      var y = window.scrollY;
-      if (Math.abs(y - last) < 2) return;
-      last = y;
-      orbs.forEach(function (o, i) {
-        o.style.marginTop = (y * (0.05 + i * 0.035)) + 'px';
-      });
-      if (mock && y < 900) mock.style.marginTop = (56 - y * 0.06) + 'px';
+      lastY = window.scrollY;
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
     }, { passive: true });
   }
 
