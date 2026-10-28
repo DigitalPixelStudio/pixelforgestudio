@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=31">
+<link rel="stylesheet" href="assets/css/style.css?v=32">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body data-page="packages.html">
@@ -76,7 +76,8 @@
           <li>One revision</li>
         </ul>
         <div class="tier-excl">No AI assistant · No code handover</div>
-        <a class="btn btn-ghost btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Launchpad%20(%E2%82%B99%2C999)." target="_blank" rel="noopener">Start with Launchpad →</a>
+        <button type="button" class="btn btn-ghost btn-block pkg-more" data-pkg="launchpad" style="margin-bottom:8px">Know more →</button>
+        <a class="btn btn-primary btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Launchpad%20(%E2%82%B99%2C999)." target="_blank" rel="noopener">Start with Launchpad →</a>
       </div>
 
       <div class="tier t2">
@@ -97,7 +98,8 @@
           <li>Google Business + Justdial sync</li>
           <li>3 months care included</li>
         </ul>
-        <a class="btn btn-ghost btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Growth%20(%E2%82%B91%2C49%2C999)." target="_blank" rel="noopener">Start with Growth →</a>
+        <button type="button" class="btn btn-ghost btn-block pkg-more" data-pkg="growth" style="margin-bottom:8px">Know more →</button>
+        <a class="btn btn-primary btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Growth%20(%E2%82%B91%2C49%2C999)." target="_blank" rel="noopener">Start with Growth →</a>
       </div>
 
       <div class="tier t3 hot">
@@ -119,6 +121,7 @@
           <li>Basic SEO + all eight directory listings</li>
           <li>Full code handover · 3 months care</li>
         </ul>
+        <button type="button" class="btn btn-ghost btn-block pkg-more" data-pkg="conquerer" style="margin-bottom:8px">Know more →</button>
         <a class="btn btn-primary btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Conquerer%20(%E2%82%B92%2C24%2C999)." target="_blank" rel="noopener">Start with Conquerer →</a>
       </div>
 
@@ -140,7 +143,8 @@
           <li>Dedicated 4-hour SLA support</li>
           <li>Full code handover · 12 months elite care</li>
         </ul>
-        <a class="btn btn-ghost btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Empire%20(%E2%82%B94%2C99%2C999)." target="_blank" rel="noopener">Discuss Empire →</a>
+        <button type="button" class="btn btn-ghost btn-block pkg-more" data-pkg="empire" style="margin-bottom:8px">Know more →</button>
+        <a class="btn btn-primary btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20Empire%20(%E2%82%B94%2C99%2C999)." target="_blank" rel="noopener">Discuss Empire →</a>
       </div>
     </div>
 
@@ -414,6 +418,13 @@
     </div>
   </div>
 </div>
+
+<div class="pkgmodal" id="pkgmodal" role="dialog" aria-modal="true">
+  <div class="pkgcard">
+    <button class="pkgclose" id="pkgclose" aria-label="Close">×</button>
+    <div id="pkgbody"></div>
+  </div>
+</div>
 <div class="mbar">
   <a class="m1" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20to%20discuss%20a%20project." target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.4A10 10 0 1012 2z"/></svg>WhatsApp us</a>
@@ -443,6 +454,6 @@
   <button data-t="copper" style="background:#B87333" title="Copper"></button>
   <button data-t="ivory" style="background:#F7F4ED" title="Ivory"></button>
 </div>
-<script src="assets/js/main.js?v=31" defer></script>
+<script src="assets/js/main.js?v=32" defer></script>
 </body>
 </html>
