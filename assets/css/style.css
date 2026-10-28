@@ -1677,3 +1677,142 @@ header.nav.scrolled{background:rgba(9,10,15,.96) !important}
 .f-verified{display:flex;align-items:center;gap:7px;margin-top:14px;
   font-size:.72rem;color:rgba(255,255,255,.6)}
 .f-verified .vtick{width:14px;height:14px;margin-left:0}
+
+/* ---------- case study ---------- */
+.case{
+  display:grid;grid-template-columns:1.15fr 1fr;gap:0;
+  background:var(--surface-card);border:1px solid var(--border-glass);
+  border-radius:20px;overflow:hidden;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.case-shot{position:relative;background:#05070D;overflow:hidden;min-height:340px}
+.case-shot img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.case-open{
+  position:absolute;left:16px;bottom:16px;display:inline-flex;align-items:center;gap:7px;
+  padding:9px 15px;border-radius:999px;background:rgba(9,10,15,.88);
+  border:1px solid rgba(255,255,255,.16);color:#F8FAFC;font-size:.72rem;font-weight:600;
+  backdrop-filter:blur(10px);transition:.25s;
+}
+.case-open:hover{background:var(--primary-purple);border-color:var(--primary-purple)}
+.case-open svg{width:13px;height:13px}
+.case-body{padding:34px 32px;display:flex;flex-direction:column;justify-content:center}
+.case-body h3{font-size:1.55rem;letter-spacing:-.03em;margin:14px 0 4px}
+.case-sub{color:var(--violet-soft);font-size:.78rem;margin:0 0 14px}
+.case-body > p{color:var(--muted);font-size:.88rem;line-height:1.62;margin:0 0 20px}
+.case-stats{display:flex;gap:30px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:22px}
+.case-stats b{display:block;font-family:'Space Grotesk';font-size:1.5rem;letter-spacing:-.03em;color:#FF8A3D;line-height:1}
+.case-stats span{display:block;font-size:.64rem;color:var(--muted-2);margin-top:5px}
+.case-actions{display:flex;gap:10px;flex-wrap:wrap}
+.case-actions .btn{flex:1;min-width:140px;justify-content:center}
+@media(max-width:900px){
+  .case{grid-template-columns:1fr}
+  .case-shot{min-height:220px;aspect-ratio:16/10}
+  .case-body{padding:26px 22px}
+}
+
+/* ---------- competitor comparison ---------- */
+.cmpwrap{overflow-x:auto;border-radius:16px;border:1px solid var(--border-glass)}
+.cmp2{width:100%;min-width:680px;border-collapse:collapse;font-size:.84rem;background:var(--surface-card)}
+.cmp2 th{
+  padding:16px 18px;text-align:left;font-family:'Space Grotesk';font-size:.78rem;
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);
+}
+.cmp2 th.us{background:rgba(139,92,246,.16);color:var(--violet-soft);position:relative}
+.cmp2 td{padding:14px 18px;border-bottom:1px solid var(--line);color:var(--muted)}
+.cmp2 td:first-child{color:var(--text-main);font-weight:500}
+.cmp2 tr:last-child td{border-bottom:0}
+.cmp2 .us{background:rgba(139,92,246,.07);color:var(--text-main)}
+.cmp2 .good{color:#4ADE80;font-weight:500}
+.cmp2 .bad{color:#F87171}
+.cmp2 .mid{color:#FBBF24}
+.cmp2 .price{font-family:'JetBrains Mono';font-size:.82rem}
+
+/* alert + value row */
+.alertbox{
+  display:flex;gap:18px;align-items:flex-start;margin-top:26px;
+  background:rgba(255,138,61,.07);border:1px solid rgba(255,138,61,.28);
+  border-radius:16px;padding:24px 26px;
+}
+.alertico{
+  width:42px;height:42px;border-radius:12px;flex:none;display:grid;place-items:center;
+  background:rgba(255,138,61,.16);border:1px solid rgba(255,138,61,.32);color:#FF8A3D;
+}
+.alertico svg{width:20px;height:20px}
+.alertbox h3{font-size:1.05rem;margin-bottom:8px;letter-spacing:-.02em}
+.alertbox p{color:var(--muted);font-size:.86rem;line-height:1.62;margin:0}
+.alertbox strong{color:var(--text-main);font-weight:600}
+.valuethree{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+.valuethree div{
+  background:var(--surface-card);border:1px solid var(--border-glass);
+  border-radius:14px;padding:22px 20px;text-align:center;
+  backdrop-filter:blur(10px);
+}
+.valuethree b{display:block;font-family:'Space Grotesk';font-size:1.6rem;letter-spacing:-.03em;color:#FF8A3D;line-height:1;margin-bottom:8px}
+.valuethree span{display:block;font-size:.74rem;color:var(--muted);line-height:1.5}
+@media(max-width:760px){.valuethree{grid-template-columns:1fr}.alertbox{flex-direction:column;gap:12px}}
+
+/* ==========================================================================
+   v22 — final polish: glass sheen, animated borders, depth
+   ========================================================================== */
+
+/* glass sheen sweep on hover */
+.card,.pkg,.jcard,.sol,.pcard-l,.case,.paybox{position:relative;overflow:hidden}
+.card::after,.pkg::after,.jcard::after,.sol::after,.pcard-l::after{
+  content:'';position:absolute;top:0;left:-120%;width:70%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.055),transparent);
+  transform:skewX(-18deg);pointer-events:none;
+  transition:left .75s cubic-bezier(.16,1,.3,1);
+}
+.card:hover::after,.pkg:hover::after,.jcard:hover::after,.sol:hover::after,.pcard-l:hover::after{
+  left:130%;
+}
+
+/* animated conic border on the featured package */
+.pkg.hero-pkg::before{
+  content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+  background:conic-gradient(from var(--ang,0deg),#8B5CF6,#FF8A3D,#00F2FE,#8B5CF6);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.75;pointer-events:none;
+  animation:spinang 7s linear infinite;
+}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes spinang{to{--ang:360deg}}
+
+/* floating pills breathe */
+.float-pill{animation:pillFloat 6s ease-in-out infinite}
+.float-pill.p2{animation-delay:-1.5s}
+.float-pill.p3{animation-delay:-3s}
+.float-pill.p4{animation-delay:-4.5s}
+@keyframes pillFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-7px)}
+}
+
+/* status pill pulse */
+.status i{animation:pulseDot 2.4s ease-in-out infinite}
+@keyframes pulseDot{
+  0%,100%{box-shadow:0 0 0 3px rgba(139,92,246,.22)}
+  50%{box-shadow:0 0 0 6px rgba(139,92,246,.08)}
+}
+
+/* stat numbers get a soft ember glow */
+.stat b{text-shadow:0 0 22px rgba(255,138,61,.28)}
+
+/* section heads slide in slightly */
+.sec-head .num{letter-spacing:.2em}
+
+/* smoother link underline */
+a{transition:color .2s,opacity .2s}
+
+/* deeper card shadows for glass depth */
+.pkg,.jcard,.sol,.case,.paybox{
+  box-shadow:0 24px 60px -40px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .float-pill,.status i,.pkg.hero-pkg::before{animation:none !important}
+  .card::after,.pkg::after,.jcard::after,.sol::after,.pcard-l::after{display:none}
+}
+.case-shot img{object-position:center top}
+@media(max-width:900px){.case-shot img{object-position:center 20%}}
