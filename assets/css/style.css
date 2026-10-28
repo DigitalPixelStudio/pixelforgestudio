@@ -2480,3 +2480,26 @@ html,body{scroll-behavior:smooth;overscroll-behavior-y:none;-webkit-font-smoothi
   font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.1em;
   color:#5A6178;background:rgba(9,10,15,.9);padding:2px 10px;border-radius:6px 6px 0 0;
   border:1px solid rgba(255,255,255,.08);border-bottom:0;white-space:nowrap}
+
+/* standalone matrix */
+.matrix{border-radius:16px;border:1px solid rgba(255,255,255,.09);overflow:hidden}
+.mtable{width:100%;border-collapse:collapse;font-size:.88rem;background:rgba(18,20,29,.9)}
+.mtable th{padding:16px 18px;text-align:left;font-family:'Space Grotesk';font-size:.82rem;
+  border-bottom:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);color:#94A3B8}
+.mtable th span{display:block;font-size:.64rem;font-weight:400;color:#5A6178;margin-top:2px}
+.mtable th.us{background:rgba(139,92,246,.16);color:#C4B5FD}
+.mtable td{padding:15px 18px;border-bottom:1px solid rgba(255,255,255,.06);
+  font-family:'JetBrains Mono',monospace;color:#F8FAFC}
+.mtable tr:last-child td{border-bottom:0}
+.mtable td:first-child{font-family:inherit}
+.mtable td b{display:block;font-size:.9rem;color:#F8FAFC;font-weight:500;margin-bottom:2px}
+.mtable td span{display:block;font-size:.7rem;color:#8A93A8;font-family:inherit;line-height:1.4}
+.mtable td.us{background:rgba(139,92,246,.08);color:#C4B5FD}
+.matrix-note{margin-top:16px;padding:18px 22px;border-radius:12px;
+  background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.22);
+  font-size:.82rem;color:#B9C0DE;line-height:1.6}
+.matrix-note b{color:#F8FAFC}
+@media(max-width:600px){
+  .mtable th,.mtable td{padding:12px 10px;font-size:.76rem}
+  .mtable td span{font-size:.64rem}
+}
