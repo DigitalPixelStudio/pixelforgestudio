@@ -2892,3 +2892,131 @@ header.nav{overflow:visible !important}
 @media(max-width:760px){.stackgrid{grid-template-columns:repeat(2,1fr);gap:10px}
   .sitem{padding:20px 12px 18px}.sico{width:44px;height:44px;border-radius:12px;margin-bottom:11px}
   .sico svg{width:20px;height:20px}.sitem b{font-size:.78rem}.sitem span{font-size:.66rem}}
+
+/* ==========================================================================
+   v46 — neon + breathing animation on Partners & Integrations
+   ========================================================================== */
+
+/* staggered float + breathing on each card */
+.sitem{
+  animation:cardFloat 7s ease-in-out infinite;
+  position:relative;overflow:hidden;
+}
+.sitem:nth-child(1){animation-delay:0s}
+.sitem:nth-child(2){animation-delay:-.6s}
+.sitem:nth-child(3){animation-delay:-1.2s}
+.sitem:nth-child(4){animation-delay:-1.8s}
+.sitem:nth-child(5){animation-delay:-2.4s}
+.sitem:nth-child(6){animation-delay:-3s}
+.sitem:nth-child(7){animation-delay:-3.6s}
+.sitem:nth-child(8){animation-delay:-4.2s}
+.sitem:nth-child(9){animation-delay:-4.8s}
+.sitem:nth-child(10){animation-delay:-5.4s}
+.sitem:nth-child(11){animation-delay:-6s}
+.sitem:nth-child(12){animation-delay:-6.6s}
+@keyframes cardFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-6px)}
+}
+
+/* neon sweep across the card */
+.sitem::after{
+  content:'';position:absolute;top:0;left:-140%;width:80%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.07),transparent);
+  transform:skewX(-18deg);pointer-events:none;
+  animation:neonSweep 6.5s ease-in-out infinite;
+}
+.sitem:nth-child(even)::after{animation-delay:-3.2s}
+@keyframes neonSweep{0%,72%{left:-140%}100%{left:140%}}
+
+/* NEON GLOW on the icon tiles — each in its own colour */
+.sico{
+  position:relative;
+  animation:neonPulse 3.4s ease-in-out infinite;
+}
+.sitem:nth-child(2) .sico{animation-delay:-.4s}
+.sitem:nth-child(3) .sico{animation-delay:-.8s}
+.sitem:nth-child(4) .sico{animation-delay:-1.2s}
+.sitem:nth-child(5) .sico{animation-delay:-1.6s}
+.sitem:nth-child(6) .sico{animation-delay:-2s}
+.sitem:nth-child(7) .sico{animation-delay:-2.4s}
+.sitem:nth-child(8) .sico{animation-delay:-2.8s}
+.sitem:nth-child(9) .sico{animation-delay:-1s}
+.sitem:nth-child(10) .sico{animation-delay:-1.4s}
+.sitem:nth-child(11) .sico{animation-delay:-1.8s}
+.sitem:nth-child(12) .sico{animation-delay:-2.2s}
+@keyframes neonPulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 0 0 currentColor, 0 0 14px -4px currentColor}
+  50%{transform:scale(1.06);box-shadow:0 0 0 1px currentColor, 0 0 26px -2px currentColor}
+}
+.s-meta{color:#25D366} .s-ai{color:#C4B5FD} .s-google{color:#6EA8FE}
+.s-bing{color:#00F2FE} .s-upi{color:#FF8A3D} .s-razor{color:#4FA8FF}
+.s-cloud{color:#F77C00} .s-next{color:#E8ECF6} .s-pwa{color:#4ADE80}
+.s-dir{color:#FFD60A} .s-kn{color:#FF2D95}
+.sico{box-shadow:0 0 16px -6px currentColor, inset 0 0 12px -8px currentColor}
+
+/* BREATHING FONT — title grows and shrinks gently */
+.sitem b{
+  animation:breatheFont 4.2s ease-in-out infinite;
+  display:block;
+}
+.sitem:nth-child(2) b{animation-delay:-.35s}
+.sitem:nth-child(3) b{animation-delay:-.7s}
+.sitem:nth-child(4) b{animation-delay:-1.05s}
+.sitem:nth-child(5) b{animation-delay:-1.4s}
+.sitem:nth-child(6) b{animation-delay:-1.75s}
+.sitem:nth-child(7) b{animation-delay:-2.1s}
+.sitem:nth-child(8) b{animation-delay:-2.45s}
+.sitem:nth-child(9) b{animation-delay:-.9s}
+.sitem:nth-child(10) b{animation-delay:-1.25s}
+.sitem:nth-child(11) b{animation-delay:-1.6s}
+.sitem:nth-child(12) b{animation-delay:-1.95s}
+@keyframes breatheFont{
+  0%,100%{transform:scale(1);opacity:.94}
+  50%{transform:scale(1.055);opacity:1}
+}
+
+/* neon ring around the whole section */
+#stack{position:relative;overflow:hidden}
+#stack::before{
+  content:'';position:absolute;left:50%;top:50%;width:120%;height:120%;
+  transform:translate(-50%,-50%);pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 22% 28%,rgba(139,92,246,.20),transparent 42%),
+    radial-gradient(circle at 78% 72%,rgba(0,242,254,.15),transparent 44%),
+    radial-gradient(circle at 50% 50%,rgba(255,45,149,.10),transparent 50%);
+  animation:neonDrift 18s ease-in-out infinite alternate;
+}
+@keyframes neonDrift{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  100%{transform:translate(-50%,-50%) scale(1.12) rotate(6deg)}
+}
+#stack .wrap{position:relative;z-index:1}
+
+/* heading breathes too */
+#stack .sec-head h2{
+  animation:headingBreathe 6s ease-in-out infinite;
+  display:inline-block;
+}
+@keyframes headingBreathe{
+  0%,100%{transform:scale(1);letter-spacing:-.038em}
+  50%{transform:scale(1.035);letter-spacing:-.028em}
+}
+
+/* note panel gets a slow neon border */
+.stacknote{animation:noteGlow 5s ease-in-out infinite}
+@keyframes noteGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(0,242,254,0), inset 0 0 30px -22px rgba(0,242,254,.6)}
+  50%{box-shadow:0 0 26px -8px rgba(0,242,254,.45), inset 0 0 40px -20px rgba(0,242,254,.9)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .sitem,.sitem::after,.sico,.sitem b,#stack::before,#stack .sec-head h2,.stacknote{
+    animation:none !important;transform:none !important;
+  }
+}
+@media(max-width:760px){
+  .sitem{animation-duration:9s}
+  .sitem b{animation-duration:5.4s}
+  .sico{animation-duration:4.2s}
+}
