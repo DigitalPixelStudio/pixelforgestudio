@@ -2887,3 +2887,116 @@ header.nav{overflow:visible !important}
   .flip:hover .flip-in{transform:none}
   .flip-back{display:none}
 }
+
+/* ==========================================================================
+   v41 — 3D + background animation layer
+   ========================================================================== */
+
+/* 1. AURORA MESH BACKGROUND (replaces flat orbs) */
+.bg{overflow:hidden}
+.bg::before,.bg::after{
+  content:'';position:absolute;border-radius:50%;filter:blur(90px);
+  pointer-events:none;will-change:transform;
+}
+.bg::before{
+  width:60vw;height:60vw;left:-14vw;top:-8vh;
+  background:radial-gradient(circle,rgba(139,92,246,.30),transparent 68%);
+  animation:auroraA 26s ease-in-out infinite alternate;
+}
+.bg::after{
+  width:52vw;height:52vw;right:-12vw;top:26vh;
+  background:radial-gradient(circle,rgba(0,242,254,.17),transparent 70%);
+  animation:auroraB 32s ease-in-out infinite alternate;
+}
+@keyframes auroraA{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(6vw,5vh,0) scale(1.14)}
+  100%{transform:translate3d(-3vw,9vh,0) scale(1.05)}
+}
+@keyframes auroraB{
+  0%{transform:translate3d(0,0,0) scale(1.06)}
+  50%{transform:translate3d(-7vw,-6vh,0) scale(.94)}
+  100%{transform:translate3d(4vw,4vh,0) scale(1.12)}
+}
+
+/* 2. PERSPECTIVE GRID FLOOR — subtle 3D depth at the hero */
+.gridfloor{
+  position:absolute;left:50%;bottom:-2%;width:220%;height:340px;
+  transform:translateX(-50%) perspective(560px) rotateX(64deg);
+  transform-origin:bottom center;pointer-events:none;z-index:1;
+  background-image:
+    linear-gradient(rgba(139,92,246,.20) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(139,92,246,.20) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.85),transparent 78%);
+  mask-image:linear-gradient(to top,rgba(0,0,0,.85),transparent 78%);
+  animation:gridRun 16s linear infinite;
+  opacity:.75;
+}
+@keyframes gridRun{from{background-position:0 0,0 0}to{background-position:0 64px,64px 0}}
+
+/* 3. 3D MOUSE TILT on cards */
+.tilt{
+  transform-style:preserve-3d;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
+  will-change:transform;
+}
+.tilt.tilting{transition:transform .08s linear}
+.tilt-glare{
+  position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(420px circle at var(--gx,50%) var(--gy,50%),
+             rgba(255,255,255,.10),transparent 55%);
+  opacity:0;transition:opacity .3s;
+}
+.tilt:hover .tilt-glare{opacity:1}
+
+/* 4. 3D FLIP CARDS (solutions) */
+.flip{perspective:1100px;height:100%}
+.flip-in{
+  position:relative;width:100%;height:100%;min-height:210px;
+  transform-style:preserve-3d;
+  transition:transform .68s cubic-bezier(.16,1,.3,1);
+}
+.flip:hover .flip-in,.flip:focus-within .flip-in{transform:rotateY(180deg)}
+.flip-face{
+  position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:14px;padding:24px 22px;
+  background:rgba(18,20,29,.95);border:1px solid rgba(255,255,255,.09);
+  display:flex;flex-direction:column;justify-content:flex-start;
+}
+.flip-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(165deg,rgba(139,92,246,.26),rgba(18,20,29,.97));
+  border-color:rgba(139,92,246,.5);
+  box-shadow:0 24px 60px -30px rgba(139,92,246,.95);
+}
+.flip-face svg{width:26px;height:26px;stroke:#C4B5FD;fill:none;stroke-width:1.6;margin-bottom:14px}
+.flip-face h4{font-size:1rem;margin:0 0 7px;color:#F8FAFC;letter-spacing:-.02em}
+.flip-face p{font-size:.79rem;color:#8A93A8;line-height:1.55;margin:0}
+.flip-back h4{color:#C4B5FD}
+.flip-back p{color:#C9D2E4}
+.flip-hint{
+  margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:.54rem;
+  letter-spacing:.16em;text-transform:uppercase;color:#5A6178;padding-top:12px;
+}
+
+/* 5. SPACED-LETTER HEADLINE REVEAL */
+.spaced{letter-spacing:-.02em;animation:spaceIn 1.5s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes spaceIn{from{letter-spacing:.16em;opacity:.4}to{letter-spacing:-.038em;opacity:1}}
+
+/* perf + accessibility guards */
+@media(max-width:820px){
+  .bg::before,.bg::after{animation:none;filter:blur(60px);opacity:.6}
+  .gridfloor{display:none}
+  .flip-in{transition:none}
+  .flip:hover .flip-in{transform:none}
+  .flip-back{display:none}
+  .tilt{transform:none !important}
+}
+@media(prefers-reduced-motion:reduce){
+  .bg::before,.bg::after,.gridfloor,.spaced{animation:none !important}
+  .gridfloor{display:none}
+  .flip:hover .flip-in{transform:none}
+  .flip-back{display:none}
+  .tilt{transform:none !important}
+}
