@@ -242,14 +242,17 @@
       cv.width = W * DPR; cv.height = H * DPR;
       cv.style.width = W + 'px'; cv.style.height = H + 'px';
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      N = Math.min(56, Math.round(W / 26));
+      N = Math.min(64, Math.round(W / 24));
       pts = [];
       for (var i = 0; i < N; i++) {
+        var HUE = [[139,92,246],[0,242,254],[255,138,61],[168,85,247],[74,222,128]];
         pts.push({
           x: Math.random() * W, y: Math.random() * H,
           z: 0.3 + Math.random() * 0.7,
           vx: (Math.random() - .5) * .28,
-          vy: (Math.random() - .5) * .28
+          vy: (Math.random() - .5) * .28,
+          c: HUE[Math.floor(Math.random() * HUE.length)],
+          ph: Math.random() * 6.283
         });
       }
     }
@@ -271,8 +274,9 @@
           var dx = pts[a].x - pts[b2].x, dy = pts[a].y - pts[b2].y;
           var d2 = dx * dx + dy * dy;
           if (d2 < 20000) {
-            var o = (1 - d2 / 20000) * 0.14;
-            ctx.strokeStyle = 'rgba(139,92,246,' + o.toFixed(3) + ')';
+            var o = (1 - d2 / 20000) * 0.16;
+            var cc = pts[a].c;
+            ctx.strokeStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',' + o.toFixed(3) + ')';
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(pts[a].x, pts[a].y); ctx.lineTo(pts[b2].x, pts[b2].y); ctx.stroke();
           }
@@ -290,9 +294,17 @@
           ctx.lineWidth = 1;
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
         }
-        var r = 1.4 * q.z + (near ? .7 : 0);
-        ctx.fillStyle = near ? 'rgba(255,138,61,.75)' : 'rgba(196,181,253,.45)';
+        q.ph += 0.012;
+        var pulse = 0.72 + Math.sin(q.ph) * 0.28;
+        var r = (1.5 * q.z + (near ? .9 : 0)) * pulse;
+        var col = near ? [255,138,61] : q.c;
+        ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (near ? .85 : .5) + ')';
         ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, 6.283); ctx.fill();
+        if (near) {
+          ctx.beginPath(); ctx.arc(q.x, q.y, r * 3.2, 0, 6.283);
+          ctx.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',.14)';
+          ctx.stroke();
+        }
       }
 
       requestAnimationFrame(frame);
@@ -868,6 +880,13 @@
 
     /* ---------- conversation state ---------- */
     var ctx = { biz:'', goal:'', stage:'start', asked:0, said:[] };
+    try {
+      var saved = JSON.parse(localStorage.getItem('pf_bot') || '{}');
+      if (saved.biz) ctx.biz = saved.biz;
+      if (saved.visits) ctx.visits = saved.visits;
+      ctx.visits = (ctx.visits || 0) + 1;
+      localStorage.setItem('pf_bot', JSON.stringify({ biz: ctx.biz, visits: ctx.visits }));
+    } catch (e) {}
 
     var BIZ_MAP = {
       shop:'launchpad', store:'launchpad', salon:'growth', clinic:'growth', hospital:'growth',
@@ -951,6 +970,19 @@
       if (/^(hi|hey|hello|yo|namaste|good (morning|afternoon|evening))\b/.test(t) && t.length < 22)
         return 'Hello. I am <b>Astra</b>, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?';
 
+      if (/what (did|have) i (pick|select|choose)|my (selection|order|build)|what.*selected/i.test(q)) {
+        var lines = [];
+        document.querySelectorAll('#sum-lines .sum-line').forEach(function (l) {
+          var t = l.querySelector('span'), b = l.querySelector('b');
+          if (t && b) lines.push(t.textContent + ' — ' + b.textContent);
+        });
+        var tot = document.getElementById('sum-total');
+        if (!lines.length) return 'Nothing selected yet. Scroll to the configurator and pick a core, a tier and any add-ons — I will keep track.';
+        return '<b>Your build so far:</b><br>' + lines.join('<br>') +
+               (tot ? '<br><br><b>One-time: ' + tot.textContent + '</b>' : '') +
+               '<br><br>Tap WhatsApp below to send it over, or <b>Pay now</b> to place it with a deposit.';
+      }
+
       var nav = navigate(q);
       if (nav) return nav;
 
@@ -958,7 +990,11 @@
       if (obj && Math.random() < 1) return obj;
 
       var biz = detectBiz(q);
-      if (biz) { ctx.biz = biz; var rec = recommend(biz); if (rec) return rec; }
+      if (biz) {
+        ctx.biz = biz;
+        try { localStorage.setItem('pf_bot', JSON.stringify({ biz: biz, visits: ctx.visits || 1 })); } catch (e) {}
+        var rec = recommend(biz); if (rec) return rec;
+      }
 
       var hit = score(q);
       if (hit) {
@@ -1006,7 +1042,9 @@
     botBtn.addEventListener('click', function () {
       botPanel.classList.toggle('open');
       if (botPanel.classList.contains('open') && !botLog.childElementCount) {
-        push('I can help you pick the right package in under two minutes — or explain anything we offer. What kind of business is it?', 'bot');
+        push(ctx.visits > 1
+          ? 'Welcome back. Picking up where you left off — what would you like to know?'
+          : 'I can help you pick the right package in under two minutes — or explain anything we offer. What kind of business is it?', 'bot');
         setTimeout(function () { chips(['Website', 'CRM', 'App', 'Just browsing']); }, 300);
       }
       if (botPanel.classList.contains('open')) botInput.focus();
