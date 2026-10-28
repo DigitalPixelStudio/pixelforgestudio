@@ -2037,3 +2037,54 @@ main,footer,header.nav{position:relative;z-index:2}
 .float-pill,.pkg,.case,.paybox,.botpanel{
   backdrop-filter:blur(12px) !important;-webkit-backdrop-filter:blur(12px) !important;
 }
+
+/* ==========================================================================
+   v26 — minimal edge-to-edge footer
+   ========================================================================== */
+footer{background:#07080D !important;border-top:1px solid rgba(255,255,255,.07) !important;padding:0 !important}
+.f-edge{width:100%;padding:0 32px;max-width:none}
+.f-top{
+  display:grid;grid-template-columns:1.5fr .8fr .8fr 1fr;
+  gap:56px;padding:52px 0 40px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.f-brand p{font-size:.84rem;line-height:1.65;color:#8A93A8;max-width:290px;margin:16px 0 0}
+.f-verified{margin-top:14px;font-size:.7rem;color:#8A93A8;display:flex;align-items:center;gap:6px}
+.socials{margin-top:16px;display:flex;gap:8px}
+.socials a{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
+  display:grid;place-items:center;background:rgba(255,255,255,.03);transition:.2s}
+.socials a:hover{border-color:#8B5CF6;background:rgba(139,92,246,.14)}
+.socials svg{width:14px;height:14px;stroke:#8A93A8;fill:none;stroke-width:1.7}
+.socials a:hover svg{stroke:#C4B5FD}
+
+.f-col h5{font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.2em;
+  text-transform:uppercase;color:#5A6178;margin:0 0 14px}
+.f-col a{display:block;font-size:.84rem;color:#A8B0C4;padding:5px 0;transition:color .18s}
+.f-col a:hover{color:#C4B5FD}
+.f-note{display:block;font-size:.8rem;color:#8A93A8;padding:4px 0;line-height:1.5}
+
+.f-legal{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  padding:18px 0 22px;font-size:.76rem;color:#5A6178;
+}
+.f-legal-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.f-legal-links a{color:#8A93A8;transition:color .18s}
+.f-legal-links a:hover{color:#C4B5FD}
+.f-legal-links span{color:#2E3345}
+.f-udyam{color:#5A6178;font-family:'JetBrains Mono',monospace;font-size:.68rem}
+
+/* mobile: compact 2-col, never a long single stack */
+@media(max-width:980px){
+  .f-edge{padding:0 20px}
+  .f-top{grid-template-columns:1fr 1fr;gap:32px 28px;padding:40px 0 32px}
+  .f-brand{grid-column:1/-1}
+  .f-brand p{max-width:none}
+}
+@media(max-width:560px){
+  .f-top{gap:26px 20px;padding:34px 0 26px}
+  .f-col h5{font-size:.52rem;margin-bottom:10px}
+  .f-col a{font-size:.78rem;padding:4px 0}
+  .f-note{font-size:.74rem;padding:3px 0}
+  .f-legal{flex-direction:column;align-items:flex-start;gap:8px;padding:16px 0 20px;font-size:.72rem}
+  .f-udyam{font-size:.62rem}
+}
