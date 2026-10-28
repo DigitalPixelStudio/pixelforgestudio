@@ -934,7 +934,7 @@
       { t:'traditional without ai difference elite with ai support comparison which',
         a:'The difference is the tier. Launchpad ₹9,999 has no AI and no code handover. Growth ₹1,49,999 upward adds a 24/7 AI assistant trained on your business that answers customers, captures numbers and books appointments — plus full code handover. If enquiries arrive outside business hours, the AI tiers pay for themselves.' },
       { t:'standalone combo website crm app options how many buy',
-        a:'Four packages cover it: Launchpad ₹9,999 · Growth ₹1,49,999 · Conquerer ₹2,24,999 · Empire ₹4,99,999. The upper four already bundle website, CRM and app. If you only need one of the three, we scope that separately — tell me which one and I will price it.' },
+        a:'Two ways to buy. <b>Full packages:</b> Launchpad ₹9,999 · Growth ₹1,49,999 · Conquerer ₹2,24,999 · Empire ₹4,99,999. <b>Single modules:</b> Website ₹19,999 (₹34,999 with AI) · CRM ₹49,999 (₹74,999 with AI) · App ₹39,999 (₹64,999 with AI) · Website+CRM ₹64,999 (₹99,999 with AI) · all three ₹99,999 (₹1,49,999 with AI).' },
       { t:'pay now payment online buy order checkout deposit',
         a:'Two ways to start: tap WhatsApp and we build the quote with you, or tap <b>Pay now</b> under the configurator — fill five details, then pay the deposit by UPI. Either way you get a reference number and a written scope before any work begins.' },
       { t:'hello hi hey namaste good morning evening',
