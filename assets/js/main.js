@@ -509,6 +509,15 @@
     });
   })();
 
+
+  /* ---------- tap-to-flip cards on touch ---------- */
+  (function () {
+    if (!window.matchMedia('(hover: none)').matches) return;
+    document.querySelectorAll('.flip').forEach(function (c) {
+      c.addEventListener('click', function () { c.classList.toggle('flipped'); });
+    });
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
