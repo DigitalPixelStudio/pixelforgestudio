@@ -2356,3 +2356,51 @@ header.nav .brand{gap:14px !important}
   .tier-top,.tier-why,.tier ul{min-height:0}
   .tier-price{margin-top:0}
 }
+
+/* ---------- logo (new 700x519 mark) ---------- */
+.brand-mark img{width:44px !important;height:auto !important;object-fit:contain}
+.brand-mark{width:58px !important;height:58px !important}
+.brand-name{font-size:1.42rem !important}
+@media(max-width:520px){
+  .brand-mark{width:48px !important;height:48px !important}
+  .brand-mark img{width:36px !important}
+  .brand-name{font-size:1.14rem !important}
+}
+
+/* ---------- package detail modal ---------- */
+.pkgmodal{position:fixed;inset:0;z-index:140;display:none;align-items:flex-start;justify-content:center;
+  background:rgba(4,5,10,.92);backdrop-filter:blur(8px);padding:24px 16px;overflow-y:auto}
+.pkgmodal.on{display:flex}
+.pkgcard{position:relative;width:100%;max-width:720px;border-radius:20px;padding:34px 32px;
+  background:linear-gradient(165deg,#171A26,#0A0B12);border:1px solid rgba(139,92,246,.32);
+  box-shadow:0 44px 110px -44px rgba(139,92,246,.85);margin:auto}
+.pkgclose{position:absolute;top:14px;right:16px;width:34px;height:34px;border-radius:9px;font-size:1.2rem;
+  color:#94A3B8;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.pkgclose:hover{color:#fff;background:rgba(255,255,255,.12)}
+.pkgcard h3{font-size:1.85rem;letter-spacing:-.035em;margin:14px 0 4px}
+.pm-price{font-family:'Space Grotesk';font-size:2.1rem;letter-spacing:-.04em;color:#FF8A3D;line-height:1;margin-bottom:18px}
+.pm-purpose{font-size:.94rem;line-height:1.68;color:#C8D0DE;margin:0 0 24px;padding-left:14px;border-left:2px solid rgba(139,92,246,.5)}
+.pm-block{margin-bottom:22px}
+.pm-block h4{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+  color:#8B5CF6;margin:0 0 10px}
+.pm-block p{font-size:.88rem;line-height:1.65;color:#B9C0DE;margin:0}
+.pm-list{list-style:none;padding:0;margin:0}
+.pm-list li{position:relative;padding:6px 0 6px 22px;font-size:.87rem;color:#C8D0DE;line-height:1.5}
+.pm-list li::before{content:'';position:absolute;left:0;top:11px;width:11px;height:11px;
+  background:no-repeat center/contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234ADE80' stroke-width='3.4'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")}
+.pm-list.no li::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF8A3D' stroke-width='3.4'%3E%3Cpath d='M18 6L6 18M6 6l12 12'/%3E%3C/svg%3E")}
+.pm-list.no li{color:#94A3B8}
+.pm-why{display:grid;gap:10px}
+.pm-why div{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;padding:12px 14px}
+.pm-why b{display:block;font-size:.84rem;color:#F8FAFC;margin-bottom:4px}
+.pm-why span{font-size:.82rem;color:#94A3B8;line-height:1.55}
+.pm-strategy{background:rgba(255,138,61,.08);border:1px solid rgba(255,138,61,.25);
+  border-radius:12px;padding:16px 18px;margin-bottom:22px}
+.pm-strategy b{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:#FFB86B;margin-bottom:8px}
+.pm-strategy p{font-size:.86rem;line-height:1.62;color:#D6DCEA;margin:0}
+.pm-cta{display:flex;gap:10px;flex-wrap:wrap}
+.pm-cta .btn{flex:1;min-width:160px;justify-content:center}
+@media(max-width:600px){.pkgcard{padding:26px 20px}.pkgcard h3{font-size:1.5rem}.pm-price{font-size:1.7rem}}
