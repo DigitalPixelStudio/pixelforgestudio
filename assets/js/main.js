@@ -227,6 +227,89 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') xm.classList.remove('on'); });
   }
 
+
+  /* ---------- 3D particle field (GPU-light canvas) ---------- */
+  (function () {
+    var cv = document.getElementById('fx3d');
+    if (!cv || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ctx = cv.getContext('2d', { alpha: true });
+    var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var pts = [], N = 0, mouse = { x: -999, y: -999 };
+    var running = true;
+
+    function size() {
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W * DPR; cv.height = H * DPR;
+      cv.style.width = W + 'px'; cv.style.height = H + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      N = Math.min(56, Math.round(W / 26));
+      pts = [];
+      for (var i = 0; i < N; i++) {
+        pts.push({
+          x: Math.random() * W, y: Math.random() * H,
+          z: 0.3 + Math.random() * 0.7,
+          vx: (Math.random() - .5) * .28,
+          vy: (Math.random() - .5) * .28
+        });
+      }
+    }
+
+    function frame() {
+      if (!running) return;
+      ctx.clearRect(0, 0, W, H);
+
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p.x += p.vx * p.z; p.y += p.vy * p.z;
+        if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
+        if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+      }
+
+      // links
+      for (var a = 0; a < pts.length; a++) {
+        for (var b2 = a + 1; b2 < pts.length; b2++) {
+          var dx = pts[a].x - pts[b2].x, dy = pts[a].y - pts[b2].y;
+          var d2 = dx * dx + dy * dy;
+          if (d2 < 20000) {
+            var o = (1 - d2 / 20000) * 0.14;
+            ctx.strokeStyle = 'rgba(139,92,246,' + o.toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(pts[a].x, pts[a].y); ctx.lineTo(pts[b2].x, pts[b2].y); ctx.stroke();
+          }
+        }
+      }
+
+      // dots + cursor attraction
+      for (var k = 0; k < pts.length; k++) {
+        var q = pts[k];
+        var mx = q.x - mouse.x, my = q.y - mouse.y;
+        var md = Math.sqrt(mx * mx + my * my);
+        var near = md < 180;
+        if (near) {
+          ctx.strokeStyle = 'rgba(255,138,61,' + ((1 - md / 180) * .32).toFixed(3) + ')';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+        }
+        var r = 1.4 * q.z + (near ? .7 : 0);
+        ctx.fillStyle = near ? 'rgba(255,138,61,.75)' : 'rgba(196,181,253,.45)';
+        ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, 6.283); ctx.fill();
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    window.addEventListener('mousemove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+    window.addEventListener('mouseleave', function () { mouse.x = -999; mouse.y = -999; });
+    window.addEventListener('resize', size, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      running = !document.hidden;
+      if (running) requestAnimationFrame(frame);
+    });
+
+    size();
+    requestAnimationFrame(frame);
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
@@ -577,66 +660,90 @@
     };
 
     var KB = [
-      { t:'price cost pricing rate charge budget expensive how much',
-        a:'Three published packages: The Launchpad ₹9,999 · The Growth Engine ₹1,49,999 · The Empire from ₹4,99,999. Everything else is priced on the packages section — nothing hidden. What kind of business are you building for?' },
-      { t:'website web page site design build',
-        a:'Websites run ₹9,999 for a one-pager, ₹19,999–₹49,999 for a proper business site, and ₹89,999 for a custom build. Most local businesses land on the Growth Engine. Shall I recommend one for your business type?' },
-      { t:'crm lead pipeline customer manage invoice gst',
-        a:'The CRM starts inside the Growth Engine — leads, pipeline, quotes, GST invoices and an AI assistant, all in one. Enterprise agencies bill ₹1.5 lakh+ for that as a separate add-on. What are you using to track leads today?' },
-      { t:'app android ios mobile play store pwa',
-        a:'Android apps start at ₹89,999, both stores ₹1,39,999. The Growth Engine already includes an Android PWA — installable, works offline, no Play Store approval needed. Do you need native features like push or camera?' },
-      { t:'time long fast quick delivery timeline launch days week',
-        a:'Seven days from the moment we have your content and photos. You see a real homepage design in 48 hours, before paying anything. If we miss the date because of us, the project fee is refunded. What is your deadline?' },
-      { t:'free mockup sample demo preview concept trial',
+      { t:'service services offer provide do you do what all general everything list scope',
+        a:'Everything under one roof: websites, business CRMs, Android apps and PWAs, AI assistants, Google Business Profile, local SEO, Google and Meta ads, WhatsApp Business API, and the eight major directory listings. Website, CRM and app can be bought separately or as one stack. Which of those is closest to what you need?' },
+      { t:'price cost pricing rate charge budget expensive how much rates',
+        a:'Three published packages: <b>The Launchpad ₹9,999</b>, <b>The Growth Engine ₹1,49,999</b>, <b>The Empire from ₹4,99,999</b>. Individual tiers and every add-on are priced on this page — nothing hidden. What kind of business are you building for?' },
+      { t:'website web page site design build frontend',
+        a:'Websites run ₹9,999 for a one-pager, ₹19,999–₹49,999 for a proper business site, ₹89,999 for a custom build. Hand-coded, static-first, 95+ Lighthouse, under two seconds on a mid-range phone. What does your business do?' },
+      { t:'crm lead pipeline customer manage track followup invoice gst quotation',
+        a:'A CRM is where every enquiry lands so none get lost — leads, pipeline stages, quotes, GST invoices and follow-up reminders in one place. Ours is included inside the Growth Engine rather than billed separately. Are you tracking leads in a notebook or a spreadsheet today?' },
+      { t:'app android ios mobile play store pwa install',
+        a:'Android apps start at ₹89,999, both stores ₹1,39,999. The Growth Engine includes an Android PWA — installable to the home screen, works offline, no Play Store approval or 30% cut. Do you need native features like camera or push notifications?' },
+      { t:'time long fast quick delivery timeline launch days week deadline',
+        a:'Seven days from the moment we have your content and photos. You see a real homepage design in 48 hours before paying anything. If we miss the date because of us, the project fee is refunded. What is your deadline?' },
+      { t:'free mockup sample demo preview concept trial see first',
         a:'We design a real homepage for your business — free, within 48 hours, no card. One concept, one revision. If you do not like it you keep it and we part as friends. Want me to start one?' },
-      { t:'own ownership code files source domain hosting account mine rights',
-        a:'You own everything — code, repository, domain, hosting, analytics, ad accounts, all in your name. No lock-in and no fee to keep your own site. Most agencies keep the code; we hand it over on day seven.' },
-      { t:'hidden cost extra charge surprise fee gst tax monthly',
-        a:'No hidden costs. Every price on the site includes design, deployment, SSL and three months of care. Prices exclude 18% GST, stated openly. There is no monthly platform fee — ever.' },
-      { t:'ai bot assistant chatbot automation agent astra',
-        a:'Every build from Professional upward includes an AI assistant trained on your business — services, prices, timings. It answers at 11pm, captures the number, and hands off to you on WhatsApp when unsure. That is what I am, on this site.' },
-      { t:'whatsapp business api verified meta catalogue',
-        a:'WhatsApp Business setup ₹4,999 · Business API ₹14,999 · WhatsApp AI bot ₹34,999. We can also set up your catalogue and quick replies.' },
-      { t:'google business profile gmb maps listing local seo',
-        a:'Google Business Profile setup is ₹4,999 — claim, verification, categories, photos. Local SEO is ₹19,999 a month including posts, content and citations.' },
-      { t:'justdial indiamart sulekha directory listing',
+      { t:'own ownership code files source domain hosting account mine rights handover',
+        a:'You own everything — code, repository, domain, hosting, analytics, ad accounts, all registered in your name. No lock-in, no fee to keep your own site. Most agencies keep the code; we hand it over on day seven.' },
+      { t:'hidden cost extra charge surprise fee gst tax monthly recurring',
+        a:'No hidden costs. Every price includes design, deployment, SSL and three months of care. Prices exclude 18% GST, stated openly. There is no monthly platform fee — you pay for the build once and own it.' },
+      { t:'ai bot assistant chatbot automation agent astra artificial intelligence',
+        a:'Every build from Professional upward includes an AI assistant trained on your business — services, prices, timings, policies. It answers at 11pm, captures the number, and hands off to you on WhatsApp when it is unsure. That is what I am, on this site.' },
+      { t:'whatsapp business api verified meta catalogue broadcast',
+        a:'WhatsApp Business setup ₹4,999 · Business API ₹14,999 · WhatsApp AI bot ₹34,999. We can also set up your catalogue, quick replies and broadcast lists.' },
+      { t:'google business profile gmb maps listing local search',
+        a:'Google Business Profile setup is ₹4,999 — claim, verification, categories, photos, hours. It is the single highest-return thing most local businesses skip.' },
+      { t:'justdial indiamart sulekha directory listing yellow pages',
         a:'Justdial ₹2,999 · IndiaMART ₹4,999 · Sulekha ₹2,499. All eight listings together with WhatsApp and Google is ₹24,999 as the Complete Online Profile.' },
-      { t:'seo search ranking google rank keyword organic',
-        a:'Local SEO ₹19,999 a month, SEO Growth ₹29,999 a month. Both include conversion tracking so you can see which enquiries became customers.' },
-      { t:'ads advertising ppc google ads meta facebook instagram campaign',
-        a:'Google Ads setup ₹4,999, management ₹14,999 a month. Google plus Meta ₹24,999 a month. Bing ₹2,999 — almost nobody in Bangalore offers that.' },
-      { t:'payment pay instalment emi split advance deposit upi refund',
-        a:'50% to start, 50% on launch. Stacks and apps are split across milestones. Deposits go to our Airtel merchant UPI — the QR is in the payments section, and we never ask for your PIN or OTP.' },
-      { t:'guarantee refund late delay promise warranty',
+      { t:'seo search ranking google rank keyword organic traffic',
+        a:'Local SEO ₹19,999 a month, SEO Growth ₹29,999 a month. Both include conversion tracking so you can see which enquiries actually became customers, not just traffic.' },
+      { t:'ads advertising ppc google ads meta facebook instagram campaign paid',
+        a:'Google Ads setup ₹4,999, management ₹14,999 a month. Google plus Meta together ₹24,999 a month. Bing ₹2,999 — almost nobody in Bangalore offers that, and it is cheap reach.' },
+      { t:'payment pay instalment emi split advance deposit upi refund money',
+        a:'50% to start, 50% on launch. Stacks and apps are split across milestones. Deposits go to our Airtel merchant UPI — the QR is in the payments section. We never ask for your PIN, OTP or card details.' },
+      { t:'guarantee refund late delay promise warranty assurance',
         a:'For a single website or CRM: live by the agreed date or the fee is refunded. For apps and stacks it is milestone-based — miss one by more than seven days and that milestone is waived.' },
-      { t:'care maintenance support after launch ongoing',
-        a:'Three months of care is included free on every project — uptime, backups, security, updates. After that it continues from ₹2,499 a month, only if you want it. No auto-renewal.' },
-      { t:'kannada language local regional english',
+      { t:'care maintenance support after launch ongoing help fix bug',
+        a:'Three months of care is included free on every project — uptime, backups, security, updates and small fixes. After that it continues from ₹2,499 a month, only if you want it. No auto-renewal, no lock-in.' },
+      { t:'kannada language local regional english hindi tamil',
         a:'We build in Kannada as well as English — content and the AI assistant. For most Bangalore businesses that matters more than people expect.' },
-      { t:'portfolio work example case study proof client reviews redapple',
-        a:'Our live case study is Red Apple Mobile Repair in Indiranagar — 4.9 stars, 767 reviews, website and Google Ads with full tracking, live in seven days. You can open their real site at redmobilerepair.in.' },
-      { t:'about who founder company studio registered trust udyam',
+      { t:'portfolio work example case study proof client reviews redapple demo',
+        a:'Our live case study is Red Apple Mobile Repair in Indiranagar — 4.9 stars, 767 reviews, website and Google Ads with full tracking, live in seven days. Open their real site at <b>redmobilerepair.in</b> — it is not a screenshot.' },
+      { t:'about who founder company studio registered trust udyam msme government',
         a:'Pixel Forge Studio is a Bengaluru studio registered with the Ministry of MSME — Udyam UDYAM-KA-03-0460058, verifiable on the government portal. Trading since October 2023.' },
-      { t:'address office location where based bengaluru bangalore remote india',
+      { t:'address office location where based bengaluru bangalore remote india city',
         a:'We work remotely with clients across India. In Bengaluru we also do in-person consulting — at your office or your home, whichever you prefer, by appointment. Which city are you in?' },
-      { t:'contact call phone talk human speak person whatsapp',
+      { t:'contact call phone talk human speak person whatsapp reach',
         a:'Tap the green WhatsApp button and our team replies — usually within five minutes during business hours, 10am to 7pm IST, Monday to Saturday.' },
-      { t:'stack bundle all three package deal discount save',
+      { t:'stack bundle all three deal discount save combo',
         a:'Startup ₹1,49,999 · Growth ₹2,24,999 · Scale ₹3,11,999 · Elite ₹4,99,999. Any two of website, CRM and app together gets 12% off the combined list price.' },
-      { t:'tripwire entry starter small first basic minimum cheap',
+      { t:'entry starter small first basic minimum cheap budget low',
         a:'The entry product is the Launchpad at ₹9,999 — one page, Google Business Profile and WhatsApp setup, live in five days. Bought separately that is ₹19,997.' },
-      { t:'hosting server speed performance fast lighthouse',
-        a:'Sites are built static-first and score 95+ on Lighthouse, loading under two seconds on a mid-range phone. Speed is part of the build, not an upgrade.' },
-      { t:'competitor other agency compare difference why you cheap alternative',
+      { t:'hosting server speed performance fast lighthouse load',
+        a:'Sites are built static-first and score 95+ on Lighthouse, loading under two seconds on a mid-range phone. Speed is part of the build, not an upgrade you pay for later.' },
+      { t:'competitor other agency compare difference why you alternative better',
         a:'Agencies charge ₹60,000 to ₹2,50,000 plus monthly retainers. Freelancers vanish. We publish our prices, show the design first, include the AI and CRM instead of billing them separately, and hand over everything in seven days. The comparison table on this page has the full picture.' },
-      { t:'hello hi hey namaste good morning',
+      { t:'process how work steps start begin kickoff on board',
+        a:'Five steps: free homepage concept in 48 hours → agree scope and price in writing → we build → two rounds of review → handover with every file and key. You are involved at step one and step four; we handle the rest.' },
+      { t:'need from me content photos logo requirements prepare',
+        a:'Your business name, services with prices, photos if you have them, and your logo. No logo? We use a clean wordmark. No photos? We source licensed images for your category. Content is usually the slowest part — send it early and seven days holds.' },
+      { t:'revision change edit rounds feedback',
+        a:'Two rounds of changes are included on every build. In practice most projects use one. Additional rounds are ₹2,999 each, but we have never charged a client for a third.' },
+      { t:'redesign existing old site migrate move shift',
+        a:'Yes. We rebuild on your existing domain and keep your rankings — 301 redirects, sitemap resubmission, and Search Console monitoring for the first 30 days. Redesigns start at ₹29,999.' },
+      { t:'domain name buy purchase register url',
+        a:'We register it in your name and hand over the registrar login. Typical cost ₹800–₹1,200 a year, paid directly by you — no markup from us.' },
+      { t:'contract agreement terms legal lock in commitment',
+        a:'One-page scope document: what is being built, the price, the date, what happens if either side is late. No long contract, no lock-in clause, no exclusivity.' },
+      { t:'social media instagram facebook page post content branding logo',
+        a:'Social media management is ₹14,999 a month. Logo and brand identity start at ₹9,999. Both are add-ons — they are not required to buy a website.' },
+      { t:'invoice gst bill tax receipt company',
+        a:'We issue a GST-compliant invoice for every payment. Our Udyam registration is on the footer if your accounts team needs to verify us.' },
+      { t:'why choose should trust best quality price turnaround',
+        a:'Best quality, best price and best turnaround in the market — that is the claim, and here is why it holds: hand-coded rather than templated, published prices with no monthly fee, AI and CRM included instead of billed separately, and a seven-day date we refund if we miss. Compare that line by line with any Bengaluru quote.' },
+      { t:'team how many people staff size small big',
+        a:'A small, senior team — you deal with the people doing the work, not an account manager relaying messages. That is why seven days is possible.' },
+      { t:'slow bad website lose customer why important',
+        a:'A slow or invisible site costs you customers every day: 53% of mobile visitors leave after three seconds, and most local buying decisions start with a Google search. If you are not there, a competitor is.' },
+      { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
 
     var STOP = {'the':1,'a':1,'an':1,'is':1,'are':1,'do':1,'you':1,'i':1,'to':1,'of':1,'for':1,'and':1,'in':1,'on':1,'it':1,'me':1,'my':1,'we':1,'can':1,'what':1,'how':1,'will':1,'would':1,'about':1,'tell':1,'know':1,'please':1,'need':1,'want':1,'get':1,'have':1};
 
     /* ---------- conversation state ---------- */
-    var ctx = { biz:'', goal:'', stage:'start', asked:0 };
+    var ctx = { biz:'', goal:'', stage:'start', asked:0, said:[] };
 
     var BIZ_MAP = {
       shop:'launchpad', store:'launchpad', salon:'growth', clinic:'growth', hospital:'growth',
@@ -653,12 +760,15 @@
       KB.forEach(function (item) {
         var hits = 0, matched = 0;
         words.forEach(function (w) {
-          if (w.length >= 3 && item.t.indexOf(w) > -1) { hits += w.length; matched++; }
+          if (w.length < 3) return;
+          // word-boundary match so "start" does not match "starter"
+          var re = new RegExp('(^|\\s)' + w + '(s|es|ing)?(\\s|$)');
+          if (re.test(item.t)) { hits += w.length; matched++; }
         });
-        var sc = matched * 10 + hits;
+        var sc = matched * 22 + hits;
         if (sc > bestScore) { bestScore = sc; best = item; }
       });
-      return bestScore >= 13 ? best : null;
+      return bestScore >= 22 ? best : null;
     }
 
     function detectBiz(q) {
@@ -727,7 +837,15 @@
       if (biz) { ctx.biz = biz; var rec = recommend(biz); if (rec) return rec; }
 
       var hit = score(q);
-      if (hit) return hit.a;
+      if (hit) {
+        // never send the same answer twice in a row
+        if (ctx.said.indexOf(hit.a) > -1) {
+          return 'I have covered that above — but if it did not answer it, tell me a bit more and I will be specific. Or tap WhatsApp below and a person will pick it up straight away.';
+        }
+        ctx.said.push(hit.a);
+        if (ctx.said.length > 4) ctx.said.shift();
+        return hit.a;
+      }
 
       if (/^(yes|yeah|ok|okay|sure|go ahead|start|proceed)/i.test(q.trim()))
         return 'Good. Tap the green WhatsApp button below and the team will pick it up — or tell me your business type and I will recommend the right package first.';
