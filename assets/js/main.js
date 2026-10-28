@@ -475,6 +475,40 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { m.classList.remove('on'); document.body.style.overflow = ''; } });
   })();
 
+
+  /* ---------- 3D mouse tilt on cards (rAF, transform-only) ---------- */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(max-width: 820px)').matches) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    document.querySelectorAll('.tilt').forEach(function (card) {
+      var raf = null, tx = 0, ty = 0, gx = 50, gy = 50;
+      var paint = function () {
+        card.style.transform =
+          'perspective(900px) rotateX(' + tx.toFixed(2) + 'deg) rotateY(' + ty.toFixed(2) + 'deg) translateZ(0)';
+        card.style.setProperty('--gx', gx + '%');
+        card.style.setProperty('--gy', gy + '%');
+        raf = null;
+      };
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;
+        var py = (e.clientY - r.top) / r.height;
+        gx = (px * 100).toFixed(1);
+        gy = (py * 100).toFixed(1);
+        ty = (px - 0.5) * 9;
+        tx = (0.5 - py) * 9;
+        card.classList.add('tilting');
+        if (!raf) raf = requestAnimationFrame(paint);
+      }, { passive: true });
+      card.addEventListener('mouseleave', function () {
+        card.classList.remove('tilting');
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+      });
+    });
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
