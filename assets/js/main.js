@@ -231,90 +231,167 @@
   }
 
 
-  /* ---------- 3D particle field (GPU-light canvas) ---------- */
+  /* ==================================================================
+     HERO 3D ENGINE — rotating wireframe globe, orbiting rings, starfield
+     Canvas 2D with manual 3D projection. No libraries.
+     ================================================================== */
   (function () {
     var cv = document.getElementById('fx3d');
-    if (!cv || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!cv) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var ctx = cv.getContext('2d', { alpha: true });
-    var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
-    var pts = [], N = 0, mouse = { x: -999, y: -999 };
-    var running = true;
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, CX = 0, CY = 0, R = 0;
+    var running = true, t = 0;
+
+    /* ---- geometry ---- */
+    var NODES = [], EDGES = [], STARS = [];
+    var LAT = 9, LON = 14;
+
+    function buildSphere() {
+      NODES = [];
+      for (var i = 0; i <= LAT; i++) {
+        var phi = (i / LAT) * Math.PI;            // 0..PI
+        for (var k = 0; k < LON; k++) {
+          var th = (k / LON) * Math.PI * 2;
+          NODES.push({
+            x: Math.sin(phi) * Math.cos(th),
+            y: Math.cos(phi),
+            z: Math.sin(phi) * Math.sin(th)
+          });
+        }
+      }
+      // connect each node to its 3 nearest — gives the mesh look
+      EDGES = [];
+      for (var a = 0; a < NODES.length; a++) {
+        var best = [];
+        for (var b = 0; b < NODES.length; b++) {
+          if (a === b) continue;
+          var dx = NODES[a].x - NODES[b].x, dy = NODES[a].y - NODES[b].y, dz = NODES[a].z - NODES[b].z;
+          var d = dx * dx + dy * dy + dz * dz;
+          if (d < 0.16) best.push(b);
+        }
+        best.slice(0, 3).forEach(function (b2) { if (b2 > a) EDGES.push([a, b2]); });
+      }
+    }
+
+    function buildStars() {
+      STARS = [];
+      var n = Math.min(90, Math.round(W / 14));
+      for (var i = 0; i < n; i++) {
+        STARS.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.4 + .3,
+                     a: Math.random() * .6 + .15, sp: Math.random() * .6 + .2, ph: Math.random() * 6.28 });
+      }
+    }
 
     function size() {
       W = window.innerWidth; H = window.innerHeight;
       cv.width = W * DPR; cv.height = H * DPR;
       cv.style.width = W + 'px'; cv.style.height = H + 'px';
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      N = Math.min(64, Math.round(W / 24));
-      pts = [];
-      for (var i = 0; i < N; i++) {
-        var HUE = [[139,92,246],[0,242,254],[255,138,61],[168,85,247],[74,222,128]];
-        pts.push({
-          x: Math.random() * W, y: Math.random() * H,
-          z: 0.3 + Math.random() * 0.7,
-          vx: (Math.random() - .5) * .28,
-          vy: (Math.random() - .5) * .28,
-          c: HUE[Math.floor(Math.random() * HUE.length)],
-          ph: Math.random() * 6.283
-        });
-      }
+      CX = W * (W < 700 ? 0.5 : 0.34); CY = H * 0.5;
+      R = Math.min(W, H) * (W < 700 ? 0.34 : 0.26);
+      buildSphere(); buildStars();
+    }
+
+    function project(p, rotY, rotX) {
+      // rotate around Y then X
+      var cy = Math.cos(rotY), sy = Math.sin(rotY);
+      var cx = Math.cos(rotX), sx = Math.sin(rotX);
+      var x1 = p.x * cy - p.z * sy;
+      var z1 = p.x * sy + p.z * cy;
+      var y1 = p.y * cx - z1 * sx;
+      var z2 = p.y * sx + z1 * cx;
+      var persp = 1 / (2.6 - z2);          // depth scaling
+      return {
+        x: CX + x1 * R * persp * 2.6,
+        y: CY + y1 * R * persp * 2.6,
+        z: z2,
+        s: persp
+      };
+    }
+
+    function ring(radius, squash, tilt, spin, alpha, color) {
+      ctx.save();
+      ctx.translate(CX, CY);
+      ctx.rotate(tilt);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, radius, radius * squash, 0, 0, 6.2832);
+      ctx.strokeStyle = color.replace('ALPHA', alpha.toFixed(3));
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      // travelling dot on the ring
+      var ang = spin;
+      var px = Math.cos(ang) * radius;
+      var py = Math.sin(ang) * radius * squash;
+      ctx.beginPath();
+      ctx.arc(px, py, 2.6, 0, 6.2832);
+      ctx.fillStyle = color.replace('ALPHA', '0.9');
+      ctx.fill();
+      ctx.restore();
     }
 
     function frame() {
       if (!running) return;
       ctx.clearRect(0, 0, W, H);
 
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i];
-        p.x += p.vx * p.z; p.y += p.vy * p.z;
-        if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
-        if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+      var rotY = t * 0.0022;
+      var rotX = Math.sin(t * 0.0006) * 0.42;
+
+      /* starfield */
+      for (var s = 0; s < STARS.length; s++) {
+        var st = STARS[s];
+        st.y -= st.sp * 0.25;
+        if (st.y < -4) { st.y = H + 4; st.x = Math.random() * W; }
+        var tw = 0.55 + Math.sin(t * 0.002 + st.ph) * 0.45;
+        ctx.fillStyle = 'rgba(196,181,253,' + (st.a * tw).toFixed(2) + ')';
+        ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.2832); ctx.fill();
       }
 
-      // links
-      for (var a = 0; a < pts.length; a++) {
-        for (var b2 = a + 1; b2 < pts.length; b2++) {
-          var dx = pts[a].x - pts[b2].x, dy = pts[a].y - pts[b2].y;
-          var d2 = dx * dx + dy * dy;
-          if (d2 < 20000) {
-            var o = (1 - d2 / 20000) * 0.16;
-            var cc = pts[a].c;
-            ctx.strokeStyle = 'rgba(' + cc[0] + ',' + cc[1] + ',' + cc[2] + ',' + o.toFixed(3) + ')';
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(pts[a].x, pts[a].y); ctx.lineTo(pts[b2].x, pts[b2].y); ctx.stroke();
-          }
+      /* glowing core */
+      var g = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 1.5);
+      g.addColorStop(0, 'rgba(124,58,237,.55)');
+      g.addColorStop(0.45, 'rgba(139,92,246,.22)');
+      g.addColorStop(1, 'rgba(139,92,246,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(CX, CY, R * 1.5, 0, 6.2832); ctx.fill();
+
+      /* projected nodes */
+      var P = NODES.map(function (n) { return project(n, rotY, rotX); });
+
+      /* mesh edges */
+      for (var e = 0; e < EDGES.length; e++) {
+        var A = P[EDGES[e][0]], B = P[EDGES[e][1]];
+        var depth = (A.z + B.z) * 0.5;              // -1..1
+        if (depth < -0.15) continue;                 // hide back faces
+        var o = Math.max(0.06, (depth + 1) * 0.38);
+        ctx.strokeStyle = 'rgba(0,242,254,' + o.toFixed(3) + ')';
+        ctx.lineWidth = 1.15;
+        ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+      }
+
+      /* nodes */
+      for (var i2 = 0; i2 < P.length; i2++) {
+        var q = P[i2];
+        if (q.z < -0.2) continue;
+        var r = Math.max(0.7, 1.9 * q.s * 2.2);
+        ctx.fillStyle = q.z > 0.55 ? 'rgba(255,138,61,.95)' : 'rgba(167,139,250,.8)';
+        ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, 6.2832); ctx.fill();
+        if (q.z > 0.7) {
+          ctx.beginPath(); ctx.arc(q.x, q.y, r * 3.4, 0, 6.2832);
+          ctx.strokeStyle = 'rgba(255,138,61,.16)'; ctx.stroke();
         }
       }
 
-      // dots + cursor attraction
-      for (var k = 0; k < pts.length; k++) {
-        var q = pts[k];
-        var mx = q.x - mouse.x, my = q.y - mouse.y;
-        var md = Math.sqrt(mx * mx + my * my);
-        var near = md < 180;
-        if (near) {
-          ctx.strokeStyle = 'rgba(255,138,61,' + ((1 - md / 180) * .32).toFixed(3) + ')';
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-        }
-        q.ph += 0.012;
-        var pulse = 0.72 + Math.sin(q.ph) * 0.28;
-        var r = (1.5 * q.z + (near ? .9 : 0)) * pulse;
-        var col = near ? [255,138,61] : q.c;
-        ctx.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + (near ? .85 : .5) + ')';
-        ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, 6.283); ctx.fill();
-        if (near) {
-          ctx.beginPath(); ctx.arc(q.x, q.y, r * 3.2, 0, 6.283);
-          ctx.strokeStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',.14)';
-          ctx.stroke();
-        }
-      }
+      /* orbiting rings */
+      ring(R * 1.72, 0.30, 0.32, t * 0.0016, 0.22, 'rgba(255,45,149,ALPHA)');
+      ring(R * 2.02, 0.24, -0.52, -t * 0.0011, 0.16, 'rgba(0,242,254,ALPHA)');
+      ring(R * 1.42, 0.42, 0.92, t * 0.0021, 0.13, 'rgba(167,139,250,ALPHA)');
 
+      t += 16;
       requestAnimationFrame(frame);
     }
 
-    window.addEventListener('mousemove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
-    window.addEventListener('mouseleave', function () { mouse.x = -999; mouse.y = -999; });
     window.addEventListener('resize', size, { passive: true });
     document.addEventListener('visibilitychange', function () {
       running = !document.hidden;
@@ -322,200 +399,8 @@
     });
 
     size();
-    requestAnimationFrame(frame);
-  })();
-
-
-  /* ---------- PAY NOW flow ---------- */
-  (function () {
-    var pm = document.getElementById('pmodal');
-    if (!pm) return;
-    var s1 = document.getElementById('pstep1'), s2 = document.getElementById('pstep2'),
-        form = document.getElementById('pform'), err = document.getElementById('perr'),
-        sumEl = document.getElementById('psummary'), amtEl = document.getElementById('pamount'),
-        upLink = document.getElementById('puplink'), confirmBtn = document.getElementById('pconfirm');
-    var order = { label:'', oneTime:0, monthly:0 };
-
-    function money(n){ return '₹' + Number(n).toLocaleString('en-IN'); }
-
-    function open() {
-      // pull the live selection from the configurator if present
-      var lines = [], one = 0, mo = 0;
-      document.querySelectorAll('#sum-lines .sum-line').forEach(function (l) {
-        var t = l.querySelector('span'), b = l.querySelector('b');
-        if (t && b) lines.push(t.textContent + ' — ' + b.textContent);
-      });
-      var tot = document.getElementById('sum-total');
-      var mEl = document.getElementById('sum-monthly');
-      one = tot ? parseInt(tot.textContent.replace(/[^0-9]/g,''), 10) || 0 : 0;
-      mo  = mEl && mEl.textContent !== '—' ? parseInt(mEl.textContent.replace(/[^0-9]/g,''), 10) || 0 : 0;
-      order.oneTime = one; order.monthly = mo;
-      order.label = lines.join(' | ') || 'Custom build';
-      sumEl.innerHTML = lines.length
-        ? lines.join('<br>') + (mo ? '<br><b style="color:#C4B5FD">Monthly: ' + money(mo) + '</b>' : '')
-        : 'Pick your options in the configurator first — or just tell us and we will quote it.';
-      amtEl.textContent = one ? money(one) : 'On quote';
-      pm.classList.add('on');
-      document.body.style.overflow = 'hidden';
-    }
-    function close() { pm.classList.remove('on'); document.body.style.overflow = ''; }
-
-    document.querySelectorAll('[data-pay]').forEach(function (b) {
-      b.addEventListener('click', function (e) { e.preventDefault(); open(); });
-    });
-    var pc = document.getElementById('pclose');
-    if (pc) pc.addEventListener('click', close);
-    pm.addEventListener('click', function (e) { if (e.target === pm) close(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var g = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
-      var need = ['pname','pphone','pbiz','ptype','pcity'];
-      for (var i = 0; i < need.length; i++) {
-        if (!g(need[i])) { err.textContent = 'Please fill the required fields marked with *'; return; }
-      }
-      if (!/^[0-9]{10}$/.test(g('pphone').replace(/\D/g,''))) {
-        err.textContent = 'Mobile number should be 10 digits.'; return;
-      }
-      err.textContent = '';
-      s1.style.display = 'none'; s2.style.display = 'block';
-
-      var upi = 'upi://pay?pa=9620024812@airtel&pn=Pixel%20Forge%20Studio&cu=INR' +
-                (order.oneTime ? '&am=' + order.oneTime : '');
-      upLink.href = upi;
-
-      var now = new Date();
-      var ref = 'PF-' + String(now.getDate()).padStart(2,'0') + String(now.getMonth()+1).padStart(2,'0') + '-' +
-                String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
-      var L = [];
-      L.push('*NEW PAID ORDER — Pixel Forge Studio*');
-      L.push('Ref: ' + ref);
-      L.push('');
-      L.push('*CUSTOMER*');
-      L.push('Name: ' + g('pname'));
-      L.push('Business: ' + g('pbiz') + ' (' + g('ptype') + ')');
-      L.push('City: ' + g('pcity'));
-      L.push('Mobile: ' + g('pphone'));
-      if (g('pemail')) L.push('Email: ' + g('pemail'));
-      if (g('pgst')) L.push('GST: ' + g('pgst'));
-      if (g('pnote')) L.push('Note: ' + g('pnote'));
-      L.push('');
-      L.push('*ORDER*');
-      L.push(order.label);
-      L.push('One-time: ' + (order.oneTime ? money(order.oneTime) : 'on quote'));
-      if (order.monthly) L.push('Monthly: ' + money(order.monthly) + '/mo');
-      L.push('');
-      L.push('_Payment initiated via UPI on ' + now.toLocaleString('en-IN') + '_');
-      L.push('_Please verify against the UPI statement and issue the invoice._');
-      confirmBtn.href = 'https://wa.me/919620024812?text=' + encodeURIComponent(L.join('\n'));
-    });
-
-    var c2 = document.getElementById('copy-upi2');
-    if (c2) c2.addEventListener('click', function () {
-      var t = document.getElementById('upi2');
-      if (navigator.clipboard) navigator.clipboard.writeText(t.textContent.trim());
-      c2.textContent = 'Copied'; setTimeout(function(){ c2.textContent = 'Copy'; }, 1600);
-    });
-  })();
-
-
-  /* ---------- package detail modal ---------- */
-  (function () {
-    var DATA = {"launchpad": {"name": "Launchpad", "price": "\u20b99,999", "sub": "Entry \u00b7 one page \u00b7 live in 5 days", "purpose": "To exist online, credibly, this week. Nothing more is needed at the start \u2014 and paying for more is the most common mistake a new business makes.", "who": "Local shops, solo consultants, independent professionals, and anyone who has been putting off a website because quotes felt absurd.", "get": ["One-page high-speed PWA website", "Google Business Profile \u2014 claim, verify, categories, photos", "Bing indexing and Search Console submission", "WhatsApp Business profile link", "One revision round", "3 months of basic care"], "not": ["No AI assistant", "No code handover", "No CRM", "No app"], "why": [["Get found on Google", "When someone searches your service plus your area, you appear. This is where most first enquiries begin."], ["Get contacted instantly", "The WhatsApp link turns a visitor into a conversation in one tap, instead of a form they abandon."], ["Look established", "A working site with a verified Google listing reads as a real business. A missing one reads as a risk."], ["Zero maintenance", "No software to learn, no CRM to feed, no dashboard to check. It does one job."]], "strategy": "The Launchpad is a wedge, not a destination. It gets you earning and ranking while you decide whether the bigger build is justified. If you upgrade within 12 months, the \u20b99,999 is credited toward the next package."}, "growth": {"name": "Growth", "price": "\u20b91,49,999", "sub": "Site + CRM + App + AI \u00b7 live in 10 days", "purpose": "To stop losing enquiries. Most small businesses do not have a lead problem \u2014 they have a follow-up problem. Growth fixes that.", "who": "Clinics, wholesalers, workshops and service businesses taking more than roughly 30 enquiries a month across phone, WhatsApp and walk-ins.", "get": ["Multi-page website, 5\u201310 pages", "Essential business CRM \u2014 leads, pipeline, quotes, GST invoices", "Android PWA app, installable, works offline", "AI assistant on the website, answering 24/7", "Google Business Profile + Justdial sync", "Lead notifications and monthly reporting", "3 months care included"], "not": ["No code handover", "No app store listing", "No WhatsApp AI bot"], "why": [["Nothing gets lost", "Every enquiry \u2014 call, form, WhatsApp \u2014 lands in one pipeline instead of three places and a notebook."], ["You can see the money", "Quotes and GST invoices are generated from the same record, so you know what is outstanding and who owes it."], ["The AI works when you are closed", "A patient at 11pm gets an answer, not silence. It captures the number and hands off to you in the morning."], ["Your app lives on their phone", "A PWA installs to the home screen without Play Store approval, and still works without signal."]], "strategy": "Growth is where most of our clients land, and it is the point where the economics flip. One recovered enquiry a month typically covers the difference between this and a website alone."}, "conquerer": {"name": "Conquerer", "price": "\u20b92,24,999", "sub": "Professional everything + WhatsApp AI \u00b7 14 days", "purpose": "To compete on equal footing with far larger businesses, and to own the entire path from search to signed quote.", "who": "Businesses with real volume, multiple staff handling enquiries, and a local market they intend to lead rather than join.", "get": ["<b>Website:</b> 10-page professional build, custom design, CMS-ready, 95+ Lighthouse", "<b>Website:</b> AI assistant on-site \u2014 answers, qualifies, books appointments 24/7", "<b>Website:</b> Basic SEO, schema markup, sitemap, Search Console + Bing submission", "<b>CRM:</b> Professional Indus CRM \u2014 leads, pipeline, quotes, GST invoices, multi-user", "<b>CRM:</b> All eight directory listings synced \u2014 Justdial, IndiaMART, Sulekha + more", "<b>App:</b> Published on both Google Play and the App Store", "<b>App:</b> WhatsApp AI bot \u2014 answers, qualifies, books on your verified number", "Reviews and reputation pack with QR and 30-day campaign", "Monthly reporting dashboard \u2014 enquiries, sources, conversion rate", "Full code handover \u00b7 3 months care"], "not": ["No CMS \u2014 content changes come through us", "No multi-role permissions"], "why": [["You stop losing leads between channels", "Website, WhatsApp, phone and walk-ins all write to one record. No more 'who spoke to them?'"], ["The AI qualifies, not just replies", "It asks the right questions, scores the enquiry and books appointments \u2014 on WhatsApp, where Indian customers actually reply."], ["You outrank the bigger names", "All eight directory listings plus local SEO means you appear in places your competitors have not bothered with."], ["You own the code", "Full handover on day 14. No lock-in, no fee to keep your own site."]], "strategy": "Conquerer is the tier where a business stops buying a website and starts buying market position. The WhatsApp AI alone typically recovers 20\u201330% of after-hours enquiries that would otherwise go to whoever replied first."}, "empire": {"name": "Empire", "price": "\u20b94,99,999", "sub": "Custom build \u00b7 enterprise \u00b7 14 days", "purpose": "To run multiple locations or teams on one system, with the access control and reporting a serious operation needs.", "who": "Multi-branch brands, high-volume dealers, franchises and companies where staff should see their own data and not everyone else's.", "get": ["<b>Website:</b> Custom Next.js architecture built around your exact workflow", "<b>Website:</b> Full CMS \u2014 you edit every page without touching code", "<b>Website:</b> Full SEO \u2014 technical, on-page, content plan, conversion tracking", "<b>CRM:</b> Elite CRM with multi-role permissions \u2014 each branch sees only its own data", "<b>CRM:</b> API integrations with your existing accounting, inventory or ERP", "<b>App:</b> Native app on both stores, push notifications, offline support", "<b>App:</b> Full AI automation suite across web, WhatsApp and app", "Reviews pack + reputation management", "Dedicated 4-hour SLA \u2014 same working day response", "Full code handover \u00b7 12 months elite care"], "not": ["Not a template \u2014 timeline is scoped per project"], "why": [["Branch-level control", "Each manager sees their own location. You see all of them. No shared logins, no data leaking between teams."], ["It fits your workflow, not ours", "Custom architecture means the software bends to how you already operate, not the other way round."], ["Integrations that actually connect", "Your existing accounting, inventory or ERP systems talk to the CRM through real APIs."], ["A four-hour SLA", "When something breaks, someone responds the same working day. Not 'we'll look into it'."]], "strategy": "Empire is priced against the cost of the problem, not the cost of the build. A multi-branch operation losing one enquiry per branch per day is losing far more than \u20b94,99,999 a year."}};
-    var m = document.getElementById('pkgmodal');
-    if (!m) return;
-    var body = document.getElementById('pkgbody');
-
-    function render(d) {
-      var h = '';
-      h += '<span class="pill-ember">' + d.sub + '</span>';
-      h += '<h3>' + d.name + '</h3>';
-      h += '<div class="pm-price">' + d.price + '</div>';
-      h += '<p class="pm-purpose">' + d.purpose + '</p>';
-      h += '<div class="pm-block"><h4>Who it is for</h4><p>' + d.who + '</p></div>';
-      h += '<div class="pm-block"><h4>What you get</h4><ul class="pm-list">';
-      d.get.forEach(function (x) { h += '<li>' + x + '</li>'; });
-      h += '</ul></div>';
-      if (d.not && d.not.length) {
-        h += '<div class="pm-block"><h4>What it does not include</h4><ul class="pm-list no">';
-        d.not.forEach(function (x) { h += '<li>' + x + '</li>'; });
-        h += '</ul></div>';
-      }
-      h += '<div class="pm-block"><h4>Why it matters to your business</h4><div class="pm-why">';
-      d.why.forEach(function (w) {
-        h += '<div><b>' + w[0] + '</b><span>' + w[1] + '</span></div>';
-      });
-      h += '</div></div>';
-      h += '<div class="pm-strategy"><b>The strategic case</b><p>' + d.strategy + '</p></div>';
-      h += '<div class="pm-cta">' +
-           '<a class="btn btn-primary" href="https://wa.me/919620024812?text=' +
-           encodeURIComponent('Hi Pixel Forge Studio, I want ' + d.name + ' (' + d.price + ').') +
-           '" target="_blank" rel="noopener">Start with ' + d.name + ' →</a>' +
-           '<button type="button" class="btn btn-ghost" id="pm-pay">Pay now</button></div>';
-      body.innerHTML = h;
-      var pay = document.getElementById('pm-pay');
-      if (pay) pay.addEventListener('click', function () {
-        m.classList.remove('on'); document.body.style.overflow = '';
-        var pb = document.querySelector('[data-pay]'); if (pb) pb.click();
-      });
-    }
-
-    document.querySelectorAll('.pkg-more').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var d = DATA[b.getAttribute('data-pkg')];
-        if (!d) return;
-        render(d);
-        m.classList.add('on'); document.body.style.overflow = 'hidden';
-      });
-    });
-    var c = document.getElementById('pkgclose');
-    if (c) c.addEventListener('click', function () { m.classList.remove('on'); document.body.style.overflow = ''; });
-    m.addEventListener('click', function (e) { if (e.target === m) { m.classList.remove('on'); document.body.style.overflow = ''; } });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { m.classList.remove('on'); document.body.style.overflow = ''; } });
-  })();
-
-
-  /* ---------- 3D mouse tilt on cards (rAF, transform-only) ---------- */
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.matchMedia('(max-width: 820px)').matches) return;
-    if (window.matchMedia('(hover: none)').matches) return;
-
-    document.querySelectorAll('.tilt').forEach(function (card) {
-      var raf = null, tx = 0, ty = 0, gx = 50, gy = 50;
-      var paint = function () {
-        card.style.transform =
-          'perspective(900px) rotateX(' + tx.toFixed(2) + 'deg) rotateY(' + ty.toFixed(2) + 'deg) translateZ(0)';
-        card.style.setProperty('--gx', gx + '%');
-        card.style.setProperty('--gy', gy + '%');
-        raf = null;
-      };
-      card.addEventListener('mousemove', function (e) {
-        var r = card.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width;
-        var py = (e.clientY - r.top) / r.height;
-        gx = (px * 100).toFixed(1);
-        gy = (py * 100).toFixed(1);
-        ty = (px - 0.5) * 9;
-        tx = (0.5 - py) * 9;
-        card.classList.add('tilting');
-        if (!raf) raf = requestAnimationFrame(paint);
-      }, { passive: true });
-      card.addEventListener('mouseleave', function () {
-        card.classList.remove('tilting');
-        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)';
-      });
-    });
-  })();
-
-
-  /* ---------- tap-to-flip cards on touch ---------- */
-  (function () {
-    if (!window.matchMedia('(hover: none)').matches) return;
-    document.querySelectorAll('.flip').forEach(function (c) {
-      c.addEventListener('click', function () { c.classList.toggle('flipped'); });
-    });
+    if (reduce) { frame(); running = false; }
+    else requestAnimationFrame(frame);
   })();
 
   /* ---------- PWA service worker ---------- */
