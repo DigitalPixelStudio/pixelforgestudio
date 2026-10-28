@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=26">
+<link rel="stylesheet" href="assets/css/style.css?v=27">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body data-page="faq.html">
@@ -130,6 +130,64 @@
     <span class="later" id="xlater">No thanks, just browsing</span>
   </div>
 </div>
+
+<div class="pmodal" id="pmodal" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+  <div class="pcard-m">
+    <button class="pclose" id="pclose" aria-label="Close">×</button>
+
+    <div class="pstep" id="pstep1">
+      <span class="pill-ember">Step 1 of 2 · Your details</span>
+      <h3 id="ptitle">Build your order</h3>
+      <p class="psub" id="psummary">—</p>
+      <form id="pform">
+        <div class="pgrid2">
+          <label>Full name <i>*</i><input name="pname" required autocomplete="name"></label>
+          <label>Mobile (WhatsApp) <i>*</i><input name="pphone" required inputmode="numeric" autocomplete="tel" placeholder="10 digits"></label>
+          <label>Business name <i>*</i><input name="pbiz" required autocomplete="organization"></label>
+          <label>Business type <i>*</i>
+            <select name="ptype" required>
+              <option value="">Select…</option>
+              <option>Retail shop</option><option>Salon / spa</option><option>Clinic / hospital</option>
+              <option>Hotel / restaurant</option><option>Real estate</option><option>Consultant / lawyer</option>
+              <option>Manufacturer / wholesale</option><option>E-commerce</option><option>Agency</option><option>Other</option>
+            </select>
+          </label>
+          <label>City <i>*</i><input name="pcity" required autocomplete="address-level2"></label>
+          <label>Email <span class="opt">optional</span><input name="pemail" type="email" autocomplete="email"></label>
+          <label>GST number <span class="opt">optional</span><input name="pgst"></label>
+          <label>Anything we should know <span class="opt">optional</span><input name="pnote"></label>
+        </div>
+        <p class="perr" id="perr"></p>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:18px">Continue to payment →</button>
+        <p class="pfoot">You will see the amount and a UPI code on the next screen. No card needed.</p>
+      </form>
+    </div>
+
+    <div class="pstep" id="pstep2" style="display:none">
+      <span class="pill-ember">Step 2 of 2 · Payment</span>
+      <h3>Pay your deposit</h3>
+      <div class="pamount" id="pamount">—</div>
+      <div class="ppayrow">
+        <div class="pqr"><img src="assets/img/upi-qr.png" alt="UPI QR to pay Pixel Forge Studio" width="180" height="180"></div>
+        <div class="pinfo">
+          <div class="upiline" style="margin-bottom:12px">
+            <span>UPI ID</span><b id="upi2">9620024812@airtel</b>
+            <button type="button" id="copy-upi2">Copy</button>
+          </div>
+          <ol class="paysteps" style="margin:0">
+            <li>Scan with any UPI app, or tap the button below on your phone</li>
+            <li>Check the payee reads <strong>Pixel Forge Studio</strong></li>
+            <li>Add your business name in the remarks</li>
+          </ol>
+          <a class="btn btn-primary btn-block" id="puplink" href="#" style="margin-top:14px">Open UPI app</a>
+        </div>
+      </div>
+      <a class="btn btn-ghost btn-block" id="pconfirm" href="#" target="_blank" rel="noopener" style="margin-top:14px">
+        I have paid — send my order on WhatsApp →</a>
+      <p class="pfoot">We match your payment to this order by your name and amount, usually within minutes during business hours. Keep the UTR from your UPI app.</p>
+    </div>
+  </div>
+</div>
 <div class="mbar">
   <a class="m1" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20to%20discuss%20a%20project." target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.4A10 10 0 1012 2z"/></svg>WhatsApp us</a>
@@ -159,6 +217,6 @@
   <button data-t="copper" style="background:#B87333" title="Copper"></button>
   <button data-t="ivory" style="background:#F7F4ED" title="Ivory"></button>
 </div>
-<script src="assets/js/main.js?v=26" defer></script>
+<script src="assets/js/main.js?v=27" defer></script>
 </body>
 </html>
