@@ -416,6 +416,62 @@
     });
   })();
 
+
+  /* ---------- package detail modal ---------- */
+  (function () {
+    var DATA = {"launchpad": {"name": "Launchpad", "price": "\u20b99,999", "sub": "Entry \u00b7 one page \u00b7 live in 5 days", "purpose": "To exist online, credibly, this week. Nothing more is needed at the start \u2014 and paying for more is the most common mistake a new business makes.", "who": "Local shops, solo consultants, independent professionals, and anyone who has been putting off a website because quotes felt absurd.", "get": ["One-page high-speed PWA website", "Google Business Profile \u2014 claim, verify, categories, photos", "Bing indexing and Search Console submission", "WhatsApp Business profile link", "One revision round", "3 months of basic care"], "not": ["No AI assistant", "No code handover", "No CRM", "No app"], "why": [["Get found on Google", "When someone searches your service plus your area, you appear. This is where most first enquiries begin."], ["Get contacted instantly", "The WhatsApp link turns a visitor into a conversation in one tap, instead of a form they abandon."], ["Look established", "A working site with a verified Google listing reads as a real business. A missing one reads as a risk."], ["Zero maintenance", "No software to learn, no CRM to feed, no dashboard to check. It does one job."]], "strategy": "The Launchpad is a wedge, not a destination. It gets you earning and ranking while you decide whether the bigger build is justified. If you upgrade within 12 months, the \u20b99,999 is credited toward the next package."}, "growth": {"name": "Growth", "price": "\u20b91,49,999", "sub": "Site + CRM + App + AI \u00b7 live in 10 days", "purpose": "To stop losing enquiries. Most small businesses do not have a lead problem \u2014 they have a follow-up problem. Growth fixes that.", "who": "Clinics, wholesalers, workshops and service businesses taking more than roughly 30 enquiries a month across phone, WhatsApp and walk-ins.", "get": ["Multi-page website, 5\u201310 pages", "Essential business CRM \u2014 leads, pipeline, quotes, GST invoices", "Android PWA app, installable, works offline", "AI assistant on the website, answering 24/7", "Google Business Profile + Justdial sync", "Lead notifications and monthly reporting", "3 months care included"], "not": ["No code handover", "No app store listing", "No WhatsApp AI bot"], "why": [["Nothing gets lost", "Every enquiry \u2014 call, form, WhatsApp \u2014 lands in one pipeline instead of three places and a notebook."], ["You can see the money", "Quotes and GST invoices are generated from the same record, so you know what is outstanding and who owes it."], ["The AI works when you are closed", "A patient at 11pm gets an answer, not silence. It captures the number and hands off to you in the morning."], ["Your app lives on their phone", "A PWA installs to the home screen without Play Store approval, and still works without signal."]], "strategy": "Growth is where most of our clients land, and it is the point where the economics flip. One recovered enquiry a month typically covers the difference between this and a website alone."}, "conquerer": {"name": "Conquerer", "price": "\u20b92,24,999", "sub": "Professional everything + WhatsApp AI \u00b7 14 days", "purpose": "To compete on equal footing with far larger businesses, and to own the entire path from search to signed quote.", "who": "Businesses with real volume, multiple staff handling enquiries, and a local market they intend to lead rather than join.", "get": ["Professional website built to your brand", "Professional CRM with invoicing, GST and multi-user access", "App on both Google Play and the App Store", "AI assistant on the website AND on WhatsApp", "Basic SEO + all eight directory listings", "Reviews and reputation pack", "Monthly reporting dashboard", "Full code handover \u00b7 3 months care"], "not": ["No CMS \u2014 content changes come through us", "No multi-role permissions"], "why": [["You stop losing leads between channels", "Website, WhatsApp, phone and walk-ins all write to one record. No more 'who spoke to them?'"], ["The AI qualifies, not just replies", "It asks the right questions, scores the enquiry and books appointments \u2014 on WhatsApp, where Indian customers actually reply."], ["You outrank the bigger names", "All eight directory listings plus local SEO means you appear in places your competitors have not bothered with."], ["You own the code", "Full handover on day 14. No lock-in, no fee to keep your own site."]], "strategy": "Conquerer is the tier where a business stops buying a website and starts buying market position. The WhatsApp AI alone typically recovers 20\u201330% of after-hours enquiries that would otherwise go to whoever replied first."}, "empire": {"name": "Empire", "price": "\u20b94,99,999", "sub": "Custom build \u00b7 enterprise \u00b7 scoped timeline", "purpose": "To run multiple locations or teams on one system, with the access control and reporting a serious operation needs.", "who": "Multi-branch brands, high-volume dealers, franchises and companies where staff should see their own data and not everyone else's.", "get": ["Custom Next.js architecture, built around your workflow", "Elite CRM with multi-role permissions and API integrations", "Native app on both stores", "Full AI automation suite across web, WhatsApp and app", "CMS so you edit content yourself", "Full SEO, reviews pack, conversion tracking", "Dedicated 4-hour SLA support", "Full code handover \u00b7 12 months elite care"], "not": ["Not a template \u2014 timeline is scoped per project"], "why": [["Branch-level control", "Each manager sees their own location. You see all of them. No shared logins, no data leaking between teams."], ["It fits your workflow, not ours", "Custom architecture means the software bends to how you already operate, not the other way round."], ["Integrations that actually connect", "Your existing accounting, inventory or ERP systems talk to the CRM through real APIs."], ["A four-hour SLA", "When something breaks, someone responds the same working day. Not 'we'll look into it'."]], "strategy": "Empire is priced against the cost of the problem, not the cost of the build. A multi-branch operation losing one enquiry per branch per day is losing far more than \u20b94,99,999 a year."}};
+    var m = document.getElementById('pkgmodal');
+    if (!m) return;
+    var body = document.getElementById('pkgbody');
+
+    function render(d) {
+      var h = '';
+      h += '<span class="pill-ember">' + d.sub + '</span>';
+      h += '<h3>' + d.name + '</h3>';
+      h += '<div class="pm-price">' + d.price + '</div>';
+      h += '<p class="pm-purpose">' + d.purpose + '</p>';
+      h += '<div class="pm-block"><h4>Who it is for</h4><p>' + d.who + '</p></div>';
+      h += '<div class="pm-block"><h4>What you get</h4><ul class="pm-list">';
+      d.get.forEach(function (x) { h += '<li>' + x + '</li>'; });
+      h += '</ul></div>';
+      if (d.not && d.not.length) {
+        h += '<div class="pm-block"><h4>What it does not include</h4><ul class="pm-list no">';
+        d.not.forEach(function (x) { h += '<li>' + x + '</li>'; });
+        h += '</ul></div>';
+      }
+      h += '<div class="pm-block"><h4>Why it matters to your business</h4><div class="pm-why">';
+      d.why.forEach(function (w) {
+        h += '<div><b>' + w[0] + '</b><span>' + w[1] + '</span></div>';
+      });
+      h += '</div></div>';
+      h += '<div class="pm-strategy"><b>The strategic case</b><p>' + d.strategy + '</p></div>';
+      h += '<div class="pm-cta">' +
+           '<a class="btn btn-primary" href="https://wa.me/919620024812?text=' +
+           encodeURIComponent('Hi Pixel Forge Studio, I want ' + d.name + ' (' + d.price + ').') +
+           '" target="_blank" rel="noopener">Start with ' + d.name + ' →</a>' +
+           '<button type="button" class="btn btn-ghost" id="pm-pay">Pay now</button></div>';
+      body.innerHTML = h;
+      var pay = document.getElementById('pm-pay');
+      if (pay) pay.addEventListener('click', function () {
+        m.classList.remove('on'); document.body.style.overflow = '';
+        var pb = document.querySelector('[data-pay]'); if (pb) pb.click();
+      });
+    }
+
+    document.querySelectorAll('.pkg-more').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var d = DATA[b.getAttribute('data-pkg')];
+        if (!d) return;
+        render(d);
+        m.classList.add('on'); document.body.style.overflow = 'hidden';
+      });
+    });
+    var c = document.getElementById('pkgclose');
+    if (c) c.addEventListener('click', function () { m.classList.remove('on'); document.body.style.overflow = ''; });
+    m.addEventListener('click', function (e) { if (e.target === m) { m.classList.remove('on'); document.body.style.overflow = ''; } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { m.classList.remove('on'); document.body.style.overflow = ''; } });
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
@@ -718,7 +774,13 @@
 
     $$('#cfg-core .opt input').forEach(function (inp) {
       inp.addEventListener('change', function () {
-        state.core = inp.value;
+        if (!state.cores) state.cores = [];
+        if (inp.checked) {
+          if (state.cores.indexOf(inp.value) === -1) state.cores.push(inp.value);
+        } else {
+          state.cores = state.cores.filter(function (c) { return c !== inp.value; });
+        }
+        state.core = state.cores[0] || '';
         render();
       });
     });
