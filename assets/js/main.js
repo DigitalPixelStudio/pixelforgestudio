@@ -937,6 +937,16 @@
         a:'Two ways to buy. <b>Full packages:</b> Launchpad ₹9,999 · Growth ₹1,49,999 · Conquerer ₹2,24,999 · Empire ₹4,99,999. <b>Single modules:</b> Website ₹19,999 (₹34,999 with AI) · CRM ₹49,999 (₹74,999 with AI) · App ₹39,999 (₹64,999 with AI) · Website+CRM ₹64,999 (₹99,999 with AI) · all three ₹99,999 (₹1,49,999 with AI).' },
       { t:'pay now payment online buy order checkout deposit',
         a:'Two ways to start: tap WhatsApp and we build the quote with you, or tap <b>Pay now</b> under the configurator — fill five details, then pay the deposit by UPI. Either way you get a reference number and a written scope before any work begins.' },
+      { t:'faq questions common doubts why not cheaper how long really guarantee proof',
+        a:'The three questions we get most: <b>1.</b> Why is a ₹9,999 site different from a ₹49,999 one? Because one is a page, the other is a system with a CRM, app and AI. <b>2.</b> Will it really be done in 7 days? Yes — from the moment we have your content. <b>3.</b> What if I do not like it? You see a free homepage concept before paying anything, and if we miss the agreed date the fee is refunded.' },
+      { t:'navigate sections page where find scroll go show',
+        a:'The page reads top to bottom: what we build, who we build for, our work, then packages, single modules, add-ons, payment and contact. You can also ask me to show you a section — try "show packages" or "show payment".' },
+      { t:'help support problem issue complain not working broken',
+        a:'If something is not working on your site, message us on WhatsApp with a screenshot — care clients get priority. Basic care is ₹2,499/month, Elite is ₹19,999/month with a 4-hour SLA. If you are already a client, tell me your business name and I will flag it for the team.' },
+      { t:'start begin first step next what do i do now',
+        a:'Two ways. Tap <b>WhatsApp</b> and we build the quote with you, or tap <b>Pay now</b> under the configurator to place it with a deposit. Either way you get a reference number and a written scope before any work starts — and a free homepage concept within 48 hours.' },
+      { t:'thank thanks ok great nice good bye bye',
+        a:'Happy to help. If anything else comes up, message us on WhatsApp — we usually reply within five minutes during business hours. Good luck with the build.' },
       { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
