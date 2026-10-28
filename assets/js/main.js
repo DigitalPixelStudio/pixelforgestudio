@@ -14,6 +14,7 @@
   var WA_NUMBER = '919620024812';
 
   var TIERS = {
+    'launchpad':   { base: 9999 },
     'website':     { base: 19999 },
     'website-ai':  { base: 34999 },
     'crm':         { base: 49999 },
@@ -426,6 +427,102 @@
     items.forEach(function (el) { io.observe(el); });
   })();
 
+
+  /* ---------- PAY NOW flow ---------- */
+  (function () {
+    var pm = document.getElementById('pmodal');
+    if (!pm) return;
+    var s1 = document.getElementById('pstep1'), s2 = document.getElementById('pstep2'),
+        form = document.getElementById('pform'), err = document.getElementById('perr'),
+        sumEl = document.getElementById('psummary'), amtEl = document.getElementById('pamount'),
+        upLink = document.getElementById('puplink'), confirmBtn = document.getElementById('pconfirm');
+    var order = { label: '', oneTime: 0, monthly: 0 };
+
+    function money(n) { return '\u20b9' + Number(n).toLocaleString('en-IN'); }
+    function openModal() {
+      var lines = [], one = 0, mo = 0;
+      var nodes = document.querySelectorAll('#sum-lines .sum-line');
+      for (var i = 0; i < nodes.length; i++) {
+        var t = nodes[i].querySelector('span'), b = nodes[i].querySelector('b');
+        if (t && b) lines.push(t.textContent + ' \u2014 ' + b.textContent);
+      }
+      var tot = document.getElementById('sum-total');
+      var mEl = document.getElementById('sum-monthly');
+      one = tot ? (parseInt(tot.textContent.replace(/[^0-9]/g, ''), 10) || 0) : 0;
+      mo = (mEl && mEl.textContent !== '\u2014') ? (parseInt(mEl.textContent.replace(/[^0-9]/g, ''), 10) || 0) : 0;
+      order.oneTime = one; order.monthly = mo;
+      order.label = lines.join(' | ') || 'Custom build';
+      if (sumEl) sumEl.innerHTML = lines.length
+        ? lines.join('<br>') + (mo ? '<br><b style="color:#C4B5FD">Monthly: ' + money(mo) + '</b>' : '')
+        : 'Pick your options above \u2014 or just tell us and we will quote it.';
+      if (amtEl) amtEl.textContent = one ? money(one) : 'On quote';
+      pm.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() { pm.classList.remove('on'); document.body.style.overflow = ''; }
+
+    var triggers = document.querySelectorAll('[data-pay]');
+    for (var k = 0; k < triggers.length; k++) {
+      triggers[k].addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+    }
+    var pc = document.getElementById('pclose');
+    if (pc) pc.addEventListener('click', closeModal);
+    pm.addEventListener('click', function (e) { if (e.target === pm) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var g = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+      var need = ['pname', 'pphone', 'pbiz', 'ptype', 'pcity'];
+      for (var i = 0; i < need.length; i++) {
+        if (!g(need[i])) { if (err) err.textContent = 'Please fill the required fields marked *'; return; }
+      }
+      if (!/^[0-9]{10}$/.test(g('pphone').replace(/\D/g, ''))) {
+        if (err) err.textContent = 'Mobile number should be 10 digits.'; return;
+      }
+      if (err) err.textContent = '';
+      if (s1) s1.style.display = 'none';
+      if (s2) s2.style.display = 'block';
+
+      var upi = 'upi://pay?pa=9620024812@airtel&pn=Pixel%20Forge%20Studio&cu=INR' +
+                (order.oneTime ? '&am=' + order.oneTime : '');
+      if (upLink) upLink.href = upi;
+
+      var now = new Date();
+      var ref = 'PF-' + String(now.getDate()).padStart(2, '0') + String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0');
+      var L = [];
+      L.push('*NEW PAID ORDER \u2014 Pixel Forge Studio*');
+      L.push('Ref: ' + ref);
+      L.push('');
+      L.push('*CUSTOMER*');
+      L.push('Name: ' + g('pname'));
+      L.push('Business: ' + g('pbiz') + ' (' + g('ptype') + ')');
+      L.push('City: ' + g('pcity'));
+      L.push('Mobile: ' + g('pphone'));
+      if (g('pemail')) L.push('Email: ' + g('pemail'));
+      if (g('pgst')) L.push('GST: ' + g('pgst'));
+      if (g('pnote')) L.push('Note: ' + g('pnote'));
+      L.push('');
+      L.push('*ORDER*');
+      L.push(order.label);
+      L.push('One-time: ' + (order.oneTime ? money(order.oneTime) : 'on quote'));
+      if (order.monthly) L.push('Monthly: ' + money(order.monthly) + '/mo');
+      L.push('');
+      L.push('_Payment initiated via UPI on ' + now.toLocaleString('en-IN') + '_');
+      L.push('_Please verify against the UPI statement and issue the invoice._');
+      if (confirmBtn) confirmBtn.href = 'https://wa.me/919620024812?text=' + encodeURIComponent(L.join('\n'));
+    });
+
+    var c2 = document.getElementById('copy-upi2');
+    if (c2) c2.addEventListener('click', function () {
+      var t = document.getElementById('upi2');
+      if (t && navigator.clipboard) navigator.clipboard.writeText(t.textContent.trim());
+      c2.textContent = 'Copied'; setTimeout(function () { c2.textContent = 'Copy'; }, 1600);
+    });
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
@@ -629,7 +726,7 @@
       var oneTime = 0;
 
       var CORE_LABEL2 = {
-        'website':'Website — Traditional', 'website-ai':'Website — Empire + AI',
+        'launchpad':'Launchpad — Starters', 'website':'Website — Traditional', 'website-ai':'Website — Empire + AI',
         'crm':'CRM — Traditional', 'crm-ai':'CRM — Empire + AI',
         'app':'App — Traditional', 'app-ai':'App — Empire + AI'
       };
