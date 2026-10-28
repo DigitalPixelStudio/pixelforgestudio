@@ -760,16 +760,16 @@
 
     /* ---------- knowledge ---------- */
     var PKG = {
-      launchpad: { name:'The Launchpad', price:'₹9,999', note:'one-page PWA, Google Business, Bing, WhatsApp link. Live in 5 days.' },
-      growth:    { name:'The Growth Engine', price:'₹1,49,999', note:'multi-page site + CRM + Android app + Meta AI agent. Saves ₹34,998 versus buying separately.' },
-      empire:    { name:'The Empire', price:'from ₹4,99,999', note:'custom Next.js build, multi-role CRM, native app, API integration, 90-day support.' }
+      launchpad: { name:'Launchpad', price:'₹9,999', note:'one-page PWA, Google Business, Bing, WhatsApp link. Live in 5 days.' },
+      growth:    { name:'Growth', price:'₹1,49,999', note:'multi-page site + CRM + Android app + Meta AI agent. Saves ₹34,998 versus buying separately.' },
+      empire:    { name:'Empire', price:'₹4,99,999', note:'custom Next.js build, multi-role CRM, native app, API integration, 90-day support.' }
     };
 
     var KB = [
       { t:'service services offer provide do you do what all general everything list scope',
         a:'Everything under one roof: websites, business CRMs, Android apps and PWAs, AI assistants, Google Business Profile, local SEO, Google and Meta ads, WhatsApp Business API, and the eight major directory listings. Website, CRM and app can be bought separately or as one stack. Which of those is closest to what you need?' },
       { t:'price cost pricing rate charge budget expensive how much rates package',
-        a:'Five packages, one ladder: <b>Launchpad ₹9,999</b> (one page, no AI, no code handover) · <b>Forge ₹1,49,999</b> (site + CRM + app + AI) · <b>Anvil ₹2,24,999</b> (professional everything, both app stores) · <b>Crucible ₹3,11,999</b> (complete + CMS + WhatsApp AI) · <b>Sovereign ₹4,99,999</b> (custom enterprise build). Every price includes design, build, deployment, SSL and care. What kind of business is it?' },
+        a:'Four packages: <b>Launchpad ₹9,999</b> (one page, no AI, no code handover) · <b>Growth ₹1,49,999</b> (site + CRM + app + AI) · <b>Conquerer ₹2,24,999</b> (professional everything, both app stores, WhatsApp AI) · <b>Empire ₹4,99,999</b> (custom enterprise build, 4-hour SLA). Every price includes design, build, deployment, SSL and care. What kind of business is it?' },
       { t:'website web page site design build frontend',
         a:'Websites run ₹9,999 for a one-pager, ₹19,999–₹49,999 for a proper business site, ₹89,999 for a custom build. Hand-coded, static-first, 95+ Lighthouse, under two seconds on a mid-range phone. What does your business do?' },
       { t:'crm lead pipeline customer manage track followup invoice gst quotation',
@@ -813,9 +813,9 @@
       { t:'contact call phone talk human speak person whatsapp reach',
         a:'Tap the green WhatsApp button and our team replies — usually within five minutes during business hours, 10am to 7pm IST, Monday to Saturday.' },
       { t:'stack bundle all three deal discount save combo',
-        a:'The four upper packages are already stacks — Forge ₹1,49,999, Anvil ₹2,24,999, Crucible ₹3,11,999, Sovereign ₹4,99,999. Each one bundles website, CRM and app together, which is 19–37% cheaper than buying them separately.' },
+        a:'Growth ₹1,49,999, Conquerer ₹2,24,999 and Empire ₹4,99,999 each bundle website, CRM and app together — 19–37% cheaper than buying them separately. Launchpad ₹9,999 is the single-page entry product.' },
       { t:'entry starter small first basic minimum cheap budget low',
-        a:'The Launchpad at ₹9,999 — one page, Google Business Profile, Bing and WhatsApp setup, live in five days. It deliberately excludes the AI assistant and code handover; those start at the Forge (₹1,49,999). Bought separately the Launchpad is worth ₹19,997.' },
+        a:'Launchpad at ₹9,999 — one page, Google Business Profile, Bing and WhatsApp setup, live in five days. It deliberately excludes the AI assistant and code handover; those start at Growth (₹1,49,999). Bought separately the Launchpad is worth ₹19,997.' },
       { t:'hosting server speed performance fast lighthouse load',
         a:'Sites are built static-first and score 95+ on Lighthouse, loading under two seconds on a mid-range phone. Speed is part of the build, not an upgrade you pay for later.' },
       { t:'competitor other agency compare difference why you alternative better',
@@ -867,9 +867,9 @@
       { t:'turnaround seven days guarantee meaning how possible',
         a:'<b>Seven days</b> is possible because the design system, deployment pipeline and testing are already built — we are assembling proven parts, not inventing them. <b>Purpose:</b> get you earning sooner. <b>Benefit:</b> most agencies take 3–6 weeks. If we miss the date because of us, the project fee is refunded.' },
       { t:'traditional without ai difference elite with ai support comparison which',
-        a:'The difference is the tier. Launchpad ₹9,999 has no AI and no code handover. Forge ₹1,49,999 upward adds a 24/7 AI assistant trained on your business that answers customers, captures numbers and books appointments — plus full code handover. If enquiries arrive outside business hours, the AI tiers pay for themselves.' },
+        a:'The difference is the tier. Launchpad ₹9,999 has no AI and no code handover. Growth ₹1,49,999 upward adds a 24/7 AI assistant trained on your business that answers customers, captures numbers and books appointments — plus full code handover. If enquiries arrive outside business hours, the AI tiers pay for themselves.' },
       { t:'standalone combo website crm app options how many buy',
-        a:'Five packages cover it: Launchpad ₹9,999 · Forge ₹1,49,999 · Anvil ₹2,24,999 · Crucible ₹3,11,999 · Sovereign ₹4,99,999. The upper four already bundle website, CRM and app. If you only need one of the three, we scope that separately — tell me which one and I will price it.' },
+        a:'Four packages cover it: Launchpad ₹9,999 · Growth ₹1,49,999 · Conquerer ₹2,24,999 · Empire ₹4,99,999. The upper four already bundle website, CRM and app. If you only need one of the three, we scope that separately — tell me which one and I will price it.' },
       { t:'pay now payment online buy order checkout deposit',
         a:'Two ways to start: tap WhatsApp and we build the quote with you, or tap <b>Pay now</b> under the configurator — fill five details, then pay the deposit by UPI. Either way you get a reference number and a written scope before any work begins.' },
       { t:'hello hi hey namaste good morning evening',
