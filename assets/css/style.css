@@ -3080,3 +3080,44 @@ header.nav{overflow:visible !important}
 @media(max-width:900px){.gal{grid-template-columns:repeat(2,1fr);gap:9px}
   .galitem.wide{grid-column:span 2}}
 @media(max-width:520px){.galitem figcaption{font-size:.5rem;left:8px;bottom:7px;padding:3px 7px}}
+
+/* ==========================================================================
+   v49 — image performance: kill the jitter
+   ========================================================================== */
+
+/* no filter transitions — they force full repaints on scroll */
+.galitem img,.bandimg img{
+  filter:none !important;
+  transition:transform .5s cubic-bezier(.16,1,.3,1) !important;
+  will-change:auto;
+  backface-visibility:hidden;
+  transform:translateZ(0);
+}
+.galitem:hover img,.bandimg:hover img{transform:scale(1.04) translateZ(0)}
+
+/* fixed aspect boxes so nothing reflows while loading */
+.galitem{contain:layout paint}
+.galitem img{aspect-ratio:16/10;object-fit:cover;display:block;width:100%;height:100%}
+.bandimg img{aspect-ratio:16/9;object-fit:cover;display:block;width:100%;height:auto}
+
+/* captions: drop the blur (expensive when repeated) */
+.galitem figcaption,.bandcap{
+  backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+  background:rgba(9,10,15,.88) !important;
+}
+
+/* cheap entrance animation instead of filter/opacity churn */
+.galitem{
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease-out,transform .5s cubic-bezier(.16,1,.3,1);
+}
+.galitem.in{opacity:1;transform:translateY(0)}
+.galitem:hover{transform:translateY(-4px) !important}
+
+/* offscreen images skip painting entirely */
+.galitem,.bandimg{content-visibility:auto;contain-intrinsic-size:auto 260px}
+
+@media(prefers-reduced-motion:reduce){
+  .galitem{opacity:1 !important;transform:none !important;transition:none !important}
+  .galitem:hover img,.bandimg:hover img{transform:none !important}
+}
