@@ -137,6 +137,96 @@
   // 5. heading clip-reveal for section heads
   $$('.sec-head').forEach(function (h) { h.classList.add('reveal-h'); });
 
+
+  /* ---------- ENQUIRY FORM: route to WhatsApp so no lead is lost ---------- */
+  var enq = document.getElementById('enq');
+  if (enq) {
+    enq.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var g = function (n) { var el = enq.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+      var name = g('name'), phone = g('phone'), biz = g('business'),
+          need = g('need'), msg = g('message');
+
+      if (!name || !phone) {
+        var warn = enq.querySelector('.enq-warn');
+        if (!warn) {
+          warn = document.createElement('p');
+          warn.className = 'enq-warn';
+          warn.style.cssText = 'color:#B4441B;font-size:.8rem;margin:8px 0 0';
+          enq.appendChild(warn);
+        }
+        warn.textContent = 'Please add your name and WhatsApp number so we can reply.';
+        return;
+      }
+
+      var now = new Date();
+      var ref = 'PF-' + String(now.getDate()).padStart(2,'0') + String(now.getMonth()+1).padStart(2,'0') + '-' +
+                String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+      var L = [];
+      L.push('*NEW ENQUIRY — Pixel Forge Studio*');
+      L.push('Ref: ' + ref);
+      L.push('');
+      L.push('*Name:* ' + name);
+      if (biz) L.push('*Business:* ' + biz);
+      L.push('*WhatsApp:* ' + phone);
+      L.push('*Looking for:* ' + need);
+      if (msg) { L.push(''); L.push('*Details:*'); L.push(msg); }
+      L.push('');
+      L.push('_Sent from contact form · ' + now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) +
+             ' ' + now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}) + ' IST_');
+
+      var url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(L.join('\n'));
+      window.open(url, '_blank');
+
+      var ok = enq.querySelector('.enq-ok');
+      if (!ok) {
+        ok = document.createElement('p');
+        ok.className = 'enq-ok';
+        ok.style.cssText = 'color:var(--green-deep);font-size:.82rem;margin:10px 0 0;font-weight:500';
+        enq.appendChild(ok);
+      }
+      ok.innerHTML = 'WhatsApp opened with your details. If it did not open, ' +
+        '<a href="' + url + '" style="text-decoration:underline">tap here</a> or email ' +
+        '<a href="mailto:hello@pixelforgestudio.com" style="text-decoration:underline">hello@pixelforgestudio.com</a>.';
+    });
+  }
+
+  /* ---------- copy UPI ID ---------- */
+  var cu = document.getElementById('copy-upi');
+  if (cu) {
+    cu.addEventListener('click', function () {
+      var id = document.getElementById('upi-id');
+      var txt = id ? id.textContent.trim() : '';
+      var done = function () { cu.textContent = 'Copied'; setTimeout(function () { cu.textContent = 'Copy'; }, 1800); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done).catch(done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = txt; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta); done();
+      }
+    });
+  }
+
+  /* ---------- exit-intent lead capture (once per session) ---------- */
+  var xm = document.getElementById('xmodal');
+  if (xm && !sessionStorage.getItem('pf_x')) {
+    var showX = function () {
+      if (sessionStorage.getItem('pf_x')) return;
+      xm.classList.add('on');
+      sessionStorage.setItem('pf_x', '1');
+    };
+    document.addEventListener('mouseout', function (e) {
+      if (e.clientY <= 0 && !e.relatedTarget) showX();
+    });
+    var xc = document.getElementById('xclose'), xl = document.getElementById('xlater');
+    if (xc) xc.addEventListener('click', function () { xm.classList.remove('on'); });
+    if (xl) xl.addEventListener('click', function () { xm.classList.remove('on'); });
+    xm.addEventListener('click', function (e) { if (e.target === xm) xm.classList.remove('on'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') xm.classList.remove('on'); });
+  }
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
