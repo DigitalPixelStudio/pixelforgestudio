@@ -3372,3 +3372,65 @@ header.nav,header.nav.scrolled{background:#090A0F !important}
   .track{padding:22px 18px}
   .track-head h3{font-size:1.3rem !important}
 }
+
+/* ==========================================================================
+   v55 — font effects, icon motion, PWA note, SEO polish
+   ========================================================================== */
+
+/* 1. GLOWING TEXT SHADOW on key numbers */
+.trow span,.tier-price,.case-stats b,.cnt b{
+  text-shadow:0 0 24px rgba(255,138,61,.35);
+  transition:text-shadow .3s;
+}
+.trow:hover span{text-shadow:0 0 30px rgba(255,138,61,.75)}
+
+/* 2. LETTER-SPACING BREATHE on section eyebrows */
+.sec-head .num{animation:trackBreathe 7s ease-in-out infinite}
+@keyframes trackBreathe{
+  0%,100%{letter-spacing:.14em;opacity:.85}
+  50%{letter-spacing:.24em;opacity:1}
+}
+
+/* 3. GRADIENT UNDERLINE SWEEP on links */
+.trow b,.whorow b{
+  background-image:linear-gradient(90deg,#C4B5FD,#FF8A3D,#00F2FE);
+  background-size:0% 1px;background-repeat:no-repeat;background-position:0 100%;
+  transition:background-size .45s cubic-bezier(.16,1,.3,1);
+}
+.trow:hover b,.whorow:hover b{background-size:100% 1px}
+
+/* 4. WEIGHT SHIFT on hover — text thickens subtly */
+.track-head h3,.vitem h4,.galitem figcaption{transition:letter-spacing .35s,transform .35s}
+.track:hover .track-head h3{letter-spacing:-.015em}
+.vitem:hover h4{letter-spacing:.005em}
+
+/* 5. TEXT REVEAL MASK on gallery captions */
+.galitem figcaption{transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .4s}
+.galitem:hover figcaption{transform:translateY(-3px);opacity:1}
+
+/* ICON MOTION — bounce / flip / rotate */
+.socials a:hover svg,.f-socials a:hover svg{animation:iconFlip .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes iconFlip{0%{transform:rotateY(0) scale(1)}50%{transform:rotateY(180deg) scale(1.18)}100%{transform:rotateY(360deg) scale(1.1)}}
+
+.wa:hover svg,.mbar a:hover svg{animation:iconBounce .55s cubic-bezier(.34,1.56,.64,1)}
+@keyframes iconBounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-4px) scale(1.12)}70%{transform:translateY(1px)}}
+
+.botbtn:hover svg{animation:iconPulseSpin .8s ease-in-out}
+@keyframes iconPulseSpin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.2)}100%{transform:rotate(360deg) scale(1)}}
+
+.gbadge:hover .stars{animation:starShake .5s ease-in-out}
+@keyframes starShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+
+.case-open:hover svg,.sl-go:hover svg{animation:iconNudge .5s ease-in-out}
+@keyframes iconNudge{0%,100%{transform:translate(0,0)}50%{transform:translate(3px,-3px)}}
+
+/* PWA badge on app rows */
+.pwa-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.5rem;
+  letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:4px;
+  background:rgba(74,222,128,.14);border:1px solid rgba(74,222,128,.34);color:#4ADE80;
+  margin-left:8px;vertical-align:middle}
+
+@media(prefers-reduced-motion:reduce){
+  .sec-head .num,.socials a:hover svg,.f-socials a:hover svg,.wa:hover svg,
+  .botbtn:hover svg,.gbadge:hover .stars,.case-open:hover svg{animation:none !important}
+}
