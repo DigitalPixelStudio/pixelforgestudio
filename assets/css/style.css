@@ -2404,3 +2404,79 @@ header.nav .brand{gap:14px !important}
 .pm-cta{display:flex;gap:10px;flex-wrap:wrap}
 .pm-cta .btn{flex:1;min-width:160px;justify-content:center}
 @media(max-width:600px){.pkgcard{padding:26px 20px}.pkgcard h3{font-size:1.5rem}.pm-price{font-size:1.7rem}}
+
+/* ==========================================================================
+   v33 — blueprint fixes
+   ========================================================================== */
+
+/* FIX 1: header hairline — no solid border, gradient edge glow instead */
+header.nav,header,.site-header{
+  border-bottom:none !important;
+  box-shadow:none !important;
+  background:rgba(9,10,15,.82) !important;
+  backdrop-filter:blur(14px) !important;
+  -webkit-backdrop-filter:blur(14px) !important;
+  transform:translateZ(0);
+}
+header.nav::after{
+  content:'';position:absolute;bottom:0;left:5%;right:5%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(139,92,246,.28),rgba(0,242,254,.28),transparent);
+  pointer-events:none;
+}
+header.nav.scrolled{border-bottom:none !important;box-shadow:none !important}
+
+/* FIX 2: Red Apple device mockup */
+.case-shot{position:relative;padding:0;background:radial-gradient(circle at 50% 30%,#151832,#07080E 72%);display:grid;place-items:center}
+.case-shot img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  border-radius:10px;display:block;
+}
+.case-device{
+  position:relative;width:calc(100% - 44px);max-width:520px;margin:22px auto;
+  border-radius:12px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 30px 70px -26px rgba(0,0,0,.95), 0 0 0 6px rgba(255,255,255,.03);
+  background:#0B0D14;
+}
+.case-device::before{
+  content:'';display:block;height:20px;
+  background:linear-gradient(180deg,#1A1D2B,#12141F);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.case-device::after{
+  content:'';position:absolute;top:7px;left:12px;width:6px;height:6px;border-radius:50%;
+  background:#FF5F57;box-shadow:11px 0 0 #FEBC2E, 22px 0 0 #28C840;
+}
+.case-device img{width:100%;height:auto;display:block;border-radius:0}
+.device-glow{
+  position:absolute;inset:-30px;z-index:-1;border-radius:24px;
+  background:radial-gradient(circle,rgba(139,92,246,.28),transparent 70%);
+  filter:blur(28px);pointer-events:none;
+}
+
+/* FIX 3: 120fps compositor lock */
+html,body{scroll-behavior:smooth;overscroll-behavior-y:none;-webkit-font-smoothing:antialiased}
+.card,.pkg,.jcard,.sol,.pcard-l,.tier,.case,.case-device,.paybox,.float-pill{
+  transform:translate3d(0,0,0);backface-visibility:hidden;
+}
+/* no global blur on low-power mobile */
+@media screen and (max-width:680px){
+  header.nav,.float-pill,.pkg,.jcard,.sol,.case,.paybox,.botpanel{
+    backdrop-filter:none !important;-webkit-backdrop-filter:none !important;
+  }
+  header.nav{background:rgba(9,10,15,.97) !important}
+  .bg i{display:none}
+  #fx3d{display:none}
+}
+
+/* trust badges */
+.trust-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tbadge{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:8px;
+  font-size:.66rem;font-weight:600;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);color:#B9C0DE}
+.tbadge svg{width:12px;height:12px;stroke:#4ADE80;fill:none;stroke-width:2.4}
+.tbadge.bing svg{stroke:#00F2FE}
+.mbar .udyam-mini{position:absolute;top:-19px;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.1em;
+  color:#5A6178;background:rgba(9,10,15,.9);padding:2px 10px;border-radius:6px 6px 0 0;
+  border:1px solid rgba(255,255,255,.08);border-bottom:0;white-space:nowrap}
