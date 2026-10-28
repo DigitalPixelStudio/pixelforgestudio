@@ -588,7 +588,7 @@
   /* ---------- CONFIGURATOR ---------- */
   var cfg = $('#cfg');
   if (cfg) {
-    var state = { core: 'website', tier: 'growth', addons: {}, monthly: {} };
+    var state = { core: 'website', cores: [], tier: '', addons: {}, monthly: {} };
 
     // build add-on lists
     var addonBox = $('#cfg-addons');
