@@ -1816,3 +1816,136 @@ a{transition:color .2s,opacity .2s}
 }
 .case-shot img{object-position:center top}
 @media(max-width:900px){.case-shot img{object-position:center 20%}}
+
+/* ==========================================================================
+   v24 — fixes + polish
+   ========================================================================== */
+
+/* 1. MOBILE MENU: fully opaque, no page bleed-through */
+.mnav{
+  background:#0B0C12 !important;
+  border-bottom:1px solid rgba(255,255,255,.10) !important;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.95) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.mnav a{color:#C8D0DE !important;font-size:1.02rem !important;padding:15px 0 !important}
+.mnav a:hover,.mnav a.on{color:#C4B5FD !important}
+.mnav .btn{color:#fff !important}
+
+/* 2. BOT: visible on mobile too, sitting above the sticky bar */
+@media(max-width:680px){
+  .botwrap{display:block !important;right:14px !important;bottom:86px !important}
+  .botbtn{width:52px !important;height:52px !important;border-radius:16px !important}
+  .botbtn svg{width:24px !important;height:24px !important}
+  .botpanel{
+    position:fixed !important;left:12px !important;right:12px !important;
+    width:auto !important;bottom:150px !important;top:auto !important;
+    max-height:66vh !important;border-radius:18px !important;
+  }
+  .botlog{height:auto !important;max-height:44vh !important}
+}
+
+/* 3. STICKY BAR: bigger, clearer */
+.mbar{gap:10px !important;padding:11px 12px calc(11px + env(safe-area-inset-bottom)) !important}
+.mbar a{padding:16px 12px !important;font-size:.94rem !important;font-weight:700 !important;gap:9px !important}
+.mbar svg{width:20px !important;height:20px !important}
+@media(max-width:680px){body{padding-bottom:92px !important}}
+
+/* 4. BIGGER SECTION HEADINGS */
+h2{font-size:clamp(2.1rem,4.4vw,3.5rem) !important;line-height:1.04 !important;letter-spacing:-.038em !important}
+.sec-head h2{font-size:clamp(2.1rem,4.4vw,3.5rem) !important}
+h3{font-size:clamp(1.22rem,2vw,1.6rem) !important}
+.sec-head p{font-size:1.04rem !important}
+
+/* 5. BREATHING COLOUR on headings */
+.sec-head h2,.hero-title{
+  background:linear-gradient(100deg,#F8FAFC 0%,#C4B5FD 28%,#FFB86B 52%,#C4B5FD 74%,#F8FAFC 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  animation:breatheCol 14s ease-in-out infinite;
+}
+.hero-title .grad,.hero-title .w{
+  -webkit-text-fill-color:currentColor;
+}
+.hero-title .grad{
+  background:linear-gradient(96deg,#FFB86B 0%,#FF8A3D 26%,#FF5C1A 52%,#FF8A3D 76%,#FFB86B 100%) !important;
+  background-size:220% 100% !important;
+  -webkit-background-clip:text !important;background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;color:transparent !important;
+}
+@keyframes breatheCol{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+/* 6. MORE GLASS */
+.trust div,.upiline,.cmpwrap,.valuethree div,.alertbox,.strip,.trip,.opt,.sum{
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.cmp2 th{backdrop-filter:blur(8px)}
+.card,.pcard-l{background:rgba(19,19,25,.72) !important;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.tile-body{backdrop-filter:blur(2px)}
+
+@media(prefers-reduced-motion:reduce){
+  .sec-head h2,.hero-title{animation:none !important}
+}
+
+/* ---------- Astra panel: bigger, modern ---------- */
+.botpanel{width:392px !important;border-radius:20px !important;border:1px solid rgba(255,255,255,.13) !important;
+  background:rgba(15,16,22,.96) !important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(139,92,246,.18) !important}
+.bot-head{padding:16px 18px !important;background:rgba(255,255,255,.03) !important}
+.bot-head .av{width:38px !important;height:38px !important;border-radius:12px !important;
+  background:linear-gradient(150deg,#8B5CF6,#5B21B6) !important;
+  box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+.bot-head .av svg{width:19px !important;height:19px !important}
+.bot-head b{font-size:.94rem !important;color:#F8FAFC !important}
+.bot-head small{color:#4ADE80 !important;font-size:.68rem !important}
+.botlog{height:340px !important;padding:18px !important;gap:12px !important;
+  background:radial-gradient(circle at 50% 0%,rgba(139,92,246,.06),transparent 60%)}
+.bmsg{font-size:.875rem !important;line-height:1.62 !important;padding:12px 15px !important;border-radius:14px !important}
+.bmsg.bot{background:rgba(255,255,255,.055) !important;border:1px solid rgba(255,255,255,.09) !important;
+  color:#DDE2EF !important;border-bottom-left-radius:5px}
+.bmsg.me{background:linear-gradient(135deg,#8B5CF6,#6D28D9) !important;color:#fff !important;
+  border-bottom-right-radius:5px}
+.bmsg b{color:#fff;font-weight:600}
+.bchips button{font-size:.76rem !important;padding:8px 14px !important;border-radius:999px !important;
+  background:rgba(139,92,246,.14) !important;border:1px solid rgba(139,92,246,.34) !important;
+  color:#C4B5FD !important;font-weight:600}
+.bchips button:hover{background:#8B5CF6 !important;color:#fff !important;border-color:#8B5CF6 !important}
+.botform{padding:14px !important;background:rgba(255,255,255,.03) !important;border-top:1px solid rgba(255,255,255,.08) !important}
+.botform input{padding:13px 16px !important;font-size:.88rem !important;border-radius:12px !important;
+  background:rgba(255,255,255,.05) !important;border:1px solid rgba(255,255,255,.12) !important;color:#F8FAFC !important}
+.botform input:focus{border-color:#8B5CF6 !important;box-shadow:0 0 0 3px rgba(139,92,246,.15) !important}
+.botform button{width:44px !important;height:44px !important;border-radius:12px !important;
+  background:linear-gradient(135deg,#8B5CF6,#6D28D9) !important}
+.bot-foot{background:rgba(255,255,255,.03) !important;padding:0 14px 14px !important}
+.bot-foot a{background:rgba(255,255,255,.05) !important;border-color:rgba(255,255,255,.12) !important;color:#94A3B8 !important}
+.botbtn{width:58px !important;height:58px !important;border-radius:18px !important;
+  background:linear-gradient(150deg,#8B5CF6,#5B21B6) !important;
+  box-shadow:0 16px 40px -14px rgba(139,92,246,.95), 0 0 0 1px rgba(255,255,255,.1) !important}
+.botbtn svg{width:26px !important;height:26px !important}
+
+/* ---------- professional footer ---------- */
+footer{background:#07080D !important;border-top:1px solid rgba(255,255,255,.08) !important;padding:64px 0 0 !important}
+.f-grid{grid-template-columns:1.6fr 1fr 1fr 1fr !important;gap:44px !important;margin-bottom:48px !important}
+.f-brand p{font-size:.86rem !important;line-height:1.7 !important;color:#94A3B8 !important;max-width:300px !important}
+.f-col h5{font-size:.6rem !important;letter-spacing:.2em !important;color:#6E7A8F !important;
+  margin-bottom:16px !important;padding-bottom:10px !important;border-bottom:1px solid rgba(255,255,255,.07)}
+.f-col a{font-size:.86rem !important;padding:6px 0 !important;color:#B9C0DE !important}
+.f-col a:hover{color:#C4B5FD !important}
+.f-verified{margin-top:16px !important;font-size:.72rem !important;color:#94A3B8 !important}
+.f-bot{
+  border-top:1px solid rgba(255,255,255,.08) !important;padding:22px 0 28px !important;
+  display:flex !important;justify-content:space-between !important;align-items:center !important;
+  gap:18px !important;flex-wrap:wrap !important;font-size:.76rem !important;color:#6E7A8F !important;
+}
+.f-bot a{color:#94A3B8 !important}
+.f-bot a:hover{color:#C4B5FD !important}
+@media(max-width:900px){
+  .f-grid{grid-template-columns:1fr 1fr !important;gap:32px 22px !important}
+  .f-brand{grid-column:1/-1 !important}
+}
+@media(max-width:420px){.f-grid{grid-template-columns:1fr !important}}
