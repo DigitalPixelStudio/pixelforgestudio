@@ -310,6 +310,100 @@
     requestAnimationFrame(frame);
   })();
 
+
+  /* ---------- PAY NOW flow ---------- */
+  (function () {
+    var pm = document.getElementById('pmodal');
+    if (!pm) return;
+    var s1 = document.getElementById('pstep1'), s2 = document.getElementById('pstep2'),
+        form = document.getElementById('pform'), err = document.getElementById('perr'),
+        sumEl = document.getElementById('psummary'), amtEl = document.getElementById('pamount'),
+        upLink = document.getElementById('puplink'), confirmBtn = document.getElementById('pconfirm');
+    var order = { label:'', oneTime:0, monthly:0 };
+
+    function money(n){ return '₹' + Number(n).toLocaleString('en-IN'); }
+
+    function open() {
+      // pull the live selection from the configurator if present
+      var lines = [], one = 0, mo = 0;
+      document.querySelectorAll('#sum-lines .sum-line').forEach(function (l) {
+        var t = l.querySelector('span'), b = l.querySelector('b');
+        if (t && b) lines.push(t.textContent + ' — ' + b.textContent);
+      });
+      var tot = document.getElementById('sum-total');
+      var mEl = document.getElementById('sum-monthly');
+      one = tot ? parseInt(tot.textContent.replace(/[^0-9]/g,''), 10) || 0 : 0;
+      mo  = mEl && mEl.textContent !== '—' ? parseInt(mEl.textContent.replace(/[^0-9]/g,''), 10) || 0 : 0;
+      order.oneTime = one; order.monthly = mo;
+      order.label = lines.join(' | ') || 'Custom build';
+      sumEl.innerHTML = lines.length
+        ? lines.join('<br>') + (mo ? '<br><b style="color:#C4B5FD">Monthly: ' + money(mo) + '</b>' : '')
+        : 'Pick your options in the configurator first — or just tell us and we will quote it.';
+      amtEl.textContent = one ? money(one) : 'On quote';
+      pm.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+    function close() { pm.classList.remove('on'); document.body.style.overflow = ''; }
+
+    document.querySelectorAll('[data-pay]').forEach(function (b) {
+      b.addEventListener('click', function (e) { e.preventDefault(); open(); });
+    });
+    var pc = document.getElementById('pclose');
+    if (pc) pc.addEventListener('click', close);
+    pm.addEventListener('click', function (e) { if (e.target === pm) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var g = function (n) { var el = form.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+      var need = ['pname','pphone','pbiz','ptype','pcity'];
+      for (var i = 0; i < need.length; i++) {
+        if (!g(need[i])) { err.textContent = 'Please fill the required fields marked with *'; return; }
+      }
+      if (!/^[0-9]{10}$/.test(g('pphone').replace(/\D/g,''))) {
+        err.textContent = 'Mobile number should be 10 digits.'; return;
+      }
+      err.textContent = '';
+      s1.style.display = 'none'; s2.style.display = 'block';
+
+      var upi = 'upi://pay?pa=9620024812@airtel&pn=Pixel%20Forge%20Studio&cu=INR' +
+                (order.oneTime ? '&am=' + order.oneTime : '');
+      upLink.href = upi;
+
+      var now = new Date();
+      var ref = 'PF-' + String(now.getDate()).padStart(2,'0') + String(now.getMonth()+1).padStart(2,'0') + '-' +
+                String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+      var L = [];
+      L.push('*NEW PAID ORDER — Pixel Forge Studio*');
+      L.push('Ref: ' + ref);
+      L.push('');
+      L.push('*CUSTOMER*');
+      L.push('Name: ' + g('pname'));
+      L.push('Business: ' + g('pbiz') + ' (' + g('ptype') + ')');
+      L.push('City: ' + g('pcity'));
+      L.push('Mobile: ' + g('pphone'));
+      if (g('pemail')) L.push('Email: ' + g('pemail'));
+      if (g('pgst')) L.push('GST: ' + g('pgst'));
+      if (g('pnote')) L.push('Note: ' + g('pnote'));
+      L.push('');
+      L.push('*ORDER*');
+      L.push(order.label);
+      L.push('One-time: ' + (order.oneTime ? money(order.oneTime) : 'on quote'));
+      if (order.monthly) L.push('Monthly: ' + money(order.monthly) + '/mo');
+      L.push('');
+      L.push('_Payment initiated via UPI on ' + now.toLocaleString('en-IN') + '_');
+      L.push('_Please verify against the UPI statement and issue the invoice._');
+      confirmBtn.href = 'https://wa.me/919620024812?text=' + encodeURIComponent(L.join('\n'));
+    });
+
+    var c2 = document.getElementById('copy-upi2');
+    if (c2) c2.addEventListener('click', function () {
+      var t = document.getElementById('upi2');
+      if (navigator.clipboard) navigator.clipboard.writeText(t.textContent.trim());
+      c2.textContent = 'Copied'; setTimeout(function(){ c2.textContent = 'Copy'; }, 1600);
+    });
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
@@ -760,6 +854,12 @@
         a:'<b>Care</b> is the ongoing upkeep after launch — uptime monitoring, backups, security patches, updates and small content changes. <b>Purpose:</b> a website is not a one-time object; it needs watching. <b>Benefit:</b> three months are included free on every project, then from ₹2,499 a month only if you want it. No auto-renewal, no lock-in.' },
       { t:'turnaround seven days guarantee meaning how possible',
         a:'<b>Seven days</b> is possible because the design system, deployment pipeline and testing are already built — we are assembling proven parts, not inventing them. <b>Purpose:</b> get you earning sooner. <b>Benefit:</b> most agencies take 3–6 weeks. If we miss the date because of us, the project fee is refunded.' },
+      { t:'traditional without ai difference elite with ai support comparison which',
+        a:'Two ways to buy. <b>Traditional</b> — website, CRM or app on its own, or as combos (Website+CRM, or all three). You run it yourself. <b>Elite</b> — the same build plus a 24/7 AI assistant trained on your business that answers customers, captures numbers and books appointments. Elite costs roughly ₹10,000–₹20,000 more per core. If enquiries come in outside business hours, Elite pays for itself.' },
+      { t:'standalone combo website crm app options how many buy',
+        a:'Standalone: Website from ₹19,999 · CRM from ₹74,999 · App from ₹89,999. Combos: Website+CRM at 12% off the combined list, or all three as Startup ₹1,49,999 / Growth ₹2,24,999 / Scale ₹3,11,999 / Elite ₹4,99,999. With AI added: Website+AI from ₹29,999, CRM+AI from ₹84,999, App+AI from ₹99,999, all three + AI at ₹4,99,999.' },
+      { t:'pay now payment online buy order checkout deposit',
+        a:'Two ways to start: tap WhatsApp and we build the quote with you, or tap <b>Pay now</b> under the configurator — fill five details, then pay the deposit by UPI. Either way you get a reference number and a written scope before any work begins.' },
       { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
