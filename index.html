@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=26">
+<link rel="stylesheet" href="assets/css/style.css?v=27">
 <script>document.documentElement.className+=" js";</script>
 </head>
 <body data-page="index.html">
@@ -209,6 +209,9 @@
         <a class="btn btn-primary btn-block" id="sum-send" href="#" target="_blank" rel="noopener" style="margin-top:16px">
           <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.4A10 10 0 1012 2z"/></svg>
           Send on WhatsApp</a>
+        <button type="button" class="btn btn-ghost btn-block" data-pay style="margin-top:10px">
+          Pay now
+        </button>
         <p style="font-size:.7rem;color:var(--muted-2);margin:12px 0 0;text-align:center">No card. No commitment. Prices exclude 18% GST.</p>
       </aside>
     </div>
@@ -551,60 +554,38 @@
       <p style="margin:0 auto">Every price below is final. Design, build, deployment, SSL and three months of care are inside it.</p>
     </div>
 
-    <div class="pkg3 rv">
-      <div class="pkg k1">
-        <div class="pico"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4-6.2-4.6-6.2 4.6 2.4-7.4L2 9.4h7.6z"/></svg></div>
-        <h3>The Launchpad</h3>
-        <div class="psub">Fast foundation</div>
-        <p class="pdesc">For local shops, consultants, independent professionals and new businesses that need to exist online this week.</p>
-        <div class="price">₹9,999 <small>one-time</small></div>
-        <span class="psave">Worth ₹19,997 bought separately</span>
-        <ul>
-          <li>One-page high-speed website (PWA)</li>
-          <li>Google Business Profile setup &amp; verification</li>
-          <li>Bing indexing &amp; Search Console</li>
-          <li>WhatsApp Business profile link</li>
-          <li>One scope, one revision</li>
-        </ul>
-        <a class="btn btn-ghost btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20The%20Launchpad%20(%E2%82%B99%2C999)." target="_blank" rel="noopener">Get started on WhatsApp →</a>
+    <div class="arch rv">
+      <div class="arch-col">
+        <div class="arch-head">
+          <span class="arch-tag">Traditional</span>
+          <h3>Without AI</h3>
+          <p>The build, done properly. You run it.</p>
+        </div>
+        <div class="arch-item"><b>Standalone Website</b><span>₹19,999 · ₹29,999 · ₹49,999 · ₹89,999</span></div>
+        <div class="arch-item"><b>Standalone CRM</b><span>₹74,999 · ₹1,09,999 · ₹1,49,999 · ₹2,99,999</span></div>
+        <div class="arch-item"><b>Standalone App</b><span>₹89,999 · ₹1,39,999 · ₹1,99,999 · ₹3,99,999</span></div>
+        <div class="arch-sub">Combos</div>
+        <div class="arch-item"><b>Website + CRM</b><span>12% off the combined list</span></div>
+        <div class="arch-item"><b>Website + CRM + App</b><span>Startup ₹1,49,999 · Growth ₹2,24,999 · Scale ₹3,11,999</span></div>
       </div>
 
-      <div class="pkg k2 hero-pkg">
-        <span class="badge">Most chosen</span>
-        <div class="pico"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
-        <h3>The Growth Engine</h3>
-        <div class="psub">Lead · Automate · Scale</div>
-        <p class="pdesc">For businesses that need to capture, organise and follow up on leads — not just take them.</p>
-        <div class="price">₹1,49,999 <small>one-time</small></div>
-        <span class="psave">Saves ₹34,998 versus buying separately</span>
-        <ul>
-          <li>Multi-page website, 5–10 pages</li>
-          <li>Essential Indus business CRM</li>
-          <li>Android PWA app</li>
-          <li>Meta AI agent — catalogue &amp; auto-reply</li>
-          <li>GMB + Justdial + IndiaMART sync</li>
-          <li>Lead notifications and reporting</li>
-        </ul>
-        <a class="btn btn-primary btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20The%20Growth%20Engine%20(%E2%82%B91%2C49%2C999)." target="_blank" rel="noopener">Get started on WhatsApp →</a>
+      <div class="arch-col elite">
+        <div class="arch-head">
+          <span class="arch-tag ember">Elite</span>
+          <h3>With AI 24/7</h3>
+          <p>The build plus an assistant that answers, qualifies and hands off — at 2am, on a Sunday.</p>
+        </div>
+        <div class="arch-item"><b>Website + AI Support</b><span>from ₹29,999</span></div>
+        <div class="arch-item"><b>CRM + AI Support</b><span>from ₹84,999</span></div>
+        <div class="arch-item"><b>App + AI Support</b><span>from ₹99,999</span></div>
+        <div class="arch-sub">Combos</div>
+        <div class="arch-item"><b>Website + CRM + AI</b><span>from ₹1,59,999</span></div>
+        <div class="arch-item"><b>Website + CRM + App + AI</b><span>Elite Stack ₹4,99,999</span></div>
       </div>
+    </div>
 
-      <div class="pkg k3">
-        <div class="pico"><svg viewBox="0 0 24 24"><path d="M3 7l4-4 4 4M7 3v12M17 21l4-4-4-4M21 17V5"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="5" r="2"/></svg></div>
-        <h3>The Empire</h3>
-        <div class="psub">Full control. Maximum growth.</div>
-        <p class="pdesc">For established businesses with multiple teams, complex workflows or integration requirements.</p>
-        <div class="price">From ₹4,99,999 <small>scoped</small></div>
-        <span class="psave">Saves ₹2,89,998 versus buying separately</span>
-        <ul>
-          <li>Custom Next.js / full-stack architecture</li>
-          <li>Elite multi-role CRM with permissions</li>
-          <li>Native Android app</li>
-          <li>Full API integration &amp; cloud hardening</li>
-          <li>Defined testing, deployment and support</li>
-          <li>90-day priority support</li>
-        </ul>
-        <a class="btn btn-ghost btn-block" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20to%20discuss%20The%20Empire%20(%E2%82%B94%2C99%2C999%2B)." target="_blank" rel="noopener">Discuss on WhatsApp →</a>
-      </div>
+    <div class="arch-note rv">
+      <b>What AI support actually gives you:</b> an assistant trained on your services, prices and timings that answers customers, captures their number, books appointments and hands off to you on WhatsApp when it is unsure. Running cost ₹2,499/month for API usage — that is the only recurring charge, and you can switch it off.
     </div>
 
     <div class="strip rv">
@@ -1109,6 +1090,64 @@
     <span class="later" id="xlater">No thanks, just browsing</span>
   </div>
 </div>
+
+<div class="pmodal" id="pmodal" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+  <div class="pcard-m">
+    <button class="pclose" id="pclose" aria-label="Close">×</button>
+
+    <div class="pstep" id="pstep1">
+      <span class="pill-ember">Step 1 of 2 · Your details</span>
+      <h3 id="ptitle">Build your order</h3>
+      <p class="psub" id="psummary">—</p>
+      <form id="pform">
+        <div class="pgrid2">
+          <label>Full name <i>*</i><input name="pname" required autocomplete="name"></label>
+          <label>Mobile (WhatsApp) <i>*</i><input name="pphone" required inputmode="numeric" autocomplete="tel" placeholder="10 digits"></label>
+          <label>Business name <i>*</i><input name="pbiz" required autocomplete="organization"></label>
+          <label>Business type <i>*</i>
+            <select name="ptype" required>
+              <option value="">Select…</option>
+              <option>Retail shop</option><option>Salon / spa</option><option>Clinic / hospital</option>
+              <option>Hotel / restaurant</option><option>Real estate</option><option>Consultant / lawyer</option>
+              <option>Manufacturer / wholesale</option><option>E-commerce</option><option>Agency</option><option>Other</option>
+            </select>
+          </label>
+          <label>City <i>*</i><input name="pcity" required autocomplete="address-level2"></label>
+          <label>Email <span class="opt">optional</span><input name="pemail" type="email" autocomplete="email"></label>
+          <label>GST number <span class="opt">optional</span><input name="pgst"></label>
+          <label>Anything we should know <span class="opt">optional</span><input name="pnote"></label>
+        </div>
+        <p class="perr" id="perr"></p>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top:18px">Continue to payment →</button>
+        <p class="pfoot">You will see the amount and a UPI code on the next screen. No card needed.</p>
+      </form>
+    </div>
+
+    <div class="pstep" id="pstep2" style="display:none">
+      <span class="pill-ember">Step 2 of 2 · Payment</span>
+      <h3>Pay your deposit</h3>
+      <div class="pamount" id="pamount">—</div>
+      <div class="ppayrow">
+        <div class="pqr"><img src="assets/img/upi-qr.png" alt="UPI QR to pay Pixel Forge Studio" width="180" height="180"></div>
+        <div class="pinfo">
+          <div class="upiline" style="margin-bottom:12px">
+            <span>UPI ID</span><b id="upi2">9620024812@airtel</b>
+            <button type="button" id="copy-upi2">Copy</button>
+          </div>
+          <ol class="paysteps" style="margin:0">
+            <li>Scan with any UPI app, or tap the button below on your phone</li>
+            <li>Check the payee reads <strong>Pixel Forge Studio</strong></li>
+            <li>Add your business name in the remarks</li>
+          </ol>
+          <a class="btn btn-primary btn-block" id="puplink" href="#" style="margin-top:14px">Open UPI app</a>
+        </div>
+      </div>
+      <a class="btn btn-ghost btn-block" id="pconfirm" href="#" target="_blank" rel="noopener" style="margin-top:14px">
+        I have paid — send my order on WhatsApp →</a>
+      <p class="pfoot">We match your payment to this order by your name and amount, usually within minutes during business hours. Keep the UTR from your UPI app.</p>
+    </div>
+  </div>
+</div>
 <div class="mbar">
   <a class="m1" href="https://wa.me/919620024812?text=Hi%20Pixel%20Forge%20Studio%2C%20I%20want%20to%20discuss%20a%20project." target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.4A10 10 0 1012 2z"/></svg>WhatsApp us</a>
@@ -1138,6 +1177,6 @@
   <button data-t="copper" style="background:#B87333" title="Copper"></button>
   <button data-t="ivory" style="background:#F7F4ED" title="Ivory"></button>
 </div>
-<script src="assets/js/main.js?v=26" defer></script>
+<script src="assets/js/main.js?v=27" defer></script>
 </body>
 </html>
