@@ -736,6 +736,30 @@
         a:'A small, senior team — you deal with the people doing the work, not an account manager relaying messages. That is why seven days is possible.' },
       { t:'slow bad website lose customer why important',
         a:'A slow or invisible site costs you customers every day: 53% of mobile visitors leave after three seconds, and most local buying decisions start with a Google search. If you are not there, a competitor is.' },
+      { t:'meaning what is explain definition purpose benefit why need',
+        a:'Ask me <b>what is</b> anything we offer and I will explain what it means, what it is for, and what it earns you. Try "what is a PWA", "what is GMB", "what is local SEO", "what is a CRM" or "what is Bing listing".' },
+      { t:'gmb google business profile map pack meaning what is purpose benefit',
+        a:'<b>Google Business Profile (GMB)</b> is the free listing that appears when someone searches "mobile repair near me" — the map result with photos, hours, reviews and a call button. <b>Purpose:</b> get found at the exact moment someone nearby is ready to buy. <b>Benefit:</b> it is the highest-return free asset a local business has; most enquiries come from it before your website is even opened. ₹4,999 to set up properly — claim, verify, categories, photos, hours.' },
+      { t:'crm meaning what is purpose benefit explain',
+        a:'<b>CRM</b> means Customer Relationship Management — one place where every enquiry lands so none get lost. <b>Purpose:</b> track who enquired, what they wanted, what you quoted, and when to follow up. <b>Benefit:</b> most small businesses lose 30–40% of leads simply by not following up. A CRM turns a messy notebook into a pipeline you can see. Ours includes quotes, GST invoices and reminders, and it comes inside the Growth Engine rather than as a paid extra.' },
+      { t:'pwa meaning what is progressive web app purpose benefit explain',
+        a:'<b>PWA</b> means Progressive Web App — a website that installs to the phone home screen like an app, works offline, and sends notifications. <b>Purpose:</b> give customers an app experience without Play Store approval, downloads or the 30% store cut. <b>Benefit:</b> loads in under two seconds, appears as an icon next to their other apps, and costs a fraction of a native app. Included in the Growth Engine.' },
+      { t:'seo meaning what is local seo purpose benefit explain',
+        a:'<b>Local SEO</b> is making your business appear when people nearby search for what you sell. <b>Purpose:</b> rank in the map pack and organic results for your area and category. <b>Benefit:</b> these are the highest-intent enquiries that exist — someone searching "dental clinic Indiranagar" is ready to book. ₹19,999 a month including posts, content, citations and tracking.' },
+      { t:'bing listing webmaster meaning what is purpose benefit',
+        a:'<b>Bing</b> is Microsoft\'s search engine — smaller than Google, but almost no Bengaluru agency submits clients to it. <b>Purpose:</b> free extra visibility, plus Bing feeds some desktop and Windows search results. <b>Benefit:</b> low competition for the same keywords, and it costs ₹2,999 as an add-on or is included in the Launchpad. A genuine edge nobody else offers.' },
+      { t:'listing directory justdial indiamart sulekha meaning purpose benefit',
+        a:'<b>Directory listings</b> are business profiles on Justdial, IndiaMART, Sulekha and similar — where people still search by category and city. <b>Purpose:</b> be present where buyers compare suppliers, especially in B2B and wholesale. <b>Benefit:</b> they rank on Google themselves, so your listing can outrank your own website for some searches. All eight together is ₹24,999 as the Complete Online Profile.' },
+      { t:'ads google meta facebook instagram meaning purpose benefit explain',
+        a:'<b>Paid ads</b> put your business in front of people searching or scrolling, immediately. <b>Google Ads</b> catches active intent — someone typing what you sell. <b>Meta ads</b> create demand — reaching people who did not know they needed you. <b>Benefit:</b> results in days not months, and with conversion tracking you see the exact cost per enquiry. Setup ₹4,999, management ₹14,999 a month.' },
+      { t:'whatsapp business api meaning purpose benefit explain',
+        a:'<b>WhatsApp Business API</b> is the official version of WhatsApp for companies — verified name, blue tick eligibility, automated replies, catalogues and broadcast lists. <b>Purpose:</b> handle enquiries at scale without a personal phone. <b>Benefit:</b> Indian customers reply on WhatsApp far more than email — typically 3–5× the response rate. ₹14,999 to set up, ₹34,999 with an AI bot answering.' },
+      { t:'stack meaning what is bundle purpose benefit',
+        a:'A <b>stack</b> is website, CRM and app built together as one system instead of three separate projects. <b>Purpose:</b> one design language, one team, one invoice, one launch date. <b>Benefit:</b> roughly 19–37% cheaper than buying them separately, and they actually talk to each other — a form enquiry appears in the CRM, the app reads the same data. Startup ₹1,49,999, Elite ₹4,99,999.' },
+      { t:'care plan meaning what is support purpose benefit',
+        a:'<b>Care</b> is the ongoing upkeep after launch — uptime monitoring, backups, security patches, updates and small content changes. <b>Purpose:</b> a website is not a one-time object; it needs watching. <b>Benefit:</b> three months are included free on every project, then from ₹2,499 a month only if you want it. No auto-renewal, no lock-in.' },
+      { t:'turnaround seven days guarantee meaning how possible',
+        a:'<b>Seven days</b> is possible because the design system, deployment pipeline and testing are already built — we are assembling proven parts, not inventing them. <b>Purpose:</b> get you earning sooner. <b>Benefit:</b> most agencies take 3–6 weeks. If we miss the date because of us, the project fee is refunded.' },
       { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
@@ -882,8 +906,8 @@
     botBtn.addEventListener('click', function () {
       botPanel.classList.toggle('open');
       if (botPanel.classList.contains('open') && !botLog.childElementCount) {
-        push('Hello — I am <b>Astra</b>, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work.', 'bot');
-        setTimeout(function () { chips(['How much?', 'How long?', 'Show packages', 'Free mockup']); }, 300);
+        push('I can help you pick the right package in under two minutes — or explain anything we offer. What kind of business is it?', 'bot');
+        setTimeout(function () { chips(['Website', 'CRM', 'App', 'Just browsing']); }, 300);
       }
       if (botPanel.classList.contains('open')) botInput.focus();
     });
@@ -899,7 +923,7 @@
           push(answer(v), 'bot');
           if (++ctx.asked === 3) {
             setTimeout(function () {
-              chips(['Talk on WhatsApp', 'See pricing', 'Free mockup']);
+              chips(['Talk on WhatsApp', 'See pricing', 'Free mockup', 'What is a PWA?']);
             }, 500);
           }
         }, 380);
