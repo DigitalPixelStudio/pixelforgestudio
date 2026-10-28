@@ -2229,3 +2229,50 @@ section+section{border-top:0 !important}
 .bg i:nth-child(4){animation-duration:26s;animation-delay:-18s}
 @keyframes orbDrift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(40px,-30px,0) scale(1.08)}}
 @media(prefers-reduced-motion:reduce){.bg i{animation:none !important}}
+
+/* ==========================================================================
+   v29 — five-tier ladder + global box-sizing (hairline fix)
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+
+.ladder{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:start}
+.tier{
+  position:relative;display:flex;flex-direction:column;
+  background:var(--surface-card);border:1px solid var(--border-glass);
+  border-radius:16px;padding:24px 20px;height:100%;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s;
+}
+.tier:hover{transform:translateY(-5px);border-color:rgba(139,92,246,.5);
+  box-shadow:0 24px 60px -30px rgba(139,92,246,.8)}
+.tier.hot{border-color:rgba(139,92,246,.55);
+  background:linear-gradient(180deg,rgba(139,92,246,.16),rgba(18,20,29,.94) 55%);
+  box-shadow:0 0 0 1px rgba(139,92,246,.3), 0 28px 70px -34px rgba(139,92,246,.9)}
+.tier-badge{position:absolute;top:0;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:#fff;
+  font-family:'JetBrains Mono',monospace;font-size:.5rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:4px 12px;border-radius:0 0 8px 8px;white-space:nowrap}
+.tier-top{display:flex;gap:10px;align-items:flex-start;margin-bottom:16px;padding-bottom:14px;
+  border-bottom:1px solid rgba(255,255,255,.07)}
+.tier-n{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#5A6178;
+  border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:2px 6px;flex:none;margin-top:2px}
+.tier h3{font-size:1.06rem !important;letter-spacing:-.025em;margin:0 0 4px;line-height:1.15}
+.tier-for{display:block;font-size:.66rem;color:#8A93A8;line-height:1.4}
+.tier-price{font-family:'Space Grotesk';font-size:1.5rem;letter-spacing:-.035em;
+  color:#F8FAFC;line-height:1;margin-bottom:16px}
+.tier-price small{font-size:.58rem;color:#5A6178;font-weight:400;letter-spacing:0;display:block;margin-top:4px}
+.tier ul{list-style:none;padding:0;margin:0 0 14px;flex:1}
+.tier li{position:relative;padding:5px 0 5px 17px;font-size:.76rem;color:#B9C0DE;line-height:1.45}
+.tier li::before{content:'';position:absolute;left:0;top:10px;width:9px;height:9px;
+  background:no-repeat center/contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='3.6'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")}
+.tier li em{color:#C4B5FD;font-style:normal}
+.tier-excl{font-size:.66rem;color:#FF8A3D;background:rgba(255,138,61,.09);
+  border:1px solid rgba(255,138,61,.22);border-radius:7px;padding:7px 9px;margin-bottom:14px;line-height:1.4}
+.tier .btn{font-size:.76rem;padding:11px 12px;justify-content:center}
+.ladder-note{margin-top:18px;padding:18px 22px;border-radius:12px;
+  background:rgba(139,92,246,.07);border:1px solid rgba(139,92,246,.22);
+  font-size:.82rem;color:#B9C0DE;line-height:1.6}
+.ladder-note b{color:#F8FAFC}
+@media(max-width:1200px){.ladder{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){.ladder{grid-template-columns:repeat(2,1fr);gap:12px}}
+@media(max-width:560px){.ladder{grid-template-columns:1fr}}
