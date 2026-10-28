@@ -2217,3 +2217,15 @@ section+section{border-top:0 !important}
   .pqr{max-width:180px;margin:0 auto}
   .pcard-m{padding:26px 20px}
 }
+
+/* richer background glow layers */
+.bg i:nth-child(1){background:radial-gradient(circle,rgba(139,92,246,.20) 0%,transparent 66%) !important}
+.bg i:nth-child(2){background:radial-gradient(circle,rgba(0,242,254,.13) 0%,transparent 68%) !important}
+.bg i:nth-child(3){background:radial-gradient(circle,rgba(255,138,61,.10) 0%,transparent 68%) !important}
+.bg i:nth-child(4){background:radial-gradient(circle,rgba(168,85,247,.14) 0%,transparent 70%) !important}
+.bg i{animation:orbDrift 22s ease-in-out infinite alternate}
+.bg i:nth-child(2){animation-duration:28s;animation-delay:-6s}
+.bg i:nth-child(3){animation-duration:34s;animation-delay:-12s}
+.bg i:nth-child(4){animation-duration:26s;animation-delay:-18s}
+@keyframes orbDrift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(40px,-30px,0) scale(1.08)}}
+@media(prefers-reduced-motion:reduce){.bg i{animation:none !important}}
