@@ -403,6 +403,26 @@
     else requestAnimationFrame(frame);
   })();
 
+
+  /* ---------- gallery scroll reveal (IntersectionObserver, zero cost) ---------- */
+  (function () {
+    var items = document.querySelectorAll('.galitem');
+    if (!items.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e, idx) {
+        if (e.isIntersecting) {
+          setTimeout(function () { e.target.classList.add('in'); }, idx * 70);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
