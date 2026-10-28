@@ -14,13 +14,13 @@
   var WA_NUMBER = '919620024812';
 
   var TIERS = {
-    website: { essential: 19999, professional: 29999, complete: 49999, elite: 89999 },
-    crm:     { essential: 74999, professional: 109999, complete: 149999, elite: 299999 },
-    app:     { essential: 89999, professional: 139999, complete: 199999, elite: 399999 }
+    website: { launchpad: 19999, growth: 29999, conquerer: 49999, empire: 89999 },
+    crm:     { launchpad: 74999, growth: 109999, conquerer: 149999, empire: 299999 },
+    app:     { launchpad: 89999, growth: 139999, conquerer: 199999, empire: 399999 }
   };
 
   var CORE_LABEL = { website: 'Website', crm: 'CRM', app: 'App' };
-  var TIER_LABEL = { essential: 'Essential', professional: 'Professional', complete: 'Complete', elite: 'Elite' };
+  var TIER_LABEL = { launchpad: 'Launchpad', growth: 'Growth', conquerer: 'Conquerer', empire: 'Empire' };
 
   var ADDONS = [
     { g:'Presence', id:'gbp',       name:'Google Business Profile', desc:'Claim, verify, photos, categories', price: 4999 },
@@ -640,7 +640,7 @@
   /* ---------- CONFIGURATOR ---------- */
   var cfg = $('#cfg');
   if (cfg) {
-    var state = { core: 'website', tier: 'professional', addons: {}, monthly: {} };
+    var state = { core: 'website', tier: 'growth', addons: {}, monthly: {} };
 
     // build add-on lists
     var addonBox = $('#cfg-addons');
@@ -724,9 +724,9 @@
                   now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true}) + ' IST';
 
       var TIER_NOTE = {
-        website:{essential:'5 pages, mobile-first, SEO basics, WhatsApp',professional:'Adds AI assistant, PWA, Google Business, 2 socials',complete:'10 pages, all 8 listings, reviews pack, analytics, reporting',elite:'Custom Next.js build, everything included, 6 months care'},
-        crm:{essential:'Pipeline, contacts, quotes, AI bot, 5 users',professional:'Adds GST invoices, dashboards, mobile PWA',complete:'Adds WhatsApp API, presence bundle, email + SMS',elite:'Custom build, multi-role, ERP integration, SLA'},
-        app:{essential:'Android, login, payments, push, AI',professional:'Both stores, richer UI, analytics',complete:'Both stores, admin panel, presence bundle',elite:'Platform build, real-time, multi-role, SLA'}
+        website:{launchpad:'5 pages, mobile-first, SEO basics, WhatsApp',growth:'Adds AI assistant, PWA, Google Business, 2 socials',conquerer:'10 pages, all 8 listings, reviews pack, analytics, reporting',empire:'Custom Next.js build, everything included, 6 months care'},
+        crm:{launchpad:'Pipeline, contacts, quotes, AI bot, 5 users',growth:'Adds GST invoices, dashboards, mobile PWA',conquerer:'Adds WhatsApp API, presence bundle, email + SMS',empire:'Custom build, multi-role, ERP integration, SLA'},
+        app:{launchpad:'Android, login, payments, push, AI',growth:'Both stores, richer UI, analytics',conquerer:'Both stores, admin panel, presence bundle',empire:'Platform build, real-time, multi-role, SLA'}
       };
 
       var L = [];
