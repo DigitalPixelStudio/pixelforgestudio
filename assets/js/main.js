@@ -14,9 +14,12 @@
   var WA_NUMBER = '919620024812';
 
   var TIERS = {
-    website: { launchpad: 19999, growth: 29999, conquerer: 49999, empire: 89999 },
-    crm:     { launchpad: 74999, growth: 109999, conquerer: 149999, empire: 299999 },
-    app:     { launchpad: 89999, growth: 139999, conquerer: 199999, empire: 399999 }
+    'website':     { base: 19999 },
+    'website-ai':  { base: 34999 },
+    'crm':         { base: 49999 },
+    'crm-ai':      { base: 74999 },
+    'app':         { base: 39999 },
+    'app-ai':      { base: 64999 }
   };
 
   var CORE_LABEL = { website: 'Website', crm: 'CRM', app: 'App' };
@@ -625,15 +628,24 @@
       var lines = [];
       var oneTime = 0;
 
-      // tier price labels follow the selected core
-      Object.keys(TIER_LABEL).forEach(function (tk) {
-        var el = document.querySelector('[data-tierprice="' + tk + '"]');
-        if (el) el.textContent = inr(TIERS[state.core][tk]);
+      var CORE_LABEL2 = {
+        'website':'Website — Traditional', 'website-ai':'Website — Empire + AI',
+        'crm':'CRM — Traditional', 'crm-ai':'CRM — Empire + AI',
+        'app':'App — Traditional', 'app-ai':'App — Empire + AI'
+      };
+      var picked = (state.cores && state.cores.length) ? state.cores : (state.core ? [state.core] : []);
+      var corePrice = 0;
+      picked.forEach(function (c) {
+        var p = (TIERS[c] && TIERS[c].base) || 0;
+        lines.push({ t: CORE_LABEL2[c] || c, p: p });
+        oneTime += p; corePrice += p;
       });
-
-      var corePrice = TIERS[state.core][state.tier];
-      lines.push({ t: CORE_LABEL[state.core] + ' — ' + TIER_LABEL[state.tier], p: corePrice });
-      oneTime += corePrice;
+      // bundle discount: 2+ cores = 12% off the core total
+      if (picked.length >= 2) {
+        var disc = Math.round(corePrice * 0.12);
+        lines.push({ t: 'Bundle discount (2+ cores, 12%)', p: -disc });
+        oneTime -= disc;
+      }
 
       ADDONS.forEach(function (a) {
         if (state.addons[a.id]) {
@@ -682,8 +694,9 @@
       L.push('Ref: ' + ref);
       L.push('');
       L.push('*WHAT THEY WANT*');
-      L.push(CORE_LABEL[state.core] + ' — ' + TIER_LABEL[state.tier] + '  (' + inr(corePrice) + ')');
-      L.push('_' + (TIER_NOTE[state.core] && TIER_NOTE[state.core][state.tier] || '') + '_');
+      picked.forEach(function (c) {
+        L.push('• ' + (CORE_LABEL2[c] || c) + '  (' + inr((TIERS[c] && TIERS[c].base) || 0) + ')');
+      });
 
       var chosen = ADDONS.filter(function (a) { return state.addons[a.id]; });
       if (chosen.length) {
