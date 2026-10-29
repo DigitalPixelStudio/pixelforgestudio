@@ -3684,3 +3684,20 @@ header.nav{height:auto;padding-top:10px;padding-bottom:10px}
 /* stronger AMOLED glow */
 body::before{filter:blur(70px) saturate(175%) !important;opacity:1}
 body::after{filter:blur(90px) !important;opacity:.9}
+
+/* ---------- stop pixelation: no upscale, no aggressive zoom ---------- */
+.cimg img,.galitem img,.bandimg img,.card .cimg img{
+  image-rendering:auto;
+  transform:scale(1) !important;
+  transition:transform .5s cubic-bezier(.16,1,.3,1) !important;
+}
+.card:hover .cimg img,.galitem:hover img,.bandimg:hover img{
+  transform:scale(1.02) !important;   /* was 1.04–1.06 → caused blur */
+}
+.cimg,.galitem,.bandimg{background:#0B0D14;overflow:hidden}
+/* ensure containers never stretch an image past its native size */
+.cimg img,.bandimg img,.galitem img{width:100%;height:auto;object-fit:cover}
+.paynote{margin-top:18px;padding:20px 24px;border-radius:14px;
+  background:#101820;border:1px solid rgba(139,92,246,.26);
+  font-size:.86rem;color:#B9C0DE;line-height:1.7}
+.paynote b{color:#C4B5FD}
