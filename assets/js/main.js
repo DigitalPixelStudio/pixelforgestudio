@@ -576,7 +576,15 @@
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () { /* silent */ });
+      navigator.serviceWorker.register('sw.js').then(function (reg) {
+        reg.update();
+        reg.addEventListener('updatefound', function () {
+          var w = reg.installing;
+          if (w) w.addEventListener('statechange', function () {
+            if (w.state === 'installed' && navigator.serviceWorker.controller) w.postMessage('skip');
+          });
+        });
+      }).catch(function () { /* silent */ });
     });
   }
 
