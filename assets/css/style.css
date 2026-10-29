@@ -3921,3 +3921,49 @@ body{transform:translateZ(0);-webkit-font-smoothing:antialiased}
 /* kill the last infinite animations */
 .tick-track{animation-duration:60s !important}
 #pbar{transition:none !important}
+
+/* bot panel — hard override */
+#botpanel.open,
+#botpanel.on{
+  opacity:1 !important;
+  transform:none !important;
+  pointer-events:auto !important;
+  visibility:visible !important;
+  display:block !important;
+}
+#botpanel{
+  z-index:9500 !important;
+}
+
+/* HARD STOP: an inherited animation was pinning the bot panel at opacity 0 */
+#botpanel, #botpanel.open, .botpanel, .botpanel.open{
+  animation: none !important;
+  -webkit-animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+#botpanel:not(.open), .botpanel:not(.open){
+  opacity: 0 !important;
+  transform: translateY(12px) scale(.97) !important;
+  pointer-events: none !important;
+  display: block !important;
+}
+
+/* FINAL: display-based toggle — opacity removed from the equation entirely */
+.botpanel, #botpanel{
+  display:none !important;
+  opacity:1 !important;
+  filter:none !important;
+  animation:none !important;
+  transform:none !important;
+  visibility:visible !important;
+}
+.botpanel.open, #botpanel.open, .botpanel.on, #botpanel.on{
+  display:block !important;
+  opacity:1 !important;
+  transform:none !important;
+  pointer-events:auto !important;
+}
