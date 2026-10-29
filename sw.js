@@ -1,4 +1,4 @@
-const C = 'pf-v73';
+const C = 'pf-v74';
 const ASSETS = ['./','./index.html','./services.html','./packages.html','./add-ons.html','./work.html','./about.html','./process.html','./faq.html','./contact.html','./assets/css/style.css','./assets/js/main.js'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(C).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== C).map(x => caches.delete(x)))).then(() => self.clients.claim())); });
