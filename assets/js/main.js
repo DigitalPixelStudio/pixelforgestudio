@@ -523,6 +523,35 @@
     });
   })();
 
+
+  /* ---------- scroll progress + spotlight ---------- */
+  (function () {
+    var bar = document.createElement('div');
+    bar.id = 'pbar';
+    document.body.appendChild(bar);
+    var raf = false;
+    function upd() {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+      raf = false;
+    }
+    addEventListener('scroll', function () {
+      if (!raf) { raf = true; requestAnimationFrame(upd); }
+    }, { passive: true });
+    upd();
+
+    if (matchMedia('(hover:hover)').matches) {
+      var sel = '.sitem,.bene,.card,.galitem,.cnt,.tier,.vitem';
+      document.addEventListener('pointermove', function (e) {
+        var el = e.target.closest(sel);
+        if (!el) return;
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      }, { passive: true });
+    }
+  })();
+
   /* ---------- PWA service worker ---------- */
   if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     window.addEventListener('load', function () {
@@ -1005,52 +1034,6 @@
         a:'Two ways. Tap <b>WhatsApp</b> and we build the quote with you, or tap <b>Pay now</b> under the configurator to place it with a deposit. Either way you get a reference number and a written scope before any work starts — and a free homepage concept within 48 hours.' },
       { t:'thank thanks ok great nice good bye bye',
         a:'Happy to help. If anything else comes up, message us on WhatsApp — we usually reply within five minutes during business hours. Good luck with the build.' },
-      { t:'launchpad beginner portfolio starter first cheap small',
-        a:'<b>Launchpad ₹9,999</b> — one page, Google Business Profile, Bing indexing and WhatsApp setup, live in 5 days. It is built for beginners, portfolios and first-time businesses who need to exist online credibly without paying for software they will not use. You can upgrade later and the fee is credited.' },
-      { t:'pwa app install store play offline push difference native',
-        a:'Every app we build is a <b>PWA — Progressive Web App</b>. It installs straight from the browser, works offline, and sends push notifications. No Play Store approval, no 30% store cut, no separate iOS build. One codebase runs on Android, iPhone and desktop.' },
-      { t:'benefit benefits why what does it do outcome value result',
-        a:'Four outcomes, one system: <b>Website</b> — you get found and trusted. <b>CRM</b> — no enquiry is lost and you see where money is stuck. <b>PWA App</b> — your business sits on their home screen. <b>AI Assistant</b> — you stop being the bottleneck at 11pm. Each works alone; together the business runs whether you are watching or not.' },
-      { t:'how long really 7 days possible fast why trust timeline realistic',
-        a:'Seven days runs from the moment we have your content and photos, not from the first call. Day 1 scope, days 2-5 build, day 6 review, day 7 handover. It is possible because the design system, deployment pipeline and testing are already built — we assemble proven parts rather than inventing them.' },
-      { t:'what do you need from me content photos logo text copy writing',
-        a:'Your business name, your services with prices, photos if you have them, and a logo. No logo? We use a clean wordmark. No photos? We source licensed images for your category. Content is usually the slowest part — send it early and the seven days holds.' },
-      { t:'revision changes rounds edit how many free',
-        a:'Two rounds of changes are included on every build. In practice most projects use one. Additional rounds are ₹2,999 each, though we have never charged a client for a third.' },
-      { t:'refund cancel cancelation money back policy',
-        a:'Single website or CRM: live by the agreed date or the fee is refunded. Apps and stacks are milestone-based — miss one by more than seven days and that milestone is waived. Before work starts, a full refund minus any third-party costs already incurred.' },
-      { t:'contract agreement terms legal lock in exit leave',
-        a:'One-page scope document: what is being built, the price, the date, what happens if either side is late. No long contract, no lock-in clause, no exclusivity. Your domain and customer data are always yours and export on request.' },
-      { t:'hosting server where hosted cloud uptime backup',
-        a:'Hosted on Cloudflare edge infrastructure with SSL, daily backups and uptime monitoring. Static-first delivery means it loads fast anywhere in India. Hosting is included in the build for the first year; after that it is part of a care plan or billed at cost.' },
-      { t:'seo ranking google appear search local pack map',
-        a:'Three layers: technical SEO in the build (schema, sitemap, speed, Search Console + Bing), Google Business Profile for the map pack, and content. Local SEO runs ₹19,999/month, SEO Growth ₹29,999/month — both include conversion tracking.' },
-      { t:'whatsapp number change update contact detail',
-        a:'Send us the new number on WhatsApp and we update the site, the Google listing and the AI assistant within one working day. Nothing else needs to change.' },
-      { t:'gst invoice bill tax receipt company account',
-        a:'We issue a GST-compliant invoice for every payment. Our Udyam registration is in the footer if your accounts team needs to verify us. GST is 18% and shown separately on the invoice.' },
-      { t:'domain name buy register who owns transfer',
-        a:'We register it in your name and hand over the registrar login. Typical cost ₹800–₹1,200 a year, paid directly by you — no markup from us. You can move it to another host any time without asking us.' },
-      { t:'language kannada hindi english regional tamil telugu',
-        a:'We build in Kannada and English as standard, and can do Hindi, Tamil or Telugu content on request. The AI assistant can run bilingually too — it detects the language the customer writes in and replies in kind.' },
-      { t:'ai assistant bot how works trained data privacy my business',
-        a:'The AI is trained only on your business — services, prices, timings, policies. It does not learn from your competitors and does not share data across clients. If it is unsure it hands off to you on WhatsApp rather than guessing. You can switch it off any time.' },
-      { t:'small business tiny shop one person worth it budget low',
-        a:'Yes — that is exactly who the Launchpad at ₹9,999 is for. One page, Google Business Profile, Bing and WhatsApp, live in five days. It gets you found and contacted without paying for software you will not use. Upgrade later and the fee is credited.' },
-      { t:'payment method upi card cash cheque bank transfer',
-        a:'UPI is the primary method — Airtel merchant VPA, QR in the payments section. Bank transfer works for larger projects. We do not take cards or cash. Payment is 100% in advance; work begins once received and the package is procured.' },
-      { t:'what happens after launch support care maintain',
-        a:'Three months of care is included free — uptime, backups, security, updates and small fixes. After that it continues from ₹2,499/month only if you want it. No auto-renewal, no lock-in.' },
-      { t:'competitor other agency cheaper why you compare difference',
-        a:'Agencies charge ₹60,000 to ₹2,50,000 plus retainers. Freelancers vanish. We publish prices, show the design first, include the AI and CRM instead of billing separately, and hold a seven-day date we refund if we miss. The comparison table on this page has the full picture.' },
-      { t:'redesign old website existing site move migrate',
-        a:'Yes. We rebuild on your existing domain and protect your rankings — 301 redirects, sitemap resubmission and Search Console monitoring for the first 30 days. Redesigns start at ₹19,999.' },
-      { t:'who are you company about trust verified registered udyam',
-        a:'Pixel Forge Studio is a Bengaluru studio registered with the Ministry of MSME — Udyam UDYAM-KA-03-0460058, verifiable on the government portal. Trading since October 2023. Meta Verified business on WhatsApp.' },
-      { t:'remote office visit meet in person bangalore location',
-        a:'We work remotely with clients across India — no office visits needed. Bengaluru clients can request an on-site meeting by appointment. Everything else runs over WhatsApp, calls and screen-shares.' },
-      { t:'app store play ios android native pwa difference',
-        a:'We build PWAs, not native apps. A PWA installs from the browser, works offline, sends push notifications and runs on Android, iPhone and desktop from one codebase — with no Play Store approval and no 30% store cut. Native is only worth it if you need camera hardware access or Bluetooth.' },
       { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
