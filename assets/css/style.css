@@ -3434,3 +3434,39 @@ header.nav,header.nav.scrolled{background:#090A0F !important}
   .sec-head .num,.socials a:hover svg,.f-socials a:hover svg,.wa:hover svg,
   .botbtn:hover svg,.gbadge:hover .stars,.case-open:hover svg{animation:none !important}
 }
+
+/* ---------- benefits grid ---------- */
+.benes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.bene{background:#12141D;border:1px solid rgba(255,255,255,.10);border-radius:16px;
+  padding:24px 20px;transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s}
+.bene:hover{transform:translateY(-5px);border-color:rgba(139,92,246,.5);
+  box-shadow:0 24px 56px -30px rgba(139,92,246,.85)}
+.bico{width:50px;height:50px;border-radius:13px;display:grid;place-items:center;margin-bottom:14px;
+  border:1px solid rgba(255,255,255,.12)}
+.bico svg{width:23px;height:23px;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.b-web{background:rgba(139,92,246,.15);border-color:rgba(139,92,246,.34)} .b-web svg{stroke:#C4B5FD}
+.b-crm{background:rgba(0,242,254,.12);border-color:rgba(0,242,254,.3)} .b-crm svg{stroke:#00F2FE}
+.b-app{background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.3)} .b-app svg{stroke:#4ADE80}
+.b-ai{background:rgba(255,138,61,.13);border-color:rgba(255,138,61,.32)} .b-ai svg{stroke:#FF8A3D}
+.bnum{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:#5A6178;letter-spacing:.14em;display:block;margin-bottom:6px}
+.bene h4{font-size:1.08rem;margin:0 0 6px;color:#F8FAFC;letter-spacing:-.02em}
+.bline{font-size:.82rem;color:#C4B5FD;margin:0 0 12px;line-height:1.5;font-weight:500}
+.bene ul{list-style:none;padding:0;margin:0}
+.bene li{position:relative;padding:5px 0 5px 18px;font-size:.76rem;color:#9AA6C0;line-height:1.5}
+.bene li::before{content:'';position:absolute;left:0;top:10px;width:8px;height:8px;
+  background:no-repeat center/contain;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B5CF6' stroke-width='4'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E")}
+.benenote{margin-top:18px;padding:20px 24px;border-radius:14px;
+  background:#141A24;border:1px solid rgba(0,242,254,.24);
+  font-size:.86rem;color:#B9C0DE;line-height:1.68}
+.benenote b{color:#00F2FE}
+@media(max-width:1100px){.benes{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.benes{grid-template-columns:1fr}.bene{padding:20px 16px}}
+
+/* neon head topics */
+.sec-head h2{animation:neonHead 8s ease-in-out infinite}
+@keyframes neonHead{
+  0%,100%{filter:drop-shadow(0 0 0 rgba(139,92,246,0))}
+  50%{filter:drop-shadow(0 0 18px rgba(139,92,246,.55))}
+}
+@media(prefers-reduced-motion:reduce){.sec-head h2{animation:none !important}}
