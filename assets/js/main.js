@@ -653,6 +653,8 @@
   var counters = $$('[data-count]');
   if (STILL) {
     counters.forEach(function (el) {
+      var txt = el.getAttribute('data-text');
+      if (txt) { el.textContent = txt; return; }
       var v = el.getAttribute('data-count');
       var suf = el.getAttribute('data-suffix') || '';
       var pre = el.getAttribute('data-prefix') || '';
@@ -666,6 +668,8 @@
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         var el = e.target;
+        var txt = el.getAttribute('data-text');
+        if (txt) { el.textContent = txt; cio.unobserve(el); return; }
         var target = parseFloat(el.getAttribute('data-count'));
         var suffix = el.getAttribute('data-suffix') || '';
         var prefix = el.getAttribute('data-prefix') || '';
