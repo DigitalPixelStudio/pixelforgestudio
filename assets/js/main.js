@@ -1005,6 +1005,12 @@
         a:'Two ways. Tap <b>WhatsApp</b> and we build the quote with you, or tap <b>Pay now</b> under the configurator to place it with a deposit. Either way you get a reference number and a written scope before any work starts — and a free homepage concept within 48 hours.' },
       { t:'thank thanks ok great nice good bye bye',
         a:'Happy to help. If anything else comes up, message us on WhatsApp — we usually reply within five minutes during business hours. Good luck with the build.' },
+      { t:'launchpad beginner portfolio starter first cheap small',
+        a:'<b>Launchpad ₹9,999</b> — one page, Google Business Profile, Bing indexing and WhatsApp setup, live in 5 days. It is built for beginners, portfolios and first-time businesses who need to exist online credibly without paying for software they will not use. You can upgrade later and the fee is credited.' },
+      { t:'pwa app install store play offline push difference native',
+        a:'Every app we build is a <b>PWA — Progressive Web App</b>. It installs straight from the browser, works offline, and sends push notifications. No Play Store approval, no 30% store cut, no separate iOS build. One codebase runs on Android, iPhone and desktop.' },
+      { t:'benefit benefits why what does it do outcome value result',
+        a:'Four outcomes, one system: <b>Website</b> — you get found and trusted. <b>CRM</b> — no enquiry is lost and you see where money is stuck. <b>PWA App</b> — your business sits on their home screen. <b>AI Assistant</b> — you stop being the bottleneck at 11pm. Each works alone; together the business runs whether you are watching or not.' },
       { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
