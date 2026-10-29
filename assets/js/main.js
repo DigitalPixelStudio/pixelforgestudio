@@ -540,14 +540,21 @@
     }, { passive: true });
     upd();
 
-    if (matchMedia('(hover:hover)').matches) {
-      var sel = '.sitem,.bene,.card,.galitem,.cnt,.tier,.vitem,.bcard';
+    if (matchMedia('(hover:hover) and (min-width:1024px)').matches) {
+      var rafP = false, lastEv = null;
       document.addEventListener('pointermove', function (e) {
-        var el = e.target.closest(sel);
-        if (!el) return;
-        var r = el.getBoundingClientRect();
-        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        lastEv = e;
+        if (rafP) return;
+        rafP = true;
+        requestAnimationFrame(function () {
+          rafP = false;
+          if (!lastEv) return;
+          var el = lastEv.target.closest('.bcard');
+          if (!el) return;
+          var r = el.getBoundingClientRect();
+          el.style.setProperty('--mx', (lastEv.clientX - r.left) + 'px');
+          el.style.setProperty('--my', (lastEv.clientY - r.top) + 'px');
+        });
       }, { passive: true });
     }
   })();
