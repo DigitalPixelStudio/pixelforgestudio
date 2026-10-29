@@ -3779,3 +3779,24 @@ html{scroll-behavior:auto}
   .sitem,.bene,.card,.cnt,.bcard{box-shadow:none !important}
   .tick-track{animation-duration:52s}
 }
+
+/* ==========================================================================
+   v69 — final jitter kill
+   ========================================================================== */
+/* hard-reserve image boxes: no reflow, ever */
+.cimg img,.bandimg img,.galitem img,.case-device img{
+  aspect-ratio:16/10;object-fit:cover;width:100%;height:auto;
+  content-visibility:auto;
+}
+/* canvas: contained so it never invalidates the page */
+#fx3d{contain:strict;will-change:transform;pointer-events:none}
+/* ticker: no animation on mobile (it's the other constant repaint) */
+@media(max-width:820px){.tick-track{animation:none !important;overflow-x:auto}}
+/* progress bar: cheaper */
+#pbar{will-change:width;transform:translateZ(0)}
+/* every section isolates its own paint */
+.sec,.sec-alt{contain:layout style paint;content-visibility:auto;contain-intrinsic-size:auto 620px}
+/* drop remaining box-shadows on large elements (expensive to composite) */
+.bandimg,.galitem,.case-device{box-shadow:none !important}
+/* one transform layer for cards, nothing else */
+.card,.vitem,.sitem,.cnt,.bene,.bcard{transform:translateZ(0)}
