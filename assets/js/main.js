@@ -250,7 +250,8 @@
 
     /* ---- geometry ---- */
     var NODES = [], EDGES = [], STARS = [];
-    var LAT = 9, LON = 14;
+    var MOB = window.innerWidth < 820;
+    var LAT = MOB ? 5 : 9, LON = MOB ? 8 : 14;
 
     function buildSphere() {
       NODES = [];
@@ -335,8 +336,10 @@
       ctx.restore();
     }
 
-    function frame() {
+    var lastT = 0, MIN_MS = (window.innerWidth < 820) ? 33 : 16;
+    function frame(ts) {
       if (!running) return;
+      if (ts && ts - lastT < MIN_MS) { requestAnimationFrame(frame); return; }
       ctx.clearRect(0, 0, W, H);
 
       var rotY = t * 0.0022;
@@ -393,6 +396,7 @@
       ring(R * 1.42, 0.42, 0.92, t * 0.0021, 0.13, 'rgba(167,139,250,ALPHA)');
 
       t += 16;
+      lastT = performance.now();
       requestAnimationFrame(frame);
     }
 
@@ -401,6 +405,16 @@
       running = !document.hidden;
       if (running) requestAnimationFrame(frame);
     });
+
+    /* pause the canvas entirely once the hero leaves the viewport */
+    var heroEl = document.querySelector('.hero') || document.querySelector('header');
+    if (heroEl && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        var vis = es[0].isIntersecting;
+        if (vis && !running) { running = true; requestAnimationFrame(frame); }
+        else if (!vis) { running = false; }
+      }, { threshold: 0 }).observe(heroEl);
+    }
 
     size();
     if (reduce) { frame(); running = false; }
