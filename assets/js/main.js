@@ -1276,15 +1276,23 @@
       botLog.scrollTop = botLog.scrollHeight;
     }
 
+    function setBot(open) {
+      botPanel.classList.toggle('open', open);
+      botPanel.style.opacity = open ? '1' : '0';
+      botPanel.style.transform = open ? 'none' : 'translateY(12px) scale(.97)';
+      botPanel.style.pointerEvents = open ? 'auto' : 'none';
+      botPanel.style.visibility = 'visible';
+    }
     botBtn.addEventListener('click', function () {
-      botPanel.classList.toggle('open');
+      var willOpen = !botPanel.classList.contains('open');
+      setBot(willOpen);
       if (botPanel.classList.contains('open') && !botLog.childElementCount) {
         push(ctx.visits > 1
           ? 'Welcome back. Picking up where you left off — what would you like to know?'
           : 'I can help you pick the right package in under two minutes — or explain anything we offer. What kind of business is it?', 'bot');
         setTimeout(function () { chips(['Website', 'CRM', 'App', 'Just browsing']); }, 300);
       }
-      if (botPanel.classList.contains('open')) botInput.focus();
+      if (botPanel.classList.contains('open')) { setBot(true); botInput.focus(); }
     });
 
     if (botForm) {
