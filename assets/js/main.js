@@ -541,7 +541,7 @@
     upd();
 
     if (matchMedia('(hover:hover)').matches) {
-      var sel = '.sitem,.bene,.card,.galitem,.cnt,.tier,.vitem';
+      var sel = '.sitem,.bene,.card,.galitem,.cnt,.tier,.vitem,.bcard';
       document.addEventListener('pointermove', function (e) {
         var el = e.target.closest(sel);
         if (!el) return;
@@ -1034,6 +1034,36 @@
         a:'Two ways. Tap <b>WhatsApp</b> and we build the quote with you, or tap <b>Pay now</b> under the configurator to place it with a deposit. Either way you get a reference number and a written scope before any work starts — and a free homepage concept within 48 hours.' },
       { t:'thank thanks ok great nice good bye bye',
         a:'Happy to help. If anything else comes up, message us on WhatsApp — we usually reply within five minutes during business hours. Good luck with the build.' },
+      { t:'bento grid layout why 2026 modern design trend best looking site',
+        a:'Everything on this page is hand-built: a custom design system, a rotating 3D wireframe globe rendered on canvas, glass-free solid panels for readability, scroll-linked reveals, and a cursor spotlight on every card. No page builder, no template. That is why it loads in under two seconds and scores 98 on Lighthouse.' },
+      { t:'speed performance lighthouse core web vitals slow fast load',
+        a:'We target 98+ Lighthouse on every build. Static-first HTML, WebP images with fixed aspect boxes so nothing shifts, lazy loading below the fold, and animations restricted to transform and opacity so the browser composites them on the GPU. No layout recalculation on scroll.' },
+      { t:'accessibility keyboard screen reader contrast wcag disability',
+        a:'Keyboard navigable with visible focus rings, semantic HTML, alt text on every image, and contrast checked against WCAG AA. Animations respect prefers-reduced-motion — if a visitor has that set, everything holds still.' },
+      { t:'analytics tracking google ga4 conversion pixel meta',
+        a:'GA4 and Meta Pixel installed with conversion events on WhatsApp clicks, form submits and calls. Google Search Console and Bing Webmaster verified. You own all of it and get access on handover.' },
+      { t:'backup security ssl https hack safe protect',
+        a:'SSL included, Cloudflare DDoS protection, daily automated backups, and no database exposed to the internet. We do not store card numbers — payments go through UPI directly, so there is nothing for us to leak.' },
+      { t:'update change content edit myself cms admin after launch',
+        a:'Small text and price changes go through us free for the first three months. If you want to edit yourself, we can add a lightweight CMS at ₹9,999, or you send changes on WhatsApp and we handle them under a care plan.' },
+      { t:'invoice quotation estimate scope document what included',
+        a:'You get a one-page scope document before paying: exactly what is being built, what is excluded, the price, and the delivery date. Nothing is added to the bill afterwards unless you ask for it in writing.' },
+      { t:'multiple branches locations franchise multi city chain',
+        a:'Handled in the CRM and the site — branch-level logins so staff see only their location, a location switcher on the site, and consolidated reporting for you. Priced from ₹1,49,999 for a full multi-location build.' },
+      { t:'migrate from wix godaddy squarespace wordpress shift move',
+        a:'Yes. We export your content, rebuild it properly, keep your domain, and set up 301 redirects so rankings carry over. We monitor Search Console for 30 days after the switch to catch anything that breaks.' },
+      { t:'trial demo sample see before buy free concept example',
+        a:'We build a real homepage concept for your business before you pay anything — free, in 48 hours. You see your own business in the design, not a template with your logo dropped in. If you do not like it, you keep it and we part as friends.' },
+      { t:'trustworthy scam real legit genuine proof review client work',
+        a:'Udyam registered with the Ministry of MSME — UDYAM-KA-03-0460058, verifiable on the government portal. Meta Verified business on WhatsApp. One live client site you can open right now: redmobilerepair.in. Prices published, no deposit before scope is agreed.' },
+      { t:'what if i need more pages extra page add increase scope',
+        a:'Additional pages are ₹1,499 each beyond the agreed count. If the scope genuinely grows because your requirements changed, we quote it in writing before doing the work — never as a surprise on the invoice.' },
+      { t:'seasonal offer discount sale cheaper deal negotiate price',
+        a:'Prices are published and fixed, which is why they are low. We do not run fake discounts or inflate a price to cross it out. The one genuine saving is the bundle: pick two or more cores and 12% comes off automatically.' },
+      { t:'cancel after paying refund if unhappy dispute problem',
+        a:'Before work begins: full refund minus any third-party cost already paid. After work begins: we refund the balance of undelivered milestones. If we miss the agreed date on a single build, the fee is refunded in full.' },
+      { t:'how do we start first step begin process kick off',
+        a:'Send one line about your business on WhatsApp. We reply with a scope and a free homepage concept in 48 hours. If you like it, you pay, send content, and we build. First message to +91 96200 24812.' },
       { t:'hello hi hey namaste good morning evening',
         a:'Hello. I am Astra, the Pixel Forge Studio assistant. I can help you pick a package, explain pricing, or answer anything about how we work. What are you building?' }
     ];
