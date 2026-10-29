@@ -3470,3 +3470,19 @@ header.nav,header.nav.scrolled{background:#090A0F !important}
   50%{filter:drop-shadow(0 0 18px rgba(139,92,246,.55))}
 }
 @media(prefers-reduced-motion:reduce){.sec-head h2{animation:none !important}}
+
+/* extra hover effects */
+.card,.vitem,.bene,.galitem,.trow,.whorow,.sitem,.cnt,.pcard-l{
+  transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .3s,background .3s;
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(139,92,246,.5)}
+.cnt:hover{transform:translateY(-4px);border-color:rgba(0,242,254,.45);
+  box-shadow:0 22px 50px -28px rgba(0,242,254,.7)}
+.cimg img{transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.card:hover .cimg img{transform:scale(1.06)}
+/* smooth scroll perf */
+html{scroll-behavior:smooth}
+.galitem,.bandimg{will-change:auto}
+@media(prefers-reduced-motion:reduce){
+  .card:hover,.cnt:hover,.cimg img{transform:none !important}
+}
