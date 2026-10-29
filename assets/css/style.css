@@ -3839,3 +3839,85 @@ h1,h2,h3,h4,.sec-head h2,.track-head h3,.bene h4,.bcard h4{
 @media(prefers-reduced-motion:reduce){
   .hero-title{animation:none !important}
 }
+
+/* ==========================================================================
+   v73 — UI FIXES: table clipping, logo, bottom bar, smoothness
+   ========================================================================== */
+
+/* ---------- 1. COMPARISON TABLE: stacked cards on mobile ---------- */
+@media(max-width:760px){
+  .cmpwrap{overflow:visible !important;border:0 !important;border-radius:0 !important;background:transparent !important}
+  .cmp2{min-width:0 !important;width:100% !important;display:block !important;background:transparent !important;border-collapse:separate}
+  .cmp2 thead{display:none !important}
+  .cmp2 tbody{display:block !important}
+  .cmp2 tr{
+    display:block !important;margin-bottom:12px;border-radius:14px;
+    background:#12141D;border:1px solid rgba(255,255,255,.10);
+    padding:6px 0;overflow:hidden;
+  }
+  .cmp2 td{
+    display:grid !important;grid-template-columns:1fr auto;gap:12px;
+    align-items:baseline;padding:11px 16px !important;
+    border-bottom:1px solid rgba(255,255,255,.055) !important;
+    font-size:.82rem !important;
+  }
+  .cmp2 td:last-child{border-bottom:0 !important}
+  /* first cell = the row title */
+  .cmp2 td:first-child{
+    display:block !important;background:rgba(139,92,246,.10);
+    font-weight:700 !important;color:#F8FAFC !important;
+    font-size:.78rem !important;letter-spacing:.02em;
+    padding:11px 16px !important;margin-bottom:2px;
+  }
+  /* vendor label appears before the value */
+  .cmp2 td[data-label]::before{
+    content:attr(data-label);
+    font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+    color:#6B7590;font-family:'JetBrains Mono',monospace;
+    font-weight:500;
+  }
+  .cmp2 td.us{background:rgba(139,92,246,.08) !important}
+  .cmp2 td.us::before{color:#C4B5FD}
+}
+
+/* ---------- 2. HEADER LOGO: square, contained, never squished ---------- */
+.brand-mark{overflow:hidden}
+.brand-mark img{
+  width:100% !important;height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  border-radius:12px;
+  padding:3px;
+}
+
+/* ---------- 3. BOTTOM BAR: no wrapping ---------- */
+.mbar a,.mbar .btn,.mbar button{
+  white-space:nowrap !important;
+  font-size:.8rem !important;
+  letter-spacing:-.01em;
+  padding:12px 10px !important;
+}
+@media(max-width:400px){
+  .mbar a,.mbar .btn,.mbar button{font-size:.72rem !important;padding:11px 6px !important}
+}
+
+/* ---------- 4. TABLE: never overflow the viewport ---------- */
+.cmpwrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cmp2{max-width:100%}
+table{max-width:100%}
+
+/* ---------- 5. SMOOTHNESS: strip remaining expensive effects ---------- */
+/* no content-visibility — it was causing layout jumps on some Android browsers */
+.sec,.sec-alt,.ticker,.galitem,.bandimg{
+  content-visibility:visible !important;
+  contain:none !important;
+}
+/* no contain on cards either */
+.card,.vitem,.sitem,.cnt,.bene,.bcard,.tier,.galitem{contain:none !important}
+/* single compositing layer for the whole page */
+body{transform:translateZ(0);-webkit-font-smoothing:antialiased}
+/* canvas: hard-stop any repaint bleed */
+#fx3d{contain:strict;will-change:auto}
+/* kill the last infinite animations */
+.tick-track{animation-duration:60s !important}
+#pbar{transition:none !important}
