@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pixelforgestudio.com/sitemap.xml
+Sitemap: https://thepixelforgestudio.in/sitemap.xml
