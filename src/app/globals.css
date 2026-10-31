@@ -1,21 +1,33 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #030311;
-  --bg-alt: #08082a;
-  --bg-card: #0d0d35;
-  --text: #e8e8f8;
-  --text-muted: #7878a8;
-  --accent: #6d5cff;
-  --accent2: #00e5a0;
-  --accent3: #ff4d8d;
-  --accent4: #00b4ff;
-  --border: rgba(109, 92, 255, 0.12);
-  --glass: rgba(13, 13, 53, 0.6);
-  --glass-border: rgba(109, 92, 255, 0.18);
-  --cta-dark: #6d5cff;
-  --cta-radius: 980px;
-  --glow: 0 0 60px rgba(109, 92, 255, 0.12);
+  /* ---- AMOLED BLACK · RED · WHITE -------------------------------------
+     True black (#000) so OLED pixels are actually off — this is the whole
+     point of AMOLED. Every surface above it is a near-black step, never a
+     navy tint, so the red is the only colour on screen. */
+  --bg: #000000;
+  --bg-alt: #070707;
+  --bg-card: #0d0d0d;
+  --bg-elev: #141414;
+
+  --text: #ffffff;
+  --text-muted: #9a9a9a;
+  --text-dim: #5c5c5c;
+
+  /* one accent, used hard */
+  --accent: #ff2233;
+  --accent2: #ff4455;
+  --accent3: #ff6b7a;
+  --accent4: #ffffff;
+  --accent-deep: #c2000f;
+
+  --border: rgba(255, 34, 51, 0.16);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --glass: rgba(13, 13, 13, 0.72);
+  --glass-border: rgba(255, 34, 51, 0.20);
+  --cta-dark: #ff2233;
+  --cta-radius: 6px;
+  --glow: 0 0 60px rgba(255, 34, 51, 0.16);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -30,10 +42,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: rgba(109, 92, 255, 0.35); color: #fff; }
+::selection { background: rgba(255, 34, 51, 0.35); color: #fff; }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: rgba(109, 92, 255, 0.3); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(255, 34, 51, 0.3); border-radius: 99px; }
 
 /* --- Type Scale --- */
 .hero-apple { font-size: clamp(2.8rem, 8vw, 6rem); line-height: 1.01; letter-spacing: -0.032em; font-weight: 900; }
@@ -46,7 +58,7 @@ body {
 
 /* --- Glass --- */
 .glass {
-  background: linear-gradient(135deg, rgba(13,13,53,0.75), rgba(13,13,53,0.4));
+  background: linear-gradient(135deg, rgba(13,13,13,0.75), rgba(13,13,13,0.4));
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border: 1px solid var(--glass-border);
@@ -61,13 +73,13 @@ body {
 
 /* --- Gradient Text --- */
 .gradient-text {
-  background: linear-gradient(135deg, #6d5cff 0%, #00e5a0 40%, #00b4ff 70%, #ff4d8d 100%);
+  background: linear-gradient(135deg, #ff2233 0%, #ff6b7a 38%, #ffffff 72%, #ff2233 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .gradient-text-glow {
-  background: linear-gradient(135deg, #6d5cff, #a78bfa, #00e5a0, #00b4ff);
+  background: linear-gradient(135deg, #ff2233, #ff6b7a, #ffffff, #ff4455);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -87,18 +99,18 @@ body {
   background: linear-gradient(135deg, var(--accent), #8b78ff); color: #fff;
   font-weight: 700; font-size: 0.95rem; padding: 1rem 2rem;
   border-radius: var(--cta-radius);
-  box-shadow: 0 4px 30px rgba(109, 92, 255, 0.4);
+  box-shadow: 0 4px 30px rgba(255, 34, 51, 0.4);
   transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
 }
-.cta-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 40px rgba(109, 92, 255, 0.6); }
+.cta-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 40px rgba(255, 34, 51, 0.6); }
 .cta-outline {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  border: 1.5px solid rgba(109, 92, 255, 0.35); color: var(--text);
+  border: 1.5px solid rgba(255, 34, 51, 0.35); color: var(--text);
   font-weight: 600; font-size: 0.95rem; padding: 1rem 2rem;
-  border-radius: var(--cta-radius); background: rgba(109, 92, 255, 0.06);
+  border-radius: var(--cta-radius); background: rgba(255, 34, 51, 0.06);
   backdrop-filter: blur(20px); transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
 }
-.cta-outline:hover { background: rgba(109, 92, 255, 0.15); border-color: rgba(109, 92, 255, 0.6); transform: translateY(-3px); }
+.cta-outline:hover { background: rgba(255, 34, 51, 0.15); border-color: rgba(255, 34, 51, 0.6); transform: translateY(-3px); }
 
 /* --- Animations 120fps --- */
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
@@ -129,7 +141,7 @@ body {
 .gradient-border { position: relative; }
 .gradient-border::after {
   content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px;
-  background: conic-gradient(from var(--border-angle), #6d5cff, #00e5a0, #ff4d8d, #00b4ff, #6d5cff);
+  background: conic-gradient(from var(--border-angle), #ff2233, #ffffff, #ff6b7a, #ff2233, #ff2233);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   animation: border-rotate 6s linear infinite; pointer-events: none;
@@ -153,7 +165,7 @@ body {
 
 /* --- Dynamic Island --- */
 .dynamic-island {
-  background: linear-gradient(135deg, rgba(13,13,53,0.96), rgba(13,13,53,0.92));
+  background: linear-gradient(135deg, rgba(13,13,13,0.96), rgba(13,13,13,0.92));
   backdrop-filter: blur(35px) saturate(200%);
   border: 1px solid rgba(109,92,255,0.2);
   box-shadow: 0 12px 50px rgba(0,0,0,0.5), 0 0 40px rgba(109,92,255,0.1);
@@ -161,10 +173,10 @@ body {
 }
 
 /* --- Focus --- */
-a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid #6d5cff; outline-offset: 3px; border-radius: 12px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid #ff2233; outline-offset: 3px; border-radius: 12px; }
 
 /* --- Scroll Progress --- */
-.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; z-index: 90; background: linear-gradient(90deg,#6d5cff,#00e5a0,#00b4ff); width: 0; transition: width 0.1s linear; }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; z-index: 90; background: linear-gradient(90deg,#ff2233,#ffffff,#ff4455); width: 0; transition: width 0.1s linear; }
 
 /* --- Neon Glow --- */
 .neon-border {
@@ -232,4 +244,164 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid 
 .hex-bg {
   background-image: radial-gradient(rgba(109,92,255,0.06) 1px, transparent 1px);
   background-size: 30px 30px;
+}
+
+/* ==========================================================================
+   BRUTALIST LAYER — the reference's language, on AMOLED black
+   Huge uppercase type, hard edges, a marquee that never stops, one accent.
+   ========================================================================== */
+
+.brut-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+}
+
+/* the giant wordmark — 18vw, tight tracking, no softening */
+.brut-word {
+  font-family: var(--font-space), var(--font-inter), sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.2rem, 17vw, 15rem);
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0;
+}
+
+/* a red rule that reads like a printed mark */
+.brut-rule {
+  height: 2px;
+  background: var(--accent);
+  transform-origin: 0 50%;
+  animation: brutRuleIn 1s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes brutRuleIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* small caps metadata row */
+.brut-meta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.brut-meta .dot { color: var(--accent); }
+
+/* ---- the marquee strip ---- */
+.brut-marquee {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  background: #000;
+  padding: 14px 0;
+}
+.brut-marquee__track {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: brutScroll 34s linear infinite;
+}
+.brut-marquee:hover .brut-marquee__track { animation-play-state: paused; }
+@keyframes brutScroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.brut-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding: 0 1.6rem;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.brut-marquee__item::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---- numbered service rows, like the reference's 01–04 ---- */
+.brut-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  padding: 1.6rem 0;
+  border-top: 1px solid var(--border-soft);
+  transition: background-color .25s ease, padding-left .25s ease;
+}
+.brut-row:hover { background: rgba(255, 34, 51, 0.045); padding-left: 0.6rem; }
+.brut-row__num {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  padding-top: 0.5rem;
+}
+.brut-row__title {
+  font-size: clamp(1.4rem, 3.4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-transform: uppercase;
+}
+.brut-row__tags {
+  margin-top: 0.5rem;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* ---- hard-edged button ---- */
+.brut-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.9rem;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff;
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), background-color .2s ease;
+}
+.brut-btn:hover { transform: translateY(-2px); background: var(--accent2); }
+.brut-btn--ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.22);
+  color: #fff;
+}
+.brut-btn--ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.4); }
+
+/* grain, so the flat black has texture like print */
+.brut-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: radial-gradient(rgba(255,255,255,0.9) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brut-marquee__track { animation: none; }
+  .brut-rule { animation: none; }
+  .brut-btn:hover, .brut-row:hover { transform: none; }
 }
