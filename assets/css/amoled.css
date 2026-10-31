@@ -15,22 +15,22 @@
   --pf-black-4: #141414;
 
   /* the only colour we own */
-  --pf-red: #ff2233;
-  --pf-red-2: #ff4455;
+  --pf-red: #ff1e27;
+  --pf-red-2: #ff4d55;
   --pf-red-3: #ff6b7a;
   --pf-red-deep: #b3000d;
-  --pf-red-glow: rgba(255, 34, 51, 0.30);
+  --pf-red-glow: rgba(255, 30, 39, 0.30);
 
   /* type */
   --pf-white: #ffffff;
   --pf-text: #f2f2f2;
-  --pf-muted: #8f8f8f;
+  --pf-muted: #a1a1aa;
   --pf-dim: #5a5a5a;
 
   /* lines */
   --pf-line: rgba(255, 255, 255, 0.10);
   --pf-line-2: rgba(255, 255, 255, 0.055);
-  --pf-line-red: rgba(255, 34, 51, 0.30);
+  --pf-line-red: rgba(255, 30, 39, 0.30);
 
   /* remap the original variable names so every existing rule follows */
   --white: #ffffff;
@@ -39,11 +39,11 @@
   --line: rgba(255, 255, 255, 0.10);
   --line-2: rgba(255, 255, 255, 0.06);
 
-  --green: #ff2233;
-  --green-deep: #ff4455;
+  --green: #ff1e27;
+  --green-deep: #ff4d55;
   --green-dark: #b3000d;
-  --green-pale: rgba(255, 34, 51, 0.14);
-  --green-wash: rgba(255, 34, 51, 0.06);
+  --green-pale: rgba(255, 30, 39, 0.14);
+  --green-wash: rgba(255, 30, 39, 0.06);
 
   --ink: #ffffff;
   --ink-2: #cfcfcf;
@@ -61,7 +61,7 @@ body {
   background: var(--pf-black) !important;
   color: var(--pf-text) !important;
 }
-::selection { background: rgba(255, 34, 51, 0.32); color: #fff; }
+::selection { background: rgba(255, 30, 39, 0.32); color: #fff; }
 
 /* ---- force every light surface dark ---- */
 .bg,
@@ -187,7 +187,7 @@ button.btn {
 
 /* ---- status dot, eyebrow ---- */
 .status {
-  background: rgba(255,34,51,0.10) !important;
+  background: rgba(255,30,39,0.10) !important;
   border: 1px solid var(--pf-line-red) !important;
   color: var(--pf-red-3) !important;
 }
@@ -198,7 +198,7 @@ button.btn {
 .device {
   background: linear-gradient(160deg, #161616, #050505) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
-  box-shadow: 0 40px 90px -50px rgba(255,34,51,0.55), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  box-shadow: 0 40px 90px -50px rgba(255,30,39,0.55), inset 0 1px 0 rgba(255,255,255,0.08) !important;
 }
 .device-bar { background: var(--pf-red) !important; }
 
@@ -233,13 +233,13 @@ input::placeholder, textarea::placeholder { color: var(--pf-dim) !important; }
 input:focus, textarea:focus, select:focus {
   border-color: var(--pf-red) !important;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(255,34,51,0.18);
+  box-shadow: 0 0 0 3px rgba(255,30,39,0.18);
 }
 
 /* ---- scrollbar ---- */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--pf-black); }
-::-webkit-scrollbar-thumb { background: rgba(255,34,51,0.35); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(255,30,39,0.35); border-radius: 99px; }
 
 /* ==========================================================================
    LOADING SCREEN — industrial, from the reference
@@ -262,8 +262,8 @@ input:focus, textarea:focus, select:focus {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,34,51,0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,34,51,0.055) 1px, transparent 1px);
+    linear-gradient(rgba(255,30,39,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,30,39,0.055) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 10%, transparent 78%);
   -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 10%, transparent 78%);
@@ -305,10 +305,10 @@ input:focus, textarea:focus, select:focus {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(255,34,51,0.42);
+  border: 1px solid rgba(255,30,39,0.42);
 }
 .pf-load__spin::before { animation: pfSpinA 3.4s linear infinite; }
-.pf-load__spin::after  { inset: 8px; border-color: rgba(255,34,51,0.22); animation: pfSpinB 4.6s linear infinite reverse; }
+.pf-load__spin::after  { inset: 8px; border-color: rgba(255,30,39,0.22); animation: pfSpinB 4.6s linear infinite reverse; }
 @keyframes pfSpinA { to { transform: rotate(360deg); } }
 @keyframes pfSpinB { to { transform: rotate(360deg); } }
 
@@ -316,7 +316,7 @@ input:focus, textarea:focus, select:focus {
   width: 34px;
   height: 34px;
   background: var(--pf-red);
-  box-shadow: 0 0 26px rgba(255,34,51,0.65), 0 0 60px rgba(255,34,51,0.30);
+  box-shadow: 0 0 26px rgba(255,30,39,0.65), 0 0 60px rgba(255,30,39,0.30);
   animation: pfCorePulse 1.5s ease-in-out infinite;
 }
 @keyframes pfCorePulse {
@@ -330,7 +330,7 @@ input:focus, textarea:focus, select:focus {
   align-items: center;
   gap: 10px;
   padding: 8px 18px;
-  border: 1px solid rgba(255,34,51,0.34);
+  border: 1px solid rgba(255,30,39,0.34);
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 11px;
   font-weight: 500;
@@ -385,7 +385,7 @@ input:focus, textarea:focus, select:focus {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(58% 44% at 50% 6%, rgba(255,34,51,0.20), transparent 72%);
+  background: radial-gradient(58% 44% at 50% 6%, rgba(255,30,39,0.20), transparent 72%);
   pointer-events: none;
 }
 
@@ -532,7 +532,7 @@ input:focus, textarea:focus, select:focus {
   border: 1px solid rgba(255,255,255,0.14);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.10),
-    0 40px 80px -46px rgba(255,34,51,0.55);
+    0 40px 80px -46px rgba(255,30,39,0.55);
   overflow: hidden;
 }
 .pf-device__screen {
@@ -545,7 +545,7 @@ input:focus, textarea:focus, select:focus {
 .pf-device__glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(60% 42% at 50% 24%, rgba(255,34,51,0.50), transparent 74%);
+  background: radial-gradient(60% 42% at 50% 24%, rgba(255,30,39,0.50), transparent 74%);
   animation: pfScreenPulse 5s ease-in-out infinite;
 }
 @keyframes pfScreenPulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
@@ -587,7 +587,7 @@ input:focus, textarea:focus, select:focus {
 .pf-device__app {
   aspect-ratio: 1;
   border-radius: 9px;
-  background: linear-gradient(145deg, rgba(255,34,51,0.28), rgba(255,255,255,0.06));
+  background: linear-gradient(145deg, rgba(255,30,39,0.28), rgba(255,255,255,0.06));
   animation: pfAppPop 4.2s ease-in-out infinite;
 }
 @keyframes pfAppPop {
@@ -609,7 +609,7 @@ input:focus, textarea:focus, select:focus {
   width: 170px; height: 22px;
   margin-left: -85px;
   border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(255,34,51,0.22), transparent 72%);
+  background: radial-gradient(ellipse, rgba(255,30,39,0.22), transparent 72%);
   animation: pfShadow 7s ease-in-out infinite;
 }
 @keyframes pfShadow {
@@ -698,7 +698,7 @@ input:focus, textarea:focus, select:focus {
   border-top: 1px solid var(--pf-line-2);
   transition: background-color .25s ease, padding-left .25s ease;
 }
-.pf-row:hover { background: rgba(255,34,51,0.045); padding-left: 10px; }
+.pf-row:hover { background: rgba(255,30,39,0.045); padding-left: 10px; }
 .pf-row__num {
   font-family: "JetBrains Mono", monospace;
   font-size: 10.5px;
@@ -764,3 +764,330 @@ input:focus, textarea:focus, select:focus {
    longer do anything.
    ========================================================================== */
 .themedock { display: none !important; }
+
+/* ==========================================================================
+   FORGED IN 7 DAYS — the line that was lost, restored as its own section
+   ========================================================================== */
+.pf-forge {
+  position: relative;
+  padding: 104px 0;
+  background: var(--pf-black);
+  overflow: hidden;
+  border-top: 1px solid var(--pf-line-2);
+}
+
+.pf-forge__grid {
+  display: grid;
+  gap: 52px;
+  align-items: center;
+}
+@media (min-width: 980px) {
+  .pf-forge__grid { grid-template-columns: 1.02fr 0.98fr; gap: 64px; }
+}
+
+.pf-forge__line {
+  margin: 18px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.1rem, 5.4vw, 4rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+.pf-forge__line .r {
+  color: var(--pf-red);
+  animation: pfForgeGlow 3.2s ease-in-out infinite;
+}
+@keyframes pfForgeGlow {
+  0%, 100% { text-shadow: 0 0 12px rgba(255,30,39,0.40), 0 0 24px rgba(255,30,39,0.20); }
+  50%      { text-shadow: 0 0 28px rgba(255,30,39,0.85), 0 0 55px rgba(255,30,39,0.45); }
+}
+
+.pf-forge__copy {
+  margin-top: 20px;
+  max-width: 520px;
+  font-size: 15.5px;
+  line-height: 1.72;
+  color: var(--pf-muted);
+}
+
+/* the seven-day rail */
+.pf-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 34px;
+  max-width: 520px;
+}
+.pf-day {
+  position: relative;
+  padding: 12px 6px 10px;
+  border-radius: 5px;
+  background: var(--pf-black-3);
+  border: 1px solid var(--pf-line-2);
+  text-align: center;
+  transition: border-color .25s ease, transform .25s cubic-bezier(.34,1.56,.64,1), background-color .25s ease;
+}
+.pf-day:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,30,39,0.65);
+  background: rgba(255,30,39,0.06);
+}
+.pf-day b {
+  display: block;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--pf-red);
+}
+.pf-day span {
+  display: block;
+  margin-top: 4px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pf-dim);
+}
+
+/* the image plate */
+.pf-plate {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,30,39,0.18);
+  background: var(--pf-black-3);
+  box-shadow: 0 40px 90px -50px rgba(255,30,39,0.45);
+}
+.pf-plate img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform .7s cubic-bezier(.22,1,.36,1);
+}
+.pf-plate:hover img { transform: scale(1.04); }
+
+/* a red scanline that crosses the plate */
+.pf-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,30,39,0.22) 48%, transparent 52%);
+  background-size: 100% 260%;
+  animation: pfScan 6.5s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+@keyframes pfScan {
+  0%   { background-position: 0 -120%; }
+  100% { background-position: 0 120%; }
+}
+
+.pf-plate__tag {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 5px;
+  background: rgba(0,0,0,0.82);
+  border: 1px solid rgba(255,30,39,0.34);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.pf-plate__tag::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--pf-red);
+  box-shadow: 0 0 8px var(--pf-red);
+  animation: pfLiveDot 1.8s ease-in-out infinite;
+}
+@keyframes pfLiveDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .4; transform: scale(.8); }
+}
+
+@media (max-width: 860px) {
+  .pf-forge { padding: 68px 0; }
+  .pf-days { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-forge__line .r, .pf-plate::after, .pf-plate__tag::before { animation: none !important; }
+  .pf-day:hover, .pf-plate:hover img { transform: none; }
+}
+
+/* ==========================================================================
+   BLUEPRINT ANIMATION SET — the highest-value of the 40, all compositor-safe
+   ========================================================================== */
+
+/* 15 · top horizon progress bar */
+.pf-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 9998;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--pf-red), #fff 60%, var(--pf-red));
+  box-shadow: 0 0 12px rgba(255,30,39,0.7);
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* 02 · continuous sheen sweep across primary buttons */
+.btn-primary { position: relative; overflow: hidden; }
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -70%;
+  width: 45%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.45), transparent);
+  transform: skewX(-18deg);
+  animation: pfSheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes pfSheen {
+  0%, 62%  { left: -70%; }
+  88%, 100% { left: 130%; }
+}
+
+/* 03 · haptic click compression */
+.btn-primary:active, .btn-ghost:active, .pf-day:active, .brut-btn:active {
+  transform: scale(0.96) !important;
+  transition: transform 80ms ease !important;
+}
+
+/* 06 · kinetic jumping icons on nav hover */
+.nav .links a { transition: transform .22s cubic-bezier(.34,1.56,.64,1), color .2s ease; }
+.nav .links a:hover { transform: translateY(-3px); }
+
+/* 18 · orbital ring on status badges */
+.status { position: relative; overflow: visible; }
+.status::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 1px dashed rgba(255,30,39,0.45);
+  animation: pfOrbitRing 9s linear infinite;
+  pointer-events: none;
+}
+@keyframes pfOrbitRing { to { transform: rotate(360deg); } }
+
+/* 19 · ambient pixel drift */
+.pf-drift {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pf-drift i {
+  position: absolute;
+  bottom: -10px;
+  width: 2px; height: 2px;
+  background: var(--pf-red);
+  border-radius: 50%;
+  animation: pfDriftUp linear infinite;
+}
+@keyframes pfDriftUp {
+  0%   { transform: translate3d(0, 0, 0);      opacity: 0; }
+  12%  { opacity: .55; }
+  88%  { opacity: .35; }
+  100% { transform: translate3d(14px, -100vh, 0); opacity: 0; }
+}
+
+/* 26 · input underline expansion */
+input, textarea {
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+/* 28 · anvil strike on logo click */
+@keyframes pfStrike {
+  0%   { transform: scale(1) rotate(0); }
+  22%  { transform: scale(0.9) rotate(-5deg); }
+  55%  { transform: scale(1.08) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.brand.striking .brand-mark { animation: pfStrike .5s cubic-bezier(.34,1.56,.64,1); }
+
+/* spark ring on strike */
+.pf-spark {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--pf-red);
+  opacity: 0;
+  pointer-events: none;
+}
+.pf-spark.go { animation: pfSparkOut .6s ease-out forwards; }
+@keyframes pfSparkOut {
+  0%   { transform: scale(.5); opacity: .95; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+/* 34 · double radio-wave pulse on live dots */
+@keyframes pfWave {
+  0%   { box-shadow: 0 0 0 0 rgba(255,30,39,0.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(255,30,39,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,30,39,0); }
+}
+.status i, .pf-plate__tag::before { animation: pfWave 2s ease-out infinite; }
+
+/* 37 · corner reticles that snap in */
+.pf-reticle { position: relative; }
+.pf-reticle::before,
+.pf-reticle::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  border-color: var(--pf-red);
+  border-style: solid;
+  opacity: 0;
+  transition: opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1);
+}
+.pf-reticle::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; transform: translate(-8px,-8px); }
+.pf-reticle::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; transform: translate(8px,8px); }
+.pf-reticle.in::before, .pf-reticle.in::after { opacity: 1; transform: none; }
+
+/* 40 · terminal typist caret on the kicker */
+.pf-kicker::after {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 11px;
+  margin-left: 5px;
+  background: var(--pf-red);
+  vertical-align: -1px;
+  animation: pfCaret 1.05s steps(2) infinite;
+}
+@keyframes pfCaret { 50% { opacity: 0; } }
+
+/* 04 · pixel cursor trail (cheap: one element, transform only) */
+.pf-trail {
+  position: fixed;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--pf-red);
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary::after, .status::before, .status i, .pf-plate__tag::before,
+  .pf-drift i, .pf-kicker::after, .brand.striking .brand-mark {
+    animation: none !important;
+  }
+  .pf-trail { display: none; }
+}
