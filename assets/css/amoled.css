@@ -1,0 +1,766 @@
+/* ==========================================================================
+   PIXEL FORGE STUDIO — AMOLED BLACK · RED · WHITE
+   Loaded AFTER style.css so it wins the cascade without rewriting 191 KB.
+
+   Palette taken from the reference: true black, one hot red, white type.
+   Every animation is transform/opacity only — no blur filters, no
+   backdrop-filter, no layout thrash. That is what holds 120fps.
+   ========================================================================== */
+
+:root {
+  /* surfaces — stepped near-blacks, never tinted */
+  --pf-black: #000000;
+  --pf-black-2: #070707;
+  --pf-black-3: #0d0d0d;
+  --pf-black-4: #141414;
+
+  /* the only colour we own */
+  --pf-red: #ff2233;
+  --pf-red-2: #ff4455;
+  --pf-red-3: #ff6b7a;
+  --pf-red-deep: #b3000d;
+  --pf-red-glow: rgba(255, 34, 51, 0.30);
+
+  /* type */
+  --pf-white: #ffffff;
+  --pf-text: #f2f2f2;
+  --pf-muted: #8f8f8f;
+  --pf-dim: #5a5a5a;
+
+  /* lines */
+  --pf-line: rgba(255, 255, 255, 0.10);
+  --pf-line-2: rgba(255, 255, 255, 0.055);
+  --pf-line-red: rgba(255, 34, 51, 0.30);
+
+  /* remap the original variable names so every existing rule follows */
+  --white: #ffffff;
+  --paper: #070707;
+  --paper-2: #0d0d0d;
+  --line: rgba(255, 255, 255, 0.10);
+  --line-2: rgba(255, 255, 255, 0.06);
+
+  --green: #ff2233;
+  --green-deep: #ff4455;
+  --green-dark: #b3000d;
+  --green-pale: rgba(255, 34, 51, 0.14);
+  --green-wash: rgba(255, 34, 51, 0.06);
+
+  --ink: #ffffff;
+  --ink-2: #cfcfcf;
+  --muted: #8f8f8f;
+  --muted-2: #5a5a5a;
+
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.8);
+  --shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 30px 70px -34px rgba(0, 0, 0, 0.95);
+}
+
+/* ---- base ---- */
+html { background: var(--pf-black); }
+body {
+  background: var(--pf-black) !important;
+  color: var(--pf-text) !important;
+}
+::selection { background: rgba(255, 34, 51, 0.32); color: #fff; }
+
+/* ---- force every light surface dark ---- */
+.bg,
+.section,
+.sec,
+.sec-alt,
+.wrap,
+.card,
+.panel,
+.box,
+.matrix,
+.bento,
+.stat,
+.ticker,
+.trust,
+.tbadge,
+.float-pill,
+.device,
+.marquee,
+footer,
+.nav,
+header {
+  background-color: transparent;
+}
+
+.sec,
+.sec-alt { background: var(--pf-black) !important; }
+.sec-alt { background: var(--pf-black-2) !important; }
+
+/* cards, pills, panels: near-black with a hairline */
+.card,
+.panel,
+.box,
+.stat,
+.tbadge,
+.float-pill,
+.matrix,
+.bento > *,
+.ticker {
+  background: var(--pf-black-3) !important;
+  border-color: var(--pf-line) !important;
+  color: var(--pf-text) !important;
+}
+
+/* any element that was white/light gets the dark treatment */
+[style*="background:#fff"],
+[style*="background: #fff"],
+[style*="background:#FFFFFF"],
+[style*="background:#FBFDFC"],
+[style*="background:var(--white)"],
+[style*="background:var(--paper)"] {
+  background: var(--pf-black-3) !important;
+}
+
+/* ---- type ---- */
+h1, h2, h3, h4, h5, h6,
+.hero-title,
+.sec-title,
+.sec-head h2 {
+  color: var(--pf-white) !important;
+}
+
+p, li, .hero-sub, .sec-sub, .muted {
+  color: var(--pf-muted) !important;
+}
+
+strong, b { color: var(--pf-white); }
+
+a { color: var(--pf-white); }
+a:hover { color: var(--pf-red-3); }
+
+/* the gradient wordmark becomes red → white → red */
+.grad,
+.gradient-text,
+.grad-wrap .grad {
+  background: linear-gradient(96deg, var(--pf-red) 0%, var(--pf-red-3) 34%, #ffffff 66%, var(--pf-red) 100%) !important;
+  background-size: 220% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  animation: pfGradShift 9s ease-in-out infinite;
+}
+@keyframes pfGradShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* ---- buttons ---- */
+.btn,
+.btn-primary,
+button.btn {
+  border-radius: 6px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+}
+.btn-primary {
+  background: var(--pf-red) !important;
+  color: #fff !important;
+  border-color: var(--pf-red) !important;
+  box-shadow: 0 10px 28px -14px var(--pf-red-glow);
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), background-color .2s ease, box-shadow .2s ease;
+}
+.btn-primary:hover {
+  background: var(--pf-red-2) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -14px var(--pf-red-glow);
+}
+.btn-ghost {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+  color: var(--pf-white) !important;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.06) !important; border-color: rgba(255,255,255,0.42) !important; }
+
+/* ---- nav ---- */
+.nav, header.nav {
+  background: rgba(0,0,0,0.86) !important;
+  border-bottom: 1px solid var(--pf-line-2) !important;
+}
+.nav a, .links a { color: var(--pf-text) !important; }
+.nav a:hover, .links a:hover { color: var(--pf-red-3) !important; }
+
+/* ---- status dot, eyebrow ---- */
+.status {
+  background: rgba(255,34,51,0.10) !important;
+  border: 1px solid var(--pf-line-red) !important;
+  color: var(--pf-red-3) !important;
+}
+.status i { background: var(--pf-red) !important; }
+.eyebrow { color: var(--pf-red) !important; }
+
+/* ---- device mockup ---- */
+.device {
+  background: linear-gradient(160deg, #161616, #050505) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  box-shadow: 0 40px 90px -50px rgba(255,34,51,0.55), inset 0 1px 0 rgba(255,255,255,0.08) !important;
+}
+.device-bar { background: var(--pf-red) !important; }
+
+/* ---- marquee ---- */
+.marquee {
+  background: var(--pf-black) !important;
+  border-top: 1px solid var(--pf-line-2) !important;
+  border-bottom: 1px solid var(--pf-line-2) !important;
+}
+.marquee-track span { color: var(--pf-white) !important; }
+
+/* ---- ticker / stats ---- */
+.ticker { background: var(--pf-black-3) !important; }
+.stat b, .stat .num { color: var(--pf-white) !important; }
+.stat span, .stat small { color: var(--pf-muted) !important; }
+
+/* ---- footer ---- */
+footer {
+  background: var(--pf-black) !important;
+  border-top: 1px solid var(--pf-line-2) !important;
+}
+footer a { color: var(--pf-muted) !important; }
+footer a:hover { color: var(--pf-red-3) !important; }
+
+/* ---- inputs ---- */
+input, textarea, select {
+  background: var(--pf-black-3) !important;
+  border: 1px solid var(--pf-line) !important;
+  color: var(--pf-white) !important;
+}
+input::placeholder, textarea::placeholder { color: var(--pf-dim) !important; }
+input:focus, textarea:focus, select:focus {
+  border-color: var(--pf-red) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,34,51,0.18);
+}
+
+/* ---- scrollbar ---- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--pf-black); }
+::-webkit-scrollbar-thumb { background: rgba(255,34,51,0.35); border-radius: 99px; }
+
+/* ==========================================================================
+   LOADING SCREEN — industrial, from the reference
+   Grid, crossed anvil mark, a rotating red square, INITIALIZING
+   ========================================================================== */
+.pf-load {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: #000;
+  transition: opacity .55s ease, visibility .55s ease;
+}
+.pf-load.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* faint engineering grid */
+.pf-load::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,34,51,0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,34,51,0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 10%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 10%, transparent 78%);
+  animation: pfGridDrift 24s linear infinite;
+}
+@keyframes pfGridDrift { to { background-position: 56px 56px; } }
+
+/* the big ghosted mark behind */
+.pf-load__mark {
+  position: absolute;
+  width: min(56vw, 520px);
+  height: min(56vw, 520px);
+  opacity: 0.10;
+  color: var(--pf-red);
+  animation: pfMarkBreathe 4.2s ease-in-out infinite;
+}
+@keyframes pfMarkBreathe {
+  0%, 100% { opacity: 0.07; transform: scale(1); }
+  50%      { opacity: 0.16; transform: scale(1.03); }
+}
+
+.pf-load__center {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 2.4rem;
+}
+
+/* rotating square inside a diamond outline */
+.pf-load__spin {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  display: grid;
+  place-items: center;
+}
+.pf-load__spin::before,
+.pf-load__spin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,34,51,0.42);
+}
+.pf-load__spin::before { animation: pfSpinA 3.4s linear infinite; }
+.pf-load__spin::after  { inset: 8px; border-color: rgba(255,34,51,0.22); animation: pfSpinB 4.6s linear infinite reverse; }
+@keyframes pfSpinA { to { transform: rotate(360deg); } }
+@keyframes pfSpinB { to { transform: rotate(360deg); } }
+
+.pf-load__core {
+  width: 34px;
+  height: 34px;
+  background: var(--pf-red);
+  box-shadow: 0 0 26px rgba(255,34,51,0.65), 0 0 60px rgba(255,34,51,0.30);
+  animation: pfCorePulse 1.5s ease-in-out infinite;
+}
+@keyframes pfCorePulse {
+  0%, 100% { transform: scale(0.9);  opacity: 0.85; }
+  50%      { transform: scale(1.06); opacity: 1;    }
+}
+
+/* INITIALIZING PIXEL FORGE ▮ */
+.pf-load__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1px solid rgba(255,34,51,0.34);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--pf-red-3);
+}
+.pf-load__label i {
+  display: inline-block;
+  width: 6px;
+  height: 13px;
+  background: var(--pf-red);
+  animation: pfBlink 1s steps(2) infinite;
+}
+@keyframes pfBlink { 50% { opacity: 0; } }
+
+/* progress hairline */
+.pf-load__bar {
+  width: min(52vw, 300px);
+  height: 1px;
+  background: rgba(255,255,255,0.10);
+  overflow: hidden;
+}
+.pf-load__bar > i {
+  display: block;
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--pf-red), transparent);
+  animation: pfBar 1.5s ease-in-out infinite;
+}
+@keyframes pfBar {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+/* ==========================================================================
+   BRUTALIST HERO — giant wordmark, red rule, metadata, marquee
+   ========================================================================== */
+.pf-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+  padding: 132px 0 0;
+}
+
+/* the one red wash */
+.pf-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(58% 44% at 50% 6%, rgba(255,34,51,0.20), transparent 72%);
+  pointer-events: none;
+}
+
+/* print grain */
+.pf-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  background-image: radial-gradient(rgba(255,255,255,0.9) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  pointer-events: none;
+}
+
+.pf-wrap { position: relative; z-index: 2; width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 1024px) { .pf-wrap { padding: 0 40px; } }
+
+.pf-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 10px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--pf-muted);
+}
+.pf-meta .dot { color: var(--pf-red); }
+
+/* the wordmark — 16vw, tight, uppercase */
+.pf-word {
+  margin: 22px 0 0;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 15.5vw, 13.5rem);
+  line-height: 0.80;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.pf-word .red { color: var(--pf-red); }
+
+/* the red rule draws in */
+.pf-rule {
+  height: 2px;
+  margin-top: 30px;
+  background: var(--pf-red);
+  transform-origin: 0 50%;
+  animation: pfRuleIn .95s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes pfRuleIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+.pf-hero__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 26px;
+}
+@media (min-width: 900px) {
+  .pf-hero__foot { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+}
+
+.pf-hero__blurb {
+  max-width: 520px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--pf-muted);
+}
+
+.pf-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ---- marquee ---- */
+.pf-marquee {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin-top: 48px;
+  padding: 14px 0;
+  border-top: 1px solid var(--pf-line-2);
+  border-bottom: 1px solid var(--pf-line-2);
+  background: #000;
+}
+.pf-marquee__track {
+  display: inline-flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: pfScroll 32s linear infinite;
+}
+.pf-marquee:hover .pf-marquee__track { animation-play-state: paused; }
+@keyframes pfScroll {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-50%,0,0); }
+}
+.pf-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.pf-marquee__item::after {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--pf-red);
+}
+
+/* ==========================================================================
+   ROTATING SHOWCASE — a 3D device that turns, plus orbiting service chips
+   Same language as the Red Apple phone: ±34° sweep so it never goes edge-on.
+   ========================================================================== */
+.pf-showcase {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 420px;
+  perspective: 1200px;
+}
+
+.pf-device {
+  position: relative;
+  width: 200px;
+  height: 400px;
+  transform-style: preserve-3d;
+  animation: pfDeviceTurn 13s cubic-bezier(.45,0,.55,1) infinite;
+}
+@keyframes pfDeviceTurn {
+  0%   { transform: rotateY(-34deg) rotateX(5deg); }
+  50%  { transform: rotateY( 34deg) rotateX(5deg); }
+  100% { transform: rotateY(-34deg) rotateX(5deg); }
+}
+
+.pf-device__body {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  background: linear-gradient(160deg, #1a1a1a 0%, #0a0a0a 55%, #000 100%);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.10),
+    0 40px 80px -46px rgba(255,34,51,0.55);
+  overflow: hidden;
+}
+.pf-device__screen {
+  position: absolute;
+  inset: 9px;
+  border-radius: 26px;
+  background: radial-gradient(120% 90% at 50% 0%, #2a0a0e 0%, #0d0506 46%, #000 100%);
+  overflow: hidden;
+}
+.pf-device__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 42% at 50% 24%, rgba(255,34,51,0.50), transparent 74%);
+  animation: pfScreenPulse 5s ease-in-out infinite;
+}
+@keyframes pfScreenPulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+
+.pf-device__bar {
+  position: absolute;
+  top: 20px; left: 50%;
+  width: 62px; height: 16px;
+  margin-left: -31px;
+  border-radius: 10px;
+  background: #000;
+}
+.pf-device__time {
+  position: absolute;
+  top: 56px; left: 0; right: 0;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+.pf-device__label {
+  position: absolute;
+  top: 96px; left: 0; right: 0;
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--pf-red-3);
+}
+.pf-device__grid {
+  position: absolute;
+  top: 140px; left: 18px; right: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.pf-device__app {
+  aspect-ratio: 1;
+  border-radius: 9px;
+  background: linear-gradient(145deg, rgba(255,34,51,0.28), rgba(255,255,255,0.06));
+  animation: pfAppPop 4.2s ease-in-out infinite;
+}
+@keyframes pfAppPop {
+  0%,100% { opacity: .5; transform: scale(1); }
+  50%     { opacity: 1;  transform: scale(1.07); }
+}
+.pf-device__dock {
+  position: absolute;
+  bottom: 14px; left: 18px; right: 18px;
+  height: 46px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.07);
+}
+
+/* shadow under the device */
+.pf-device__shadow {
+  position: absolute;
+  bottom: -20px; left: 50%;
+  width: 170px; height: 22px;
+  margin-left: -85px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,34,51,0.22), transparent 72%);
+  animation: pfShadow 7s ease-in-out infinite;
+}
+@keyframes pfShadow {
+  0%,100% { opacity: .5; transform: scaleX(1); }
+  50%     { opacity: .25; transform: scaleX(.86); }
+}
+
+/* orbiting service chips */
+.pf-orbit {
+  position: absolute;
+  inset: 0;
+  animation: pfOrbitSpin 26s linear infinite;
+  pointer-events: none;
+}
+@keyframes pfOrbitSpin { to { transform: rotate(360deg); } }
+
+.pf-orbit__chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  background: var(--pf-black-3);
+  border: 1px solid var(--pf-line-red);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  /* counter-rotate so the label stays upright */
+  animation: pfOrbitCounter 26s linear infinite;
+}
+@keyframes pfOrbitCounter { to { transform: rotate(-360deg); } }
+
+.pf-orbit__chip::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--pf-red);
+  box-shadow: 0 0 8px var(--pf-red);
+}
+
+/* ==========================================================================
+   SECTION SHELL + REVEAL
+   ========================================================================== */
+.pf-sec { position: relative; padding: 96px 0; background: #000; }
+.pf-sec--alt { background: var(--pf-black-2); }
+
+.pf-kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--pf-red);
+}
+
+.pf-h2 {
+  margin: 14px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.pf-lead {
+  margin-top: 14px;
+  max-width: 600px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--pf-muted);
+}
+
+/* numbered ledger rows, like the reference's 01–04 */
+.pf-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  padding: 26px 0;
+  border-top: 1px solid var(--pf-line-2);
+  transition: background-color .25s ease, padding-left .25s ease;
+}
+.pf-row:hover { background: rgba(255,34,51,0.045); padding-left: 10px; }
+.pf-row__num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--pf-red);
+  padding-top: 8px;
+}
+.pf-row__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.3rem, 3.2vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.pf-row__tags {
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pf-muted);
+}
+
+/* reveal on scroll */
+.pf-rv { opacity: 0; transform: translateY(18px); transition: opacity .62s cubic-bezier(.22,1,.36,1), transform .62s cubic-bezier(.22,1,.36,1); }
+.pf-rv.in { opacity: 1; transform: none; }
+
+/* ==========================================================================
+   REDUCED MOTION — everything off
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .pf-load::before, .pf-load__mark, .pf-load__spin::before, .pf-load__spin::after,
+  .pf-load__core, .pf-load__label i, .pf-load__bar > i,
+  .pf-marquee__track, .pf-device, .pf-device__glow, .pf-device__app,
+  .pf-device__shadow, .pf-orbit, .pf-orbit__chip, .pf-rule,
+  .grad, .gradient-text, .grad-wrap .grad {
+    animation: none !important;
+  }
+  .pf-rv { opacity: 1; transform: none; }
+  .btn-primary:hover { transform: none; }
+}
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+@media (max-width: 860px) {
+  .pf-hero { padding-top: 108px; min-height: auto; }
+  .pf-word { font-size: clamp(2.6rem, 15vw, 5rem); }
+  .pf-sec { padding: 64px 0; }
+  .pf-device { width: 160px; height: 320px; }
+  .pf-device__time { font-size: 26px; }
+  .pf-device__grid { top: 112px; gap: 8px; }
+  .pf-showcase { min-height: 360px; }
+  .pf-orbit__chip { font-size: 8.5px; padding: 6px 10px; }
+}
+
+/* ==========================================================================
+   The old theme switcher offered six palettes. AMOLED + red is now the single
+   identity, so the dock is hidden — leaving it would offer choices that no
+   longer do anything.
+   ========================================================================== */
+.themedock { display: none !important; }
