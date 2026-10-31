@@ -213,3 +213,58 @@
     });
   }
 })();
+
+/* ==========================================================================
+   v81 — decorative graphics. Purely additive; wrapped so a failure can never
+   affect scrolling or the page.
+   ========================================================================== */
+(function () {
+  try {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* grid floor + drifting orbs inside each major section */
+    document.querySelectorAll('.pf-sec, .sec, .pf-forge').forEach(function (sec, i) {
+      if (sec.querySelector(':scope > .gridfloor')) return;
+
+      var g = document.createElement('div');
+      g.className = 'gridfloor';
+      g.setAttribute('aria-hidden', 'true');
+      sec.appendChild(g);
+
+      if (reduce) return;
+
+      /* two glow orbs per section, offset so they never sync */
+      for (var k = 0; k < 2; k++) {
+        var o = document.createElement('div');
+        o.className = 'orb-fx';
+        var size = 180 + Math.random() * 220;
+        o.style.width = size + 'px';
+        o.style.height = size + 'px';
+        o.style.left = (k === 0 ? 6 + Math.random() * 14 : 62 + Math.random() * 22) + '%';
+        o.style.top = (10 + Math.random() * 60) + '%';
+        o.style.animationDelay = (-Math.random() * 20) + 's';
+        o.style.animationDuration = (22 + Math.random() * 16) + 's';
+        o.setAttribute('aria-hidden', 'true');
+        sec.appendChild(o);
+      }
+    });
+
+    /* twinkling sparkles in the hero */
+    var hero = document.querySelector('.pf-hero');
+    if (hero && !reduce && !hero.querySelector('.sparkle')) {
+      for (var s = 0; s < 14; s++) {
+        var sp = document.createElement('span');
+        sp.className = 'sparkle';
+        sp.style.left = (Math.random() * 100) + '%';
+        sp.style.top = (Math.random() * 100) + '%';
+        sp.style.animationDelay = (-Math.random() * 5) + 's';
+        sp.style.animationDuration = (3.5 + Math.random() * 3) + 's';
+        sp.style.opacity = '0';
+        sp.setAttribute('aria-hidden', 'true');
+        hero.appendChild(sp);
+      }
+    }
+  } catch (e) {
+    /* decorative only — never break the page */
+  }
+})();
