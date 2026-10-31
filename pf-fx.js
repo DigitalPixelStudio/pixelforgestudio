@@ -1,3 +1,9 @@
+/* hard guarantee: nothing in this file may lock the page */
+(function(){try{
+  document.documentElement.style.overflow='';
+  document.body.style.overflow='';
+  document.body.style.position='';
+}catch(e){}})();
 /* ==========================================================================
    Pixel Forge — blueprint effects
    Everything here is rAF-throttled and transform/opacity only.
@@ -141,6 +147,7 @@
    Transform-only. One rAF loop, no layout reads inside it.
    ========================================================================== */
 (function () {
+  try {
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (window.matchMedia && window.matchMedia('(hover: none)').matches) return; // skip on touch
 
@@ -191,4 +198,18 @@
   document.querySelectorAll('.sec, .pf-sec, .pf-forge').forEach(function (n) {
     sio.observe(n);
   });
+
+  /* never let a stuck tilt lock the page */
+  document.addEventListener('pointerout', function () {
+    if (active) { active.style.transform = ''; active = null; }
+  }, { passive: true });
+  window.addEventListener('scroll', function () {
+    if (active) { active.style.transform = ''; active = null; }
+  }, { passive: true });
+  } catch (e) {
+    /* a decorative effect must never break the page */
+    document.querySelectorAll('.sitem,.cnt,.vitem,.pkg,.card').forEach(function (c) {
+      c.style.transform = '';
+    });
+  }
 })();
