@@ -87,6 +87,30 @@
     }
   }
 
+
+  /* ---- v78 · hero scanline + per-section dust ---- */
+  var hero = document.querySelector('.pf-hero');
+  if (hero) {
+    var sl = document.createElement('div');
+    sl.className = 'scanline';
+    hero.appendChild(sl);
+  }
+
+  document.querySelectorAll('.pf-sec, .sec, .sec-alt').forEach(function (sec) {
+    if (sec.querySelector(':scope > .dust')) return;
+    var d = document.createElement('div');
+    d.className = 'dust';
+    for (var j = 0; j < 10; j++) {
+      var p = document.createElement('i');
+      p.style.left = (Math.random() * 100) + '%';
+      p.style.bottom = (Math.random() * 40) + '%';
+      p.style.animationDuration = (7 + Math.random() * 9) + 's';
+      p.style.animationDelay = (-Math.random() * 12) + 's';
+      d.appendChild(p);
+    }
+    sec.appendChild(d);
+  });
+
   /* ---- 23 · fluid metric counters ---- */
   var counters = document.querySelectorAll('[data-count]');
   if (counters.length) {
