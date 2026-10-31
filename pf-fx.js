@@ -135,3 +135,60 @@
     counters.forEach(function (c) { cio.observe(c); });
   }
 })();
+
+/* ==========================================================================
+   v79 — 3D pointer tilt + section lift
+   Transform-only. One rAF loop, no layout reads inside it.
+   ========================================================================== */
+(function () {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia && window.matchMedia('(hover: none)').matches) return; // skip on touch
+
+  var cards = Array.prototype.slice.call(
+    document.querySelectorAll('.sitem, .cnt, .vitem, .pkg, .card')
+  ).slice(0, 60); // cap so the loop stays cheap
+
+  var active = null, tx = 0, ty = 0, raf = null;
+
+  function run() {
+    if (!active) { raf = null; return; }
+    var r = active.__r;
+    var rx = (ty - 0.5) * -7;
+    var ry = (tx - 0.5) * 7;
+    active.style.transform =
+      'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' +
+      ry.toFixed(2) + 'deg) translateY(-5px) scale(1.012)';
+    raf = null;
+  }
+
+  cards.forEach(function (c) {
+    c.addEventListener('pointerenter', function () {
+      c.__r = c.getBoundingClientRect();
+      active = c;
+    });
+    c.addEventListener('pointermove', function (e) {
+      if (active !== c) { c.__r = c.getBoundingClientRect(); active = c; }
+      tx = (e.clientX - c.__r.left) / c.__r.width;
+      ty = (e.clientY - c.__r.top) / c.__r.height;
+      if (!raf) raf = requestAnimationFrame(run);
+    });
+    c.addEventListener('pointerleave', function () {
+      active = null;
+      c.style.transform = '';
+    });
+  });
+
+  /* section lift-in */
+  var sio = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        sio.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.sec, .pf-sec, .pf-forge').forEach(function (n) {
+    sio.observe(n);
+  });
+})();
