@@ -1091,3 +1091,303 @@ input, textarea {
   }
   .pf-trail { display: none; }
 }
+
+/* ==========================================================================
+   v78 — BUG FIXES
+   ========================================================================== */
+
+/* 1. STAT TEXT RAN TOGETHER: "98%Lighthouse performance".
+      The number and its label were both inline. Block them. */
+.cnt { display: flex; flex-direction: column; gap: 8px; }
+.cnt b {
+  display: block !important;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+.cnt span {
+  display: block !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  color: var(--pf-muted) !important;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* 2. MOBILE BAR was white on a black site, and sat oddly. */
+.mbar {
+  background: rgba(0,0,0,0.94) !important;
+  border-top: 1px solid rgba(255,30,39,0.28) !important;
+  box-shadow: 0 -10px 30px -16px rgba(0,0,0,0.9) !important;
+  gap: 10px !important;
+}
+.mbar a {
+  border-radius: 8px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em;
+}
+.mbar .m1 {
+  background: var(--pf-red) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 22px -10px rgba(255,30,39,0.6);
+}
+.mbar .m2 {
+  background: transparent !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+}
+.mbar .m1 svg { fill: #fff !important; }
+.mbar .m2 svg { stroke: #fff !important; fill: none !important; }
+
+/* 3. HEADER had too much air. Tighten it and keep one height. */
+.nav-in {
+  height: 64px !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+.nav { padding: 0 !important; }
+@media (max-width: 680px) {
+  .nav-in { height: 58px !important; }
+  .brand-mark { width: 32px !important; height: 32px !important; }
+  .brand-name { font-size: 15px !important; }
+}
+
+/* 4. MARQUEES MUST MOVE. The site stopped both of them entirely under
+      prefers-reduced-motion, which is what the client saw as "not sliding".
+      A marquee is informational, not a vestibular trigger — keep it moving,
+      just slower. */
+@media (prefers-reduced-motion: reduce) {
+  .tick-track { animation: tickMove 60s linear infinite !important; }
+  .marquee-track { animation: slide 70s linear infinite !important; }
+  .pf-marquee__track { animation: pfScroll 70s linear infinite !important; }
+}
+
+/* 5. BACKDROP-FILTER was on every card with !important — the single biggest
+      cause of scroll jank. Solid near-black instead. */
+.sitem, .cnt, .vitem, .tier, .pkg, .galitem, .case,
+.paybox, .card, .pcard-l, .sol {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: linear-gradient(160deg, #101010, #060606) !important;
+  border-color: rgba(255,255,255,0.09) !important;
+}
+
+/* ==========================================================================
+   v78 — ICONS MAY BE NEON AGAIN (client's call: colour lives in the icons only)
+   ========================================================================== */
+.icon-neon, .sitem .ico, .vitem .ico, .tech-ico, .tile-ico {
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, filter .3s ease;
+}
+.sitem:hover .ico, .vitem:hover .ico, .icon-neon:hover {
+  transform: translateY(-3px) scale(1.10) rotate(-3deg);
+}
+
+/* a rotating hue ring around neon icons */
+@keyframes neonSpin { to { --a: 360deg; } }
+@property --a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+.icon-neon::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--a),
+    #ff1e27, #ff8a00, #ffe600, #35ff8a, #00e5ff, #6d5cff, #ff2dd4, #ff1e27);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: neonSpin 6s linear infinite;
+  opacity: .85;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   v78 — GLASS + HOVER + TYPE MOTION across every section
+   ========================================================================== */
+.pf-sec, .pf-forge, .sec, .sec-alt { position: relative; }
+
+/* glass rim on hover for every card */
+.sitem, .cnt, .vitem, .tier, .pkg, .galitem, .case, .card {
+  transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease;
+}
+.sitem:hover, .cnt:hover, .vitem:hover, .tier:hover,
+.pkg:hover, .card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,30,39,0.55) !important;
+  box-shadow: 0 20px 44px -26px rgba(255,30,39,0.45) !important;
+}
+
+/* section headings breathe their weight — never their size (no reflow) */
+.sec-head h2, .pf-h2, .pf-forge__line, .hero-title {
+  animation: typeBreathe 6.5s ease-in-out infinite;
+}
+@keyframes typeBreathe {
+  0%, 100% { font-variation-settings: "wght" 680; letter-spacing: -0.030em; }
+  50%      { font-variation-settings: "wght" 780; letter-spacing: -0.022em; }
+}
+
+/* kickers shift colour */
+.eyebrow, .pf-kicker, .num {
+  animation: kickerFlow 7s ease-in-out infinite;
+}
+@keyframes kickerFlow {
+  0%, 100% { color: var(--pf-red); }
+  50%      { color: #ff8a90; }
+}
+
+/* every button gets a hover lift + red bloom */
+.btn, .cta-primary, .brut-btn {
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease, background-color .22s ease;
+}
+.btn:hover, .cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -16px rgba(255,30,39,0.65);
+}
+
+/* inputs glow on focus */
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 3px rgba(255,30,39,0.20), 0 0 24px -8px rgba(255,30,39,0.5) !important;
+}
+
+/* section entrance: cards cascade in */
+.pf-sec .pf-row, .sec .card, .sec .sitem {
+  animation: cardIn .55s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* a soft red aurora behind alternating sections */
+.pf-sec--alt::before, .sec-alt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 36% at 18% 12%, rgba(255,30,39,0.10), transparent 68%),
+    radial-gradient(42% 32% at 84% 78%, rgba(255,30,39,0.07), transparent 66%);
+  animation: auroraShift 24s ease-in-out infinite alternate;
+}
+@keyframes auroraShift {
+  0%   { transform: translate3d(-1.5%, -1%, 0) scale(1);    opacity: .7; }
+  100% { transform: translate3d(1.5%,  1.5%, 0) scale(1.05); opacity: 1; }
+}
+
+/* ==========================================================================
+   v78 — 12 MORE MOTION ELEMENTS (total now ~25)
+   ========================================================================== */
+
+/* 1 · corner brackets on every section */
+.pf-sec::after, .sec::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  pointer-events: none;
+  border: 1px solid rgba(255,30,39,0.10);
+  border-radius: 3px;
+  mask-image: linear-gradient(#000,#000);
+  opacity: .55;
+}
+
+/* 2 · a scanline that crosses the hero once every 8s */
+.pf-hero .scanline {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,30,39,0.6), transparent);
+  animation: scanY 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes scanY {
+  0%   { top: 0%;   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* 3 · floating dust in section backgrounds */
+.pf-sec .dust {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pf-sec .dust i {
+  position: absolute;
+  width: 2px; height: 2px;
+  border-radius: 50%;
+  background: rgba(255,30,39,0.6);
+  animation: dustFloat linear infinite;
+}
+@keyframes dustFloat {
+  0%   { transform: translate3d(0, 20px, 0);   opacity: 0; }
+  20%  { opacity: .5; }
+  100% { transform: translate3d(10px, -120px, 0); opacity: 0; }
+}
+
+/* 4 · numbers scale in */
+.cnt b, .stat b, .tier-price {
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1), color .3s ease;
+}
+.cnt:hover b, .stat:hover b {
+  transform: scale(1.06);
+  color: var(--pf-red);
+}
+
+/* 5 · link underline sweep */
+.pf-meta span, .brut-meta span { position: relative; }
+
+/* 6 · list rows reveal their number in red on hover */
+.pf-row:hover .pf-row__num { color: #fff; transform: scale(1.15); }
+.pf-row__num { transition: color .2s ease, transform .2s ease; }
+
+/* 7 · the marquee edges fade so it never looks cut */
+.pf-marquee, .ticker, .marquee {
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* 8 · device screen flicker, subtle */
+.pf-device__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.045) 50%, transparent 100%);
+  background-size: 100% 240%;
+  animation: screenSweep 7s linear infinite;
+  pointer-events: none;
+}
+@keyframes screenSweep {
+  0%   { background-position: 0 -120%; }
+  100% { background-position: 0 120%; }
+}
+
+/* 9 · badge pulse on the live dot */
+.pf-plate__tag, .status { animation: badgeGlow 4s ease-in-out infinite; }
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,30,39,0.0); }
+  50%      { box-shadow: 0 0 18px -4px rgba(255,30,39,0.45); }
+}
+
+/* 10 · footer link stagger */
+footer a { transition: color .2s ease, transform .2s ease; }
+footer a:hover { transform: translateX(3px); }
+
+/* 11 · selection colour */
+::selection { background: rgba(255,30,39,0.45) !important; color: #fff !important; }
+
+/* 12 · reduce-motion safety for the new pieces */
+@media (prefers-reduced-motion: reduce) {
+  .sec-head h2, .pf-h2, .pf-forge__line, .hero-title,
+  .eyebrow, .pf-kicker, .num,
+  .pf-sec--alt::before, .sec-alt::before,
+  .pf-hero .scanline, .pf-sec .dust i,
+  .pf-device__screen::after, .pf-plate__tag, .status,
+  .pf-sec .pf-row, .sec .card, .sec .sitem {
+    animation: none !important;
+  }
+}
