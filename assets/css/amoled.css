@@ -1640,3 +1640,63 @@ b, strong { color: #fff; }
   .sitem .sico, .sico::after, .sec.in-view, .pf-sec.in-view,
   .sec-head h2::after, .pf-h2::after { animation: none !important; }
 }
+
+/* ==========================================================================
+   v80 — EMERGENCY SCROLL FIX
+   The page locked at the top. Three properties were responsible and all three
+   are removed here. Later rules win, so these override v79 without editing it.
+   ========================================================================== */
+
+/* 1. background-attachment:fixed is the single worst mobile-scroll property.
+      It forces a full-viewport repaint on every scroll frame. Static wash. */
+body {
+  background:
+    radial-gradient(120% 60% at 50% 0%, #1a0305 0%, transparent 55%),
+    radial-gradient(90% 50% at 8% 30%, #120204 0%, transparent 60%),
+    radial-gradient(90% 50% at 92% 70%, #100203 0%, transparent 60%),
+    #000000 !important;
+  background-attachment: scroll !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100vh, 100% 100vh, 100% 100vh, auto !important;
+}
+
+/* 2. perspective on a section creates a containing block and a 3D rendering
+      context that breaks scrolling in several mobile browsers. Gone. */
+.pf-sec, .sec, .pf-forge, .sec-alt { perspective: none !important; }
+.sitem, .cnt, .vitem, .pkg, .card, .pcard-l, .sol { transform-style: flat !important; }
+
+/* 3. overflow-x on html stops the document scroller. Body-only, and never
+      with max-width:100vw (that clips the scrollbar gutter). */
+html { overflow-x: visible !important; overflow-y: auto !important; max-width: none !important; }
+body { overflow-x: clip !important; max-width: none !important; min-height: 0 !important; }
+
+/* 4. any scroll-lock the old scripts may have left behind */
+html, body { position: static !important; height: auto !important; }
+body.locked, body.no-scroll, body.modal-open { overflow: visible !important; position: static !important; }
+
+/* 5. the loader must never be able to trap the page. If the hide script fails
+      for any reason, CSS removes it on its own after 3.5s. */
+.pf-load {
+  pointer-events: none !important;
+  animation: pfLoadFailSafe 0s linear 3.5s forwards;
+}
+@keyframes pfLoadFailSafe {
+  to { opacity: 0; visibility: hidden; display: none; }
+}
+.pf-load.is-done { pointer-events: none !important; }
+
+/* 6. no transform may sit on a scrolling ancestor */
+.pf-hero, .pf-wrap, main, .wrap { transform: none !important; }
+
+/* 7. keep the tilt effect but make it cheap and non-blocking: the card itself
+      transforms, never its container. */
+.sitem, .cnt, .vitem, .pkg, .card { will-change: auto !important; }
+
+/* 8. scroll progress bar must not intercept anything */
+.pf-progress { pointer-events: none !important; }
+.pf-drift, .pf-trail, .scanline, .dust { pointer-events: none !important; }
+
+/* 9. the section lift-in animation left some sections invisible if the
+      observer never fired. Force them visible. */
+.sec, .pf-sec, .pf-forge { opacity: 1 !important; }
+.sec.in-view, .pf-sec.in-view { animation: none !important; }
