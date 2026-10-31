@@ -2027,3 +2027,196 @@ footer::before {
     background: none !important;
   }
 }
+
+/* ==========================================================================
+   v82 — ICON, FOOTER, TABLE COLOUR, CENTRING, FLOATING ACTIONS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE ICON MUST BE THE EXACT LOGO
+   The brand mark had a red gradient behind it and the image was cover-cropped,
+   so the anvil was zoomed and its edges clipped. Black plate, contain-fit.
+   -------------------------------------------------------------------------- */
+.brand-mark {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  overflow: visible !important;
+  display: grid !important;
+  place-items: center !important;
+}
+.brand-mark img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border-radius: 8px !important;
+  filter: drop-shadow(0 0 8px rgba(255,30,39,0.45));
+}
+/* a soft red halo ring around it, not a red fill */
+.brand-mark::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 10px;
+  background: radial-gradient(circle, rgba(255,30,39,0.35), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+.brand { position: relative; }
+
+/* the floating assistant button: keep the exact mark, no gradient plate */
+.botbtn {
+  background: #0a0a0a !important;
+  border: 1px solid rgba(255,30,39,0.45) !important;
+  box-shadow: 0 10px 30px -12px rgba(255,30,39,0.75) !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+.botbtn svg { stroke: var(--pf-red) !important; }
+.botbtn::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(255,30,39,0.45), transparent 70%);
+  animation: btnHalo 3.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* --------------------------------------------------------------------------
+   2. FOOTER — close every gap
+   -------------------------------------------------------------------------- */
+footer {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: #000 !important;
+}
+.f-edge {
+  padding: 0 clamp(18px, 4vw, 56px) 0 !important;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.f-hero { padding: 44px 0 30px !important; }
+
+/* the logo card must be centred, and the logo itself must be legible */
+.f-brandmark { display: block; margin: 0 auto 16px !important; width: fit-content; }
+.f-brandmark img {
+  width: clamp(120px, 30vw, 190px) !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 18px rgba(255,30,39,0.35));
+}
+.f-title { margin: 0 0 6px !important; }
+.f-tag { margin: 0 0 18px !important; }
+.f-remote { margin: 0 auto 16px !important; max-width: 560px; }
+.f-verified { margin: 0 auto !important; }
+
+.f-cols { padding: 30px 0 !important; gap: 26px !important; }
+.f-col h5 { margin: 0 0 10px !important; }
+.f-col a { padding: 3px 0 !important; display: block; }
+.f-socials { padding: 20px 0 !important; }
+
+.f-legal {
+  padding: 18px 0 22px !important;
+  margin: 0 !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.f-legal-links { display: flex; align-items: center; gap: 8px; }
+.f-legal-links span { opacity: .35; }
+
+/* the page must end at the footer, never below it */
+body { padding-bottom: 0 !important; }
+footer + *:empty { display: none !important; }
+
+/* clear the fixed action bar without leaving a void */
+@media (max-width: 680px) {
+  .f-legal { padding-bottom: 78px !important; }
+}
+
+/* --------------------------------------------------------------------------
+   3. COMPARISON TABLE — our column reads GREEN (client's call)
+   Colour is scoped to the comparison table only; the rest of the site stays
+   red / black / white.
+   -------------------------------------------------------------------------- */
+:root { --pf-green: #22c55e; --pf-green-soft: rgba(34,197,94,0.13); }
+
+.cmp .us,
+.cmp td.us,
+.cmp th.us,
+.cmp .good.us,
+table.cmp td:last-child {
+  color: var(--pf-green) !important;
+}
+.cmp td:last-child {
+  font-weight: 700;
+  background: var(--pf-green-soft) !important;
+}
+.cmp th:last-child {
+  color: var(--pf-green) !important;
+  background: rgba(34,197,94,0.20) !important;
+}
+/* the "our column" marker bar */
+.cmp tr td:last-child { border-left: 2px solid rgba(34,197,94,0.45) !important; }
+
+/* --------------------------------------------------------------------------
+   4. THE BADGE-SECTION LOGO CARD — centre the artwork
+   -------------------------------------------------------------------------- */
+.dcard .dhead img,
+.dcard img[src*="logo"] {
+  display: block !important;
+  margin: 0 auto !important;
+  width: min(320px, 74vw) !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+.dcard .dhead { text-align: center !important; justify-content: center !important; }
+
+/* the standalone logo card that was sitting left-aligned */
+.sec img[src*="logo-mark"],
+.sec img[src*="logo-lockup"] {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: min(340px, 76vw) !important;
+  height: auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. FLOATING ACTIONS — always reachable, never only at the footer
+   -------------------------------------------------------------------------- */
+.botwrap, .botbtn {
+  position: fixed !important;
+  z-index: 96 !important;
+}
+.botbtn { bottom: 84px !important; right: 16px !important; }
+@media (min-width: 681px) { .botbtn { bottom: 22px !important; right: 22px !important; } }
+
+/* the mobile action bar sits above the safe area and never overlaps the bot */
+.mbar {
+  z-index: 97 !important;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. GENERAL GAP CLEANUP
+   -------------------------------------------------------------------------- */
+.sec, .pf-sec { padding-top: 64px !important; padding-bottom: 64px !important; }
+@media (max-width: 680px) {
+  .sec, .pf-sec { padding-top: 44px !important; padding-bottom: 44px !important; }
+  .pf-forge { padding-top: 52px !important; padding-bottom: 52px !important; }
+}
+/* headings should not carry a big top margin under a tight section */
+.sec-head { margin-bottom: 22px !important; }
+.pf-h2, .pf-forge__line { margin-top: 10px !important; }
+
+/* no stray empty blocks anywhere */
+div:empty:not([class]):not([id]) { display: none !important; }
