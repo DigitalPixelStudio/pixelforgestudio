@@ -4560,3 +4560,156 @@ header.nav, .nav, .site-header { background: #000 !important; }
   .f-legal { padding-bottom: 0 !important; }
 }
 body { padding-bottom: 0 !important; }
+
+/* ==========================================================================
+   v98 — COLOUR ACROSS THE TEXT-HEAVY SECTIONS
+   The rule: colour the accents, never the paragraph. Labels, numbers, prices,
+   bold words, list markers and links take colour; body copy stays readable.
+   Every section gets its own hue so the page stops feeling like one long red
+   wall.
+   ========================================================================== */
+
+:root {
+  --c-red:    #ff1e27;
+  --c-green:  #22c55e;
+  --c-purple: #a855f7;
+  --c-blue:   #3b82f6;
+  --c-amber:  #f59e0b;
+  --c-cyan:   #06b6d4;
+  --c-pink:   #ec4899;
+}
+
+/* --------------------------------------------------------------------------
+   1. A HUE PER SECTION — the kicker, the number and the rule all take it
+   -------------------------------------------------------------------------- */
+.sec:nth-of-type(4n+1) { --sec-c: var(--c-red); }
+.sec:nth-of-type(4n+2) { --sec-c: var(--c-green); }
+.sec:nth-of-type(4n+3) { --sec-c: var(--c-purple); }
+.sec:nth-of-type(4n+4) { --sec-c: var(--c-blue); }
+
+.sec .eyebrow, .sec .pf-kicker, .sec .kicker {
+  color: var(--sec-c, var(--c-red)) !important;
+  -webkit-text-fill-color: var(--sec-c, var(--c-red)) !important;
+}
+.sec .num, .sec .step-n {
+  color: var(--sec-c, var(--c-red)) !important;
+}
+.sec-head h2::after, .pf-h2::after {
+  content: "";
+  display: block;
+  width: 46px; height: 2px;
+  margin-top: 12px;
+  background: var(--sec-c, var(--c-red));
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   2. BOLD WORDS INSIDE PARAGRAPHS
+   -------------------------------------------------------------------------- */
+p strong, p b, li strong, li b, .lead strong, .lead b {
+  color: var(--sec-c, var(--c-red)) !important;
+  font-weight: 700;
+}
+/* a couple of semantic ones get their own colour wherever they appear */
+p strong:where(:not([class])) { color: var(--sec-c, var(--c-red)) !important; }
+
+/* --------------------------------------------------------------------------
+   3. NUMBERS AND PRICES IN PROSE
+   -------------------------------------------------------------------------- */
+.cnt b, .stat b { color: #fff !important; }
+.cnt:nth-child(1) b { color: var(--c-red)    !important; }
+.cnt:nth-child(2) b { color: var(--c-green)  !important; }
+.cnt:nth-child(3) b { color: var(--c-purple) !important; }
+.cnt:nth-child(4) b { color: var(--c-blue)   !important; }
+.cnt:nth-child(5) b { color: var(--c-amber)  !important; }
+
+/* every price reads green, AI prices read purple */
+.tier-price, .trow span, .pamount, .price,
+[class*="price"] b, .paybox .payupi b {
+  color: var(--c-green) !important;
+}
+.trow:has(.pwa-tag) span,
+.track.elite .trow span,
+.track:has(.track-tag.ember) .trow span {
+  color: var(--c-purple) !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. CARD AND ROW TITLES
+   -------------------------------------------------------------------------- */
+.card h3, .sitem b, .pf-row__title, .row h3, .dcard b, .pkg h3 {
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  animation: none !important;
+  color: #fff !important;
+  transition: color .22s ease;
+}
+.card:hover h3   { color: var(--c-red)    !important; }
+.sitem:hover b   { color: var(--c-green)  !important; }
+.pf-row__title   { color: var(--c-red)    !important; }
+.row h3          { color: var(--c-green)  !important; }
+.pkg h3          { color: var(--c-purple) !important; }
+.dcard b         { color: var(--c-red)    !important; }
+
+/* the small line under a row title */
+.row p, .sitem span, .pf-row__sub {
+  color: #9a9aa0 !important;
+}
+.row:hover p { color: var(--c-green) !important; }
+
+/* --------------------------------------------------------------------------
+   5. LISTS, TABLES AND FAQ
+   -------------------------------------------------------------------------- */
+.pkg li::before { border-color: currentColor !important; }
+.pkg.green li::before  { border-color: var(--c-green)  !important; }
+.pkg.purple li::before { border-color: var(--c-purple) !important; }
+
+table tbody td:first-child { color: #fff !important; }
+table tbody td:last-child  { color: var(--c-green) !important; font-weight: 600; }
+table thead th             { color: var(--sec-c, var(--c-red)) !important; }
+
+.faq summary { color: #fff !important; }
+.faq summary::after { color: var(--sec-c, var(--c-red)) !important; }
+.faq details[open] summary { color: var(--sec-c, var(--c-red)) !important; }
+.faq p { color: #a8a8ae !important; }
+
+/* --------------------------------------------------------------------------
+   6. TAGS, PILLS AND BADGES — each family its own hue
+   -------------------------------------------------------------------------- */
+.pill-ember, .pill { color: var(--c-red) !important; border-color: rgba(255,30,39,.45) !important; background: rgba(255,30,39,.10) !important; }
+.badge-verified     { color: var(--c-blue) !important; border-color: rgba(59,130,246,.5) !important; background: rgba(59,130,246,.12) !important; }
+.pwa-tag            { color: var(--c-purple) !important; border-color: rgba(168,85,247,.55) !important; background: rgba(168,85,247,.14) !important; -webkit-text-fill-color: var(--c-purple) !important; }
+.track-badge        { background: var(--c-purple) !important; color: #fff !important; }
+.status             { color: var(--c-green) !important; }
+
+/* --------------------------------------------------------------------------
+   7. LINKS AND INLINE ACCENTS
+   -------------------------------------------------------------------------- */
+.sec a:not(.btn) { color: var(--sec-c, var(--c-red)); text-decoration-color: rgba(255,255,255,.25); }
+.sec a:not(.btn):hover { text-decoration: underline; }
+
+/* the "why" numbers in the process rows */
+.pf-forge__day b, .day-n { color: var(--c-amber) !important; }
+
+/* the tech / integration grid keeps its own neon set (v90) — do not override */
+
+/* --------------------------------------------------------------------------
+   8. SECTION BACKGROUND TINT
+   A barely-there wash in the section's own hue, so the colour reads even
+   before you look at the text.
+   -------------------------------------------------------------------------- */
+.sec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(120% 70% at 50% 0%,
+    color-mix(in srgb, var(--sec-c, #ff1e27) 9%, transparent), transparent 62%);
+  opacity: .9;
+}
+.sec > .wrap { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sec::before { opacity: .55; }
+}
