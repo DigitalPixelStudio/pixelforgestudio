@@ -2419,3 +2419,44 @@ img { content-visibility: auto; }
 /* one promoted layer for the marquee only */
 .pf-marquee__track, .tick-track, .marquee-track, .pf-progress { will-change: transform; }
 .pf-device, .pf-orbit { will-change: auto; }
+
+/* ==========================================================================
+   v84 — FLOATING ACTIONS, FINAL
+   The inline styles in the markup are the source of truth now, so these rules
+   only handle the responsive show/hide and make sure nothing clips them.
+   ========================================================================== */
+
+/* nothing may create a containing block above them */
+body { position: static !important; transform: none !important; filter: none !important; }
+main, footer, header, .sec, .pf-sec { transform: none !important; perspective: none !important; }
+
+/* DESKTOP: WhatsApp pill + assistant above it, always */
+@media (min-width: 681px) {
+  .wa      { display: inline-flex !important; bottom: 20px !important; right: 20px !important; }
+  .botwrap { display: block !important;       bottom: 84px !important; right: 20px !important; }
+  .mbar    { display: none !important; }
+}
+
+/* MOBILE: one bottom bar + assistant above it, always */
+@media (max-width: 680px) {
+  .wa      { display: none !important; }
+  .mbar    { display: flex !important; }
+  .botwrap { display: block !important; bottom: 78px !important; right: 14px !important; }
+  .botbtn  { width: 48px !important; height: 48px !important; }
+  /* the panel opens upward from the button, never off-screen */
+  .botpanel { bottom: 60px !important; right: 0 !important; width: calc(100vw - 28px) !important; max-width: 360px !important; }
+}
+
+/* the assistant button must never be pulled out of its wrapper again */
+.botbtn { position: relative !important; top: auto !important; left: auto !important; }
+
+/* the assistant panel itself */
+.botwrap .botpanel {
+  position: absolute !important;
+  bottom: 64px !important;
+  right: 0 !important;
+  z-index: 9993 !important;
+}
+
+/* the page must never scroll behind a fixed bar without room */
+@media (max-width: 680px) { footer { padding-bottom: 74px !important; } }
