@@ -2220,3 +2220,202 @@ table.cmp td:last-child {
 
 /* no stray empty blocks anywhere */
 div:empty:not([class]):not([id]) { display: none !important; }
+
+/* ==========================================================================
+   v83 — REAL PERFORMANCE FIX + PACKAGES COLOUR + LOGO + FOOTER END
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE ACTUAL SLOWDOWN — four full-viewport layers animating forever
+   On a phone this is the whole problem: a dead canvas, four 700px orbs, a
+   per-section grid, per-section orbs, dust and drift. All of it compositing
+   at once. Desktop can carry it; a phone cannot. Cut it hard below 900px.
+   -------------------------------------------------------------------------- */
+
+/* #fx3d is a canvas nothing in the codebase draws to. Dead weight, full
+   viewport, allocated surface. Remove it entirely. */
+#fx3d { display: none !important; }
+
+/* the four background orbs: 720/600/800/460px, each an animated layer */
+.bg i { animation: none !important; }
+
+@media (max-width: 900px) {
+  /* every decorative layer off on small screens */
+  .pf-sec > .gridfloor, .sec > .gridfloor,
+  .orb-fx, .pf-sec .dust, .sec .dust,
+  .pf-drift, .pf-hero .sparkle,
+  .pf-hero .scanline, .pf-showcase::before,
+  .sico::after, .sico::before,
+  .pf-marquee__item, .btn-primary::before,
+  .pf-hero::before, footer::before {
+    display: none !important;
+    animation: none !important;
+  }
+  /* the marquee keeps moving but as a cheap transform only */
+  .tick-track, .pf-marquee__track, .marquee-track { will-change: transform; }
+  /* no animated shimmer on numbers — it repaints text every frame */
+  .cnt b, .stat b {
+    background: none !important;
+    -webkit-text-fill-color: #fff !important;
+    color: #fff !important;
+    animation: none !important;
+  }
+  /* cards keep the hover feel but not the constant pulse */
+  .sitem .sico { animation: none !important; }
+  /* cheaper blur-free shadows */
+  .sitem, .cnt, .vitem, .pkg, .card { contain: layout style paint; }
+}
+
+/* --------------------------------------------------------------------------
+   2. THE BOTTOM VOID
+   Two paddings were stacking: body{padding-bottom:78px} on mobile plus the
+   footer's own. The page now ends at the footer.
+   -------------------------------------------------------------------------- */
+body { padding-bottom: 0 !important; }
+@media (max-width: 680px) { body { padding-bottom: 0 !important; } }
+
+/* the mobile bar is fixed, so reserve exactly its height once, at the end */
+.mbar { height: auto; }
+body::after {
+  content: "";
+  display: block;
+  height: 0;
+  clear: both;
+}
+@media (max-width: 680px) {
+  footer { padding-bottom: 64px !important; }
+  .f-legal { padding-bottom: 0 !important; }
+}
+html, body { height: auto !important; }
+main { min-height: 0 !important; }
+
+/* nothing may render below the footer */
+footer { margin-bottom: 0 !important; }
+
+/* --------------------------------------------------------------------------
+   3. THE CONTACT-CARD LOGO (v82 made it 320px and broke the row)
+   -------------------------------------------------------------------------- */
+.dcard .dhead {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  text-align: left !important;
+}
+.dcard .dhead img {
+  width: 40px !important;
+  height: 40px !important;
+  max-width: 40px !important;
+  min-width: 40px !important;
+  margin: 0 !important;
+  border-radius: 10px !important;
+  object-fit: contain !important;
+  background: #0a0a0a !important;
+  padding: 4px !important;
+  border: 1px solid rgba(255,30,39,0.28);
+}
+.dcard .dhead b { font-size: 1rem !important; }
+.dcard .dhead span { font-size: .62rem !important; }
+
+/* the standalone logo card: centred but never wider than its column */
+.sec img[src*="logo-mark"],
+.sec img[src*="logo-lockup"] {
+  display: block !important;
+  margin: 0 auto !important;
+  width: min(300px, 72vw) !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* the footer logo: big enough to read, centred */
+.f-brandmark img {
+  width: clamp(140px, 34vw, 200px) !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. PACKAGES AND PLANS — green and purple
+   Client's call: the package ladder reads green, the AI tier reads purple.
+   Scoped to the package UI only.
+   -------------------------------------------------------------------------- */
+:root {
+  --pf-pkg-green: #22c55e;
+  --pf-pkg-purple: #a855f7;
+}
+
+/* every package row / card */
+.tier, .pkg, .track, .pcard-l, .prow {
+  border-color: rgba(34,197,94,0.28) !important;
+}
+.tier b, .pkg b, .track-head h3, .prow b, .trow b {
+  color: var(--pf-pkg-green) !important;
+}
+.tier-price, .trow span, .pkg .price, .pamount {
+  color: var(--pf-pkg-green) !important;
+}
+
+/* the AI / Empire tier reads purple */
+.track.elite, .pkg.elite, .tier.elite,
+.track:has(.track-tag.ember), .pkg:has(.pwa-tag) {
+  border-color: rgba(168,85,247,0.45) !important;
+  background: linear-gradient(165deg, rgba(168,85,247,0.10), rgba(10,6,14,0.96)) !important;
+}
+.track.elite b, .track.elite h3,
+.track.elite .trow b, .track.elite .tier-price,
+.track:has(.track-tag.ember) .trow b,
+.track:has(.track-tag.ember) .track-head h3 {
+  color: var(--pf-pkg-purple) !important;
+}
+.track-badge, .track-tag.ember {
+  background: var(--pf-pkg-purple) !important;
+  color: #fff !important;
+  border-color: var(--pf-pkg-purple) !important;
+}
+/* AI rows inside any list */
+.trow:has(.pwa-tag) b, .pwa-tag {
+  color: var(--pf-pkg-purple) !important;
+  border-color: rgba(168,85,247,0.5) !important;
+}
+
+/* the radio selector in the package picker */
+.prow.on, .pkg.on, .tier.on {
+  border-color: var(--pf-pkg-green) !important;
+  box-shadow: 0 0 0 1px rgba(34,197,94,0.35) !important;
+}
+.prow.on .radio, .pkg.on .radio { background: var(--pf-pkg-green) !important; border-color: var(--pf-pkg-green) !important; }
+
+/* --------------------------------------------------------------------------
+   5. FLOATING ACTIONS — always visible, never overlapping, never clipped
+   -------------------------------------------------------------------------- */
+.wa, .botwrap, .botbtn, .mbar { pointer-events: auto !important; }
+
+/* desktop: WhatsApp pill bottom-right, assistant above it */
+@media (min-width: 681px) {
+  .wa      { bottom: 22px !important; right: 22px !important; z-index: 98 !important; }
+  .botwrap { bottom: 84px !important; right: 22px !important; z-index: 97 !important; }
+  .mbar    { display: none !important; }
+}
+/* mobile: one bar at the bottom, assistant above it */
+@media (max-width: 680px) {
+  .wa      { display: none !important; }
+  .mbar    { bottom: 0 !important; z-index: 98 !important; }
+  .botwrap { bottom: 76px !important; right: 14px !important; z-index: 97 !important; }
+  .botbtn  { width: 48px !important; height: 48px !important; }
+}
+
+/* the footer legal must never sit under the assistant button */
+.f-legal { position: relative; z-index: 1; }
+.f-legal-links, .f-copy { max-width: calc(100% - 64px); }
+
+/* --------------------------------------------------------------------------
+   6. SMOOTHNESS — the last few paint-triggering rules
+   -------------------------------------------------------------------------- */
+html { scroll-behavior: auto; }          /* smooth-scroll fights momentum on mobile */
+img { content-visibility: auto; }
+.sec, .pf-sec, .pf-forge { content-visibility: auto; contain-intrinsic-size: auto 700px; }
+
+/* one promoted layer for the marquee only */
+.pf-marquee__track, .tick-track, .marquee-track, .pf-progress { will-change: transform; }
+.pf-device, .pf-orbit { will-change: auto; }
