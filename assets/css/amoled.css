@@ -3894,3 +3894,191 @@ footer::after {
 }
 .wa-pay .wabtn:hover { background: #2f74e8 !important; }
 .wa-pay .wabtn svg { stroke: #fff !important; fill: none !important; }
+
+/* ==========================================================================
+   v93 — RECTANGULAR LOGO, SPLIT FAB, GREEN SCANNER
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE LOGO MUST READ AS A RECTANGLE
+   The 1.792 : 1 artwork was being boxed into a square slot. Give the header
+   enough height that the full lockup shows at its own ratio.
+   -------------------------------------------------------------------------- */
+.nav-in {
+  height: 64px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+}
+.pf-hero { padding-top: 64px !important; }
+
+.brand {
+  display: flex !important;
+  align-items: center !important;
+  flex: none !important;
+  max-width: 46vw !important;
+}
+.brand-logo {
+  display: block !important;
+  height: 42px !important;          /* 42 x 1.792 = ~75px wide, a real rectangle */
+  width: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  filter: drop-shadow(0 0 10px rgba(255,58,0,.5));
+}
+
+@media (max-width: 900px) {
+  .nav-in { height: 54px !important; min-height: 54px !important; max-height: 54px !important; }
+  .pf-hero { padding-top: 54px !important; }
+  .brand-logo { height: 34px !important; }
+  .brand { max-width: 52vw !important; }
+}
+
+/* footer + badge: same rectangle, larger */
+.f-brandmark img {
+  width: min(320px, 76vw) !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+.dcard img[src*="logo"],
+.sec img[src*="logo-fire"] {
+  width: min(400px, 84vw) !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. THE FAB SPLITS — assistant and estimator left, WhatsApp right
+   -------------------------------------------------------------------------- */
+.fab {
+  position: fixed !important;
+  inset: auto !important;
+  right: 14px !important;
+  left: auto !important;
+  bottom: 18px !important;
+  z-index: 995 !important;
+  display: block !important;
+  padding: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* each button is positioned independently */
+.fab > * {
+  position: fixed !important;
+  margin: 0 !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 26px -12px rgba(0,0,0,.95);
+  z-index: 995 !important;
+}
+
+/* right side: WhatsApp alone */
+.fab .f-wa {
+  right: 14px !important;
+  bottom: 18px !important;
+  left: auto !important;
+}
+
+/* left side: price estimator, with the assistant above it */
+.fab .f-price {
+  left: 14px !important;
+  right: auto !important;
+  bottom: 18px !important;
+}
+.fab .f-ai {
+  left: 14px !important;
+  right: auto !important;
+  bottom: 76px !important;
+}
+
+.fab svg { width: 22px !important; height: 22px !important; }
+
+@media (max-width: 680px) {
+  .fab > * { width: 46px !important; height: 46px !important; border-radius: 13px !important; }
+  .fab .f-wa    { right: 12px !important; bottom: 76px !important; }
+  .fab .f-price { left: 12px !important;  bottom: 76px !important; }
+  .fab .f-ai    { left: 12px !important;  bottom: 130px !important; }
+}
+
+/* the Astra panel opens above the assistant button, on the left */
+.botwrap {
+  position: fixed !important;
+  left: 14px !important;
+  right: auto !important;
+  bottom: 134px !important;
+  width: 0 !important; height: 0 !important;
+  pointer-events: none !important;
+  z-index: 996 !important;
+}
+.botwrap .botpanel {
+  position: absolute !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: 0 !important;
+  width: min(370px, calc(100vw - 28px)) !important;
+  max-height: min(68vh, 540px) !important;
+  overflow-y: auto !important;
+  background: #070707 !important;
+  border: 1px solid rgba(255,30,39,.32) !important;
+  border-radius: 16px !important;
+  pointer-events: auto !important;
+  transform-origin: bottom left;
+}
+@media (max-width: 680px) {
+  .botwrap { left: 12px !important; bottom: 188px !important; }
+  .botwrap .botpanel { width: calc(100vw - 24px) !important; }
+}
+
+/* --------------------------------------------------------------------------
+   3. THE SCANNER IS GREEN — the WhatsApp card below stays blue
+   -------------------------------------------------------------------------- */
+.paybox {
+  border-color: rgba(34,197,94,.45) !important;
+  background: linear-gradient(165deg, rgba(34,197,94,.10), rgba(4,10,6,.96)) !important;
+  box-shadow: 0 22px 54px -36px rgba(34,197,94,.9) !important;
+}
+.paybox .pill-ember {
+  color: #22c55e !important;
+  border-color: rgba(34,197,94,.5) !important;
+  background: rgba(34,197,94,.12) !important;
+}
+.paybox h3 { color: #22c55e !important; }
+.paybox p { color: #c2e6cf !important; }
+.paybox .paylogo { background: #22c55e !important; color: #04120a !important; }
+.paybox .payupi {
+  border-color: rgba(34,197,94,.4) !important;
+  background: rgba(34,197,94,.07) !important;
+}
+.paybox .payupi span { color: #7fd6a0 !important; }
+.paybox .payupi b { color: #22c55e !important; }
+.paybox .payupi button {
+  background: rgba(34,197,94,.16) !important;
+  border-color: rgba(34,197,94,.45) !important;
+  color: #22c55e !important;
+}
+.paybox .paysteps li { color: #c2e6cf !important; }
+.paybox .paysteps strong { color: #22c55e !important; }
+.paybox .paynote { color: #8fbfa1 !important; }
+.paybox a.btn, .paybox .btn-primary {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
+  color: #04120a !important;
+  box-shadow: 0 10px 26px -12px rgba(34,197,94,.95) !important;
+}
+.paybox a.btn:hover { background: #1ea94f !important; }
+.paybox svg { stroke: #22c55e !important; }
+.paybox .payqr { border-color: rgba(34,197,94,.35) !important; }
+
+/* the WhatsApp pay card keeps its blue */
+.wa-pay { /* untouched — blue from v92b */ }
