@@ -3692,3 +3692,205 @@ footer::after {
 @media (max-width: 900px) { .nav-in { height: 52px !important; min-height: 52px !important; max-height: 52px !important; } }
 .pf-hero { padding-top: 58px !important; }
 @media (max-width: 900px) { .pf-hero { padding-top: 52px !important; } }
+
+/* ==========================================================================
+   v92 — LOGO AT ITS TRUE ASPECT, HORIZONTAL FAB, BLUE PAY CARD
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE LOGO IS THE WHOLE IMAGE
+   No trim, no crop, no added border, no object-fit squeeze. Height drives it
+   and the width follows at the file's own 1.792 : 1 ratio.
+   -------------------------------------------------------------------------- */
+.brand { display: flex !important; align-items: center !important; flex: none !important; }
+.brand-logo {
+  display: block !important;
+  height: 34px !important;
+  width: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: fill !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  filter: drop-shadow(0 0 10px rgba(255,58,0,.5));
+  transition: filter .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.brand:hover .brand-logo { transform: scale(1.03); filter: drop-shadow(0 0 18px rgba(255,58,0,.8)); }
+
+/* the old square plate and wordmark are retired */
+.brand-mark, .brand-name { display: none !important; }
+
+/* header sized for a 34px lockup */
+.nav-in { height: 58px !important; min-height: 58px !important; max-height: 58px !important; }
+.pf-hero { padding-top: 58px !important; }
+
+@media (max-width: 900px) {
+  .brand-logo { height: 28px !important; }
+  .nav-in { height: 50px !important; min-height: 50px !important; max-height: 50px !important; }
+  .pf-hero { padding-top: 50px !important; }
+}
+
+/* footer + badge: same image, larger, same ratio */
+.f-brandmark img {
+  height: auto !important;
+  width: min(300px, 74vw) !important;
+  max-width: 100% !important;
+  display: block !important;
+  margin: 0 auto !important;
+  object-fit: fill !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  filter: drop-shadow(0 0 24px rgba(255,58,0,.5));
+}
+.dcard img[src*="logo"],
+.sec img[src*="logo-fire"] {
+  display: block !important;
+  margin: 0 auto !important;
+  width: min(380px, 82vw) !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: fill !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  filter: drop-shadow(0 0 24px rgba(255,58,0,.45));
+}
+
+/* --------------------------------------------------------------------------
+   2. FAB — HORIZONTAL
+   -------------------------------------------------------------------------- */
+.fab {
+  position: fixed !important;
+  right: 14px !important;
+  left: auto !important;
+  bottom: 18px !important;
+  transform: none !important;
+  z-index: 995 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 9px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  width: auto !important;
+  height: auto !important;
+}
+.fab > * {
+  position: relative !important;
+  inset: auto !important;
+  margin: 0 !important;
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 14px !important;
+  flex: none !important;
+  box-shadow: 0 10px 26px -12px rgba(0,0,0,.95);
+}
+.fab svg { width: 22px !important; height: 22px !important; }
+
+@media (max-width: 680px) {
+  .fab {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: 76px !important;
+    gap: 8px !important;
+  }
+  .fab > * { width: 46px !important; height: 46px !important; border-radius: 13px !important; }
+}
+
+/* the panel sits above the row */
+.botwrap {
+  position: fixed !important;
+  right: 14px !important;
+  left: auto !important;
+  bottom: 86px !important;
+  width: 0 !important; height: 0 !important;
+  pointer-events: none !important;
+  z-index: 996 !important;
+}
+.botwrap .botpanel {
+  position: absolute !important;
+  right: 0 !important;
+  left: auto !important;
+  bottom: 0 !important;
+  width: min(370px, calc(100vw - 28px)) !important;
+  max-height: min(68vh, 540px) !important;
+  overflow-y: auto !important;
+  background: #070707 !important;
+  border: 1px solid rgba(255,30,39,.32) !important;
+  border-radius: 16px !important;
+  pointer-events: auto !important;
+  transform-origin: bottom right;
+}
+@media (max-width: 680px) {
+  .botwrap { right: 50% !important; transform: translateX(50%) !important; bottom: 134px !important; }
+  .botwrap .botpanel { right: auto !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100vw - 24px) !important; }
+}
+
+/* --------------------------------------------------------------------------
+   3. PAY ON WHATSAPP — BLUE
+   -------------------------------------------------------------------------- */
+.paybox, .pay-wa, [class*="pay-wa"] {
+  border-color: rgba(59,130,246,.45) !important;
+  background: linear-gradient(165deg, rgba(59,130,246,.11), rgba(5,9,16,.96)) !important;
+}
+.paybox h3, .paybox b, .paybox strong,
+.paybox .pill-ember, .paybox .tag {
+  color: #3b82f6 !important;
+  border-color: rgba(59,130,246,.5) !important;
+  background: rgba(59,130,246,.12) !important;
+}
+.paybox svg, .paybox .ico svg { stroke: #3b82f6 !important; }
+.paybox .ico, .paybox .pay-ico {
+  background: rgba(59,130,246,.14) !important;
+  border-color: rgba(59,130,246,.42) !important;
+}
+.paybox .btn, .paybox .btn-primary, .paybox a.btn {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px -12px rgba(59,130,246,.95) !important;
+}
+.paybox .btn:hover { background: #2f74e8 !important; }
+/* the body copy inside the card stays readable on the blue tint */
+.paybox p { color: #c7d7f0 !important; }
+/* the verified tick */
+.paybox .vtick path, .paybox .vtick .t { fill: #3b82f6 !important; }
+
+/* ==========================================================================
+   v92b — PAY ON WHATSAPP IN BLUE (the real selectors)
+   Structure: .wa-pay > .wa-ico + div > h4 (with .badge-verified) + p + a.wabtn
+   ========================================================================== */
+.wa-pay {
+  border: 1px solid rgba(59,130,246,.45) !important;
+  background: linear-gradient(165deg, rgba(59,130,246,.12), rgba(5,9,16,.96)) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px -34px rgba(59,130,246,.9) !important;
+}
+.wa-pay .wa-ico {
+  background: rgba(59,130,246,.16) !important;
+  border: 1px solid rgba(59,130,246,.45) !important;
+  border-radius: 12px !important;
+}
+.wa-pay .wa-ico svg { stroke: #3b82f6 !important; fill: #3b82f6 !important; }
+.wa-pay h4 { color: #3b82f6 !important; }
+.wa-pay h4 .vtick path { fill: #3b82f6 !important; }
+.wa-pay h4 .vtick polyline { stroke: #fff !important; }
+.wa-pay .badge-verified {
+  color: #3b82f6 !important;
+  border-color: rgba(59,130,246,.5) !important;
+  background: rgba(59,130,246,.14) !important;
+}
+.wa-pay p { color: #c3d5f2 !important; }
+.wa-pay .wabtn {
+  background: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px -12px rgba(59,130,246,.95) !important;
+}
+.wa-pay .wabtn:hover { background: #2f74e8 !important; }
+.wa-pay .wabtn svg { stroke: #fff !important; fill: none !important; }
