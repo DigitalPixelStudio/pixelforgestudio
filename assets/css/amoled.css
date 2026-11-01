@@ -4713,3 +4713,147 @@ table thead th             { color: var(--sec-c, var(--c-red)) !important; }
 @media (prefers-reduced-motion: reduce) {
   .sec::before { opacity: .55; }
 }
+
+/* ==========================================================================
+   v99 — RAW LOGO, NO BOX, NO TEXT ON TOP, BIGGER IN THE HEADER
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE FOOTER LOGO WAS OVERFLOWING ITS BOX AND LANDING ON THE TEXT
+   .f-brandmark was pinned at 92x72 while the image inside was 320px wide, so
+   it spilled out and the heading underneath collided with it. The container
+   now sizes to its content and the box is gone.
+   -------------------------------------------------------------------------- */
+.f-brandmark {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 auto 22px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+.f-brandmark:hover { transform: none !important; }
+
+.f-brandmark img {
+  display: block !important;
+  width: min(340px, 82vw) !important;
+  height: auto !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  object-fit: contain !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  mix-blend-mode: screen !important;
+  filter: drop-shadow(0 0 26px rgba(255,58,0,.45)) !important;
+}
+
+/* the heading and tagline now sit clearly BELOW the image */
+.f-hero { text-align: center !important; }
+.f-title {
+  display: block !important;
+  margin: 0 0 8px !important;
+  position: static !important;
+  transform: none !important;
+}
+.f-tag {
+  display: block !important;
+  margin: 0 0 22px !important;
+  position: static !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. ANY OTHER LOGO PLACEMENT — same raw treatment
+   -------------------------------------------------------------------------- */
+.dcard img[src*="logo"],
+.sec img[src*="logo-fire"] {
+  display: block !important;
+  width: min(400px, 84vw) !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  mix-blend-mode: screen !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. THE HEADER LOGO — BIG AND FULL
+   No plate, no frame, no crop. The lockup is the whole mark.
+   -------------------------------------------------------------------------- */
+header.nav, .nav, .site-header {
+  background: #000 !important;
+  padding: 0 !important;
+}
+.nav-in {
+  height: 74px !important;
+  min-height: 74px !important;
+  max-height: 74px !important;
+  padding: 0 !important;
+  gap: 18px !important;
+}
+.pf-hero { padding-top: 74px !important; }
+
+.brand {
+  display: flex !important;
+  align-items: center !important;
+  flex: none !important;
+  max-width: 58vw !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.brand-logo {
+  display: block !important;
+  height: 58px !important;          /* 58 x 1.792 = ~104px wide */
+  width: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  min-width: 0 !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  mix-blend-mode: screen !important;
+  filter: drop-shadow(0 0 16px rgba(255,58,0,.5));
+  transition: filter .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.brand:hover .brand-logo { transform: scale(1.02); filter: drop-shadow(0 0 24px rgba(255,58,0,.85)); }
+
+/* nothing may sit behind or around it */
+.brand-mark, .brand-name, .brand::before, .brand::after { display: none !important; }
+
+@media (max-width: 900px) {
+  .nav-in {
+    height: 62px !important;
+    min-height: 62px !important;
+    max-height: 62px !important;
+  }
+  .pf-hero { padding-top: 62px !important; }
+  .brand-logo { height: 46px !important; }
+  .brand { max-width: 62vw !important; }
+}
+@media (max-width: 400px) {
+  .brand-logo { height: 40px !important; }
+  .nav-in { height: 56px !important; min-height: 56px !important; max-height: 56px !important; }
+  .pf-hero { padding-top: 56px !important; }
+}
+
+/* the burger stays clear of the wider logo */
+.burger { flex: none !important; }
