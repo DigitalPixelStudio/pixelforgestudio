@@ -4251,3 +4251,138 @@ div:empty:not([class]):not([id]) { display: none !important; }
   background-image: none !important;
   animation: none !important;
 }
+
+/* ==========================================================================
+   v95 — THE FAB USES THE REAL CLASS NAMES
+   Every previous attempt targeted .f-price / .f-ai / .f-wa. The markup
+   actually uses .fab-price / .botbtn / .fab-wa, so nothing ever matched and
+   two of the three buttons had no position at all. This block is written
+   against the classes that exist.
+   ========================================================================== */
+
+/* the wrapper must not create a box, or the fixed children are trapped */
+.fab {
+  display: contents !important;
+  position: static !important;
+  inset: auto !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* every button, positioned against the viewport */
+.fab .fab-btn,
+.fab .botbtn,
+.fab .fab-price,
+.fab .fab-wa {
+  position: fixed !important;
+  inset: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 54px !important;
+  height: 54px !important;
+  border-radius: 15px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 9990 !important;
+  box-shadow: 0 10px 26px -12px rgba(0,0,0,.95);
+  transition: transform .16s cubic-bezier(.34,1.56,.64,1);
+  -webkit-tap-highlight-color: transparent;
+}
+.fab .fab-btn svg { width: 24px !important; height: 24px !important; }
+
+.fab .fab-btn:active { transform: scale(.93) !important; }
+@media (hover: hover) {
+  .fab .fab-btn:hover { transform: translateY(-2px) scale(1.06); }
+}
+
+/* LEFT — price estimator, with the assistant stacked above it */
+.fab .fab-price {
+  left: 14px !important;
+  right: auto !important;
+  bottom: 20px !important;
+}
+.fab .botbtn {
+  left: 14px !important;
+  right: auto !important;
+  bottom: 84px !important;
+}
+/* RIGHT — WhatsApp */
+.fab .fab-wa {
+  right: 14px !important;
+  left: auto !important;
+  bottom: 20px !important;
+}
+
+@media (max-width: 680px) {
+  .fab .fab-btn { width: 50px !important; height: 50px !important; border-radius: 14px !important; }
+  .fab .fab-btn svg { width: 22px !important; height: 22px !important; }
+  .fab .fab-price { left: 12px !important;  bottom: 78px !important; }
+  .fab .botbtn    { left: 12px !important;  bottom: 136px !important; }
+  .fab .fab-wa    { right: 12px !important; bottom: 78px !important; }
+}
+
+/* --------------------------------------------------------------------------
+   THE LOGO — blend only works when the surface behind it is true black
+   -------------------------------------------------------------------------- */
+header.nav, .nav, .site-header { background: #000 !important; }
+.brand-logo {
+  mix-blend-mode: screen !important;
+  isolation: auto !important;
+  height: 44px !important;
+  width: auto !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+@media (max-width: 900px) { .brand-logo { height: 36px !important; } }
+
+.f-brandmark img,
+.dcard img[src*="logo"],
+.sec img[src*="logo-fire"] {
+  mix-blend-mode: screen !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* the assistant panel, anchored to the left-hand button */
+.botwrap {
+  position: fixed !important;
+  left: 14px !important;
+  right: auto !important;
+  bottom: 144px !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+  z-index: 9991 !important;
+}
+.botwrap .botpanel {
+  position: absolute !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: 0 !important;
+  width: min(370px, calc(100vw - 28px)) !important;
+  max-height: min(68vh, 540px) !important;
+  overflow-y: auto !important;
+  background: #070707 !important;
+  border: 1px solid rgba(255,30,39,.32) !important;
+  border-radius: 16px !important;
+  pointer-events: auto !important;
+  transform-origin: bottom left;
+}
+@media (max-width: 680px) {
+  .botwrap { left: 12px !important; bottom: 196px !important; }
+  .botwrap .botpanel { width: calc(100vw - 24px) !important; }
+}
