@@ -3011,3 +3011,289 @@ body::after {
     background: none !important;
   }
 }
+
+/* ==========================================================================
+   v89 — FIRE, SLIDERS, TEXT SLIDES, FAB PLACEMENT
+   Everything here is injected or styled from CSS. Only transform and opacity
+   animate, so nothing on this list can cost a frame.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE FORGE FLAME
+   A CSS flame that sits above a section heading. Three stacked layers, each a
+   radial gradient on a pseudo-element, animated with scale and opacity only —
+   no blur, no filter, no repaint.
+   -------------------------------------------------------------------------- */
+.flame {
+  position: relative;
+  width: 46px;
+  height: 54px;
+  margin: 0 0 14px;
+  flex: none;
+}
+.flame::before,
+.flame::after,
+.flame i {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  border-radius: 50% 50% 46% 46% / 62% 62% 38% 38%;
+  transform-origin: 50% 100%;
+}
+/* outer flame */
+.flame::before {
+  width: 34px; height: 46px;
+  margin-left: -17px;
+  background: radial-gradient(ellipse at 50% 82%, #ff3a00 0%, #ff1e27 38%, rgba(255,30,39,0) 72%);
+  animation: flameOuter 2.6s ease-in-out infinite;
+}
+/* mid flame */
+.flame::after {
+  width: 22px; height: 32px;
+  margin-left: -11px;
+  background: radial-gradient(ellipse at 50% 80%, #ffb300 0%, #ff6a00 46%, rgba(255,106,0,0) 76%);
+  animation: flameMid 1.9s ease-in-out infinite;
+}
+/* white-hot core */
+.flame i {
+  width: 10px; height: 16px;
+  margin-left: -5px;
+  background: radial-gradient(ellipse at 50% 78%, #fff8e1 0%, #ffd54f 52%, rgba(255,213,79,0) 78%);
+  animation: flameCore 1.3s ease-in-out infinite;
+}
+@keyframes flameOuter {
+  0%, 100% { transform: scale(1, 1)        translateY(0);    opacity: .92; }
+  35%      { transform: scale(1.10, .90)   translateY(1px);  opacity: 1; }
+  70%      { transform: scale(.94, 1.08)   translateY(-2px); opacity: .85; }
+}
+@keyframes flameMid {
+  0%, 100% { transform: scale(1, 1)      translateY(0);   opacity: 1; }
+  40%      { transform: scale(.90, 1.12) translateY(-3px); opacity: .9; }
+  75%      { transform: scale(1.06, .94) translateY(1px);  opacity: 1; }
+}
+@keyframes flameCore {
+  0%, 100% { transform: scale(1, 1)      opacity: 1; }
+  50%      { transform: scale(.86, 1.16) opacity: .75; }
+}
+
+/* the glow that spills under the flame */
+.flame-glow {
+  position: absolute;
+  left: 50%; bottom: -6px;
+  width: 90px; height: 26px;
+  margin-left: -45px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,30,39,.55), transparent 72%);
+  animation: flameGlow 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes flameGlow {
+  0%, 100% { transform: scale(1);    opacity: .55; }
+  50%      { transform: scale(1.22); opacity: .9; }
+}
+
+/* a small inline variant for headings */
+.flame-sm { width: 30px; height: 36px; margin-bottom: 10px; }
+.flame-sm::before { width: 22px; height: 30px; margin-left: -11px; }
+.flame-sm::after  { width: 15px; height: 21px; margin-left: -7.5px; }
+.flame-sm i       { width: 7px;  height: 11px; margin-left: -3.5px; }
+
+/* --------------------------------------------------------------------------
+   2. THE LOGO GETS THE FIRE
+   -------------------------------------------------------------------------- */
+.brand-mark { position: relative; }
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 14px;
+  background: radial-gradient(ellipse at 50% 80%, rgba(255,58,0,.75), rgba(255,30,39,.25) 45%, transparent 72%);
+  animation: logoBurn 3.2s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+@keyframes logoBurn {
+  0%, 100% { transform: scale(1)    translateY(0);   opacity: .55; }
+  50%      { transform: scale(1.18) translateY(-2px); opacity: .95; }
+}
+.f-brandmark { position: relative; }
+.f-brandmark::after {
+  content: "";
+  position: absolute;
+  left: 50%; bottom: -10px;
+  width: 160px; height: 40px;
+  margin-left: -80px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,30,39,.5), transparent 70%);
+  animation: flameGlow 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. RED TEXT SLIDE — applied to more places
+   The same sweep the headings use, extended to every label and price.
+   -------------------------------------------------------------------------- */
+.red-slide {
+  background-image: linear-gradient(100deg, currentColor 0%, currentColor 44%, #fff 50%, currentColor 56%, currentColor 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: redSlide 6s ease-in-out infinite;
+}
+@keyframes redSlide {
+  0%, 100% { background-position: 135% 0; }
+  50%      { background-position: -35% 0; }
+}
+
+/* auto-apply to these, without needing a class */
+.pf-row__title, .row h3, .tier-price, .trow span, .pamount,
+.brand-name, .f-col h5, .status, .eyebrow, .pf-kicker {
+  background-image: linear-gradient(100deg, currentColor 0%, currentColor 46%, rgba(255,255,255,.95) 50%, currentColor 54%, currentColor 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: redSlide 7s ease-in-out infinite;
+}
+/* prices and titles slide in red rather than white */
+.tier-price, .trow span, .pamount {
+  background-image: linear-gradient(100deg, #22c55e 0%, #22c55e 44%, #b6ffd0 50%, #22c55e 56%, #22c55e 100%);
+}
+
+/* --------------------------------------------------------------------------
+   4. THE SLIDERS — longer, glass-red, drag and scroll
+   -------------------------------------------------------------------------- */
+.pfslider {
+  position: relative;
+  margin: 34px 0 0;
+}
+.pfslider__rail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 2px 16px;
+  scrollbar-width: none;
+}
+.pfslider__rail::-webkit-scrollbar { display: none; }
+
+.pfslider__card {
+  flex: 0 0 auto;
+  width: 268px;
+  scroll-snap-align: start;
+  border-radius: 14px;
+  padding: 20px;
+  background: linear-gradient(150deg, rgba(255,30,39,.13), rgba(8,4,5,.78));
+  border: 1px solid rgba(255,30,39,.30);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 18px 44px -28px rgba(255,30,39,.7);
+  transition: transform .22s cubic-bezier(.22,1,.36,1), border-color .22s ease;
+}
+.pfslider__card:hover { transform: translateY(-5px); border-color: rgba(255,30,39,.65); }
+.pfslider__card h4 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px;
+}
+.pfslider__card p { font-size: 12.5px; line-height: 1.6; color: var(--pf-muted); }
+.pfslider__card .n {
+  font-family: "JetBrains Mono", monospace; font-size: 10px;
+  letter-spacing: .18em; color: var(--pf-red); display: block; margin-bottom: 10px;
+}
+.pfslider__card .ico {
+  width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+  background: rgba(255,30,39,.14); border: 1px solid rgba(255,30,39,.32);
+  margin-bottom: 12px;
+}
+.pfslider__card .ico svg { width: 18px; height: 18px; fill: none; stroke: var(--pf-red); stroke-width: 1.9; }
+
+/* arrows */
+.pfslider__nav {
+  display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px;
+}
+.pfslider__nav button {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: rgba(255,30,39,.10);
+  border: 1px solid rgba(255,30,39,.35);
+  color: var(--pf-red);
+  display: grid; place-items: center;
+  transition: background-color .18s ease, transform .18s ease;
+}
+.pfslider__nav button:hover { background: rgba(255,30,39,.22); transform: translateY(-1px); }
+.pfslider__nav button:active { transform: scale(.94); }
+.pfslider__nav svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+
+/* the progress rail under the slider */
+.pfslider__bar {
+  height: 3px; border-radius: 99px;
+  background: rgba(255,30,39,.12);
+  overflow: hidden; margin-top: 4px;
+}
+.pfslider__bar i {
+  display: block; height: 100%; width: 30%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(255,30,39,.9), rgba(255,150,150,.95));
+  transform-origin: 0 50%;
+  transition: transform .18s ease;
+}
+
+@media (max-width: 700px) {
+  .pfslider__card { width: 232px; padding: 17px; }
+}
+
+/* --------------------------------------------------------------------------
+   5. FAB PLACEMENT — moved to the LEFT, WhatsApp stays right
+   -------------------------------------------------------------------------- */
+.fab {
+  left: 14px !important;
+  right: auto !important;
+  bottom: 16px !important;
+}
+@media (max-width: 680px) {
+  .fab { left: 12px !important; right: auto !important; bottom: 78px !important; }
+}
+/* the Astra panel now opens from the left */
+.botwrap {
+  left: 14px !important;
+  right: auto !important;
+  bottom: 172px !important;
+}
+.botwrap .botpanel {
+  left: 0 !important;
+  right: auto !important;
+  transform-origin: bottom left;
+}
+@media (max-width: 680px) {
+  .botwrap { left: 12px !important; bottom: 228px !important; }
+}
+
+/* --------------------------------------------------------------------------
+   6. GAPS — tighten the dead space between sections
+   -------------------------------------------------------------------------- */
+.sec, .pf-sec { padding-top: 58px !important; padding-bottom: 58px !important; }
+@media (max-width: 700px) { .sec, .pf-sec { padding-top: 40px !important; padding-bottom: 40px !important; } }
+.sec-head { margin-bottom: 20px !important; }
+.pf-h2, .sec-head h2 { margin-top: 8px !important; }
+.pf-forge { padding-top: 56px !important; padding-bottom: 56px !important; }
+
+/* --------------------------------------------------------------------------
+   7. FPS — the last paint-triggering rules
+   -------------------------------------------------------------------------- */
+/* the flame and logo glow are the only new animated layers; keep them
+   promoted so they never repaint their section */
+.flame, .flame i, .brand-mark::after { will-change: transform, opacity; }
+/* nothing else should ask for a layer */
+.pfslider__card { will-change: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flame::before, .flame::after, .flame i, .flame-glow,
+  .brand-mark::after, .f-brandmark::after,
+  .red-slide, .pf-row__title, .row h3, .tier-price, .trow span, .pamount,
+  .brand-name, .f-col h5, .status, .eyebrow, .pf-kicker {
+    animation: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    background: none !important;
+  }
+}
