@@ -3297,3 +3297,266 @@ body::after {
     background: none !important;
   }
 }
+
+/* ==========================================================================
+   v90 — PWA TAG FIX, HORIZONTAL FAB, GREEN PAY, FIRE LOGO, MORE COLOUR
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THE INVISIBLE PWA TAG
+   The red-slide gradient sets -webkit-text-fill-color:transparent. On a badge
+   that already has a background, the text vanished. Badges must never get the
+   text-slide treatment.
+   -------------------------------------------------------------------------- */
+.pwa-tag, .track-tag, .track-badge, .pill, .status, .eyebrow,
+.pf-kicker, .num, .f-col h5, .tier-price, .trow span, .pamount {
+  background-image: none !important;
+  -webkit-text-fill-color: currentColor !important;
+  animation: none !important;
+}
+/* restore their own colours explicitly */
+.pwa-tag {
+  color: #a855f7 !important;
+  border: 1px solid rgba(168,85,247,.55) !important;
+  background: rgba(168,85,247,.14) !important;
+  padding: 2px 7px !important;
+  border-radius: 4px !important;
+  font-size: .62rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em !important;
+  display: inline-block !important;
+  -webkit-text-fill-color: #a855f7 !important;
+}
+.track-tag { color: #a855f7 !important; border-color: rgba(168,85,247,.5) !important; }
+.track-badge { color: #fff !important; background: #a855f7 !important; }
+.eyebrow, .pf-kicker { color: var(--pf-red) !important; }
+.num { color: var(--pf-red) !important; }
+.f-col h5 { color: var(--pf-red) !important; }
+.tier-price, .trow span, .pamount { color: #22c55e !important; }
+.status { color: var(--pf-red-3) !important; }
+
+/* --------------------------------------------------------------------------
+   2. PAY ON WHATSAPP — green
+   -------------------------------------------------------------------------- */
+.paybox, .pay-wa, [class*="pay-wa"] {
+  border-color: rgba(37,211,102,.45) !important;
+  background: linear-gradient(165deg, rgba(37,211,102,.10), rgba(6,12,8,.96)) !important;
+}
+.paybox h3, .paybox b, .paybox strong { color: #25d366 !important; }
+.paybox svg, .paybox .ico svg { stroke: #25d366 !important; }
+.paybox .pill-ember, .paybox .tag {
+  color: #25d366 !important;
+  border-color: rgba(37,211,102,.5) !important;
+  background: rgba(37,211,102,.12) !important;
+}
+/* the button itself */
+.paybox .btn, .paybox .btn-primary, .paybox a.btn {
+  background: #25d366 !important;
+  border-color: #25d366 !important;
+  color: #fff !important;
+  box-shadow: 0 10px 26px -12px rgba(37,211,102,.9) !important;
+}
+.paybox .btn:hover { background: #1fbe5a !important; }
+/* the whatsapp icon plate inside it */
+.paybox .ico, .paybox .pay-ico {
+  background: rgba(37,211,102,.14) !important;
+  border-color: rgba(37,211,102,.4) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. THE FAB GOES HORIZONTAL — one row, bottom centre-right
+   -------------------------------------------------------------------------- */
+.fab {
+  position: fixed !important;
+  left: auto !important;
+  right: 14px !important;
+  bottom: 16px !important;
+  z-index: 995 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  padding: 8px !important;
+  border-radius: 16px !important;
+  background: rgba(6,4,4,.78) !important;
+  border: 1px solid rgba(255,30,39,.28) !important;
+  box-shadow: 0 14px 38px -22px rgba(255,30,39,.85), inset 0 1px 0 rgba(255,255,255,.07) !important;
+}
+.fab > * {
+  position: relative !important;
+  inset: auto !important;
+  margin: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  flex: none !important;
+}
+.fab svg { width: 20px !important; height: 20px !important; }
+
+@media (max-width: 680px) {
+  .fab {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    bottom: 76px !important;
+    gap: 7px !important;
+    padding: 7px !important;
+  }
+  .fab > * { width: 42px !important; height: 42px !important; }
+}
+
+/* the Astra panel opens above the row, aligned right */
+.botwrap {
+  position: fixed !important;
+  right: 14px !important;
+  left: auto !important;
+  bottom: 86px !important;
+  width: 0 !important; height: 0 !important;
+  pointer-events: none !important;
+  z-index: 996 !important;
+}
+.botwrap .botpanel {
+  position: absolute !important;
+  right: 0 !important;
+  left: auto !important;
+  bottom: 0 !important;
+  width: min(370px, calc(100vw - 28px)) !important;
+  max-height: min(68vh, 540px) !important;
+  overflow-y: auto !important;
+  background: #070707 !important;
+  border: 1px solid rgba(255,30,39,.32) !important;
+  border-radius: 16px !important;
+  pointer-events: auto !important;
+  transform-origin: bottom right;
+}
+@media (max-width: 680px) {
+  .botwrap { right: 50% !important; transform: translateX(50%) !important; bottom: 134px !important; }
+  .botwrap .botpanel { width: calc(100vw - 24px) !important; right: auto !important; left: 50% !important; transform: translateX(-50%) !important; }
+}
+
+/* --------------------------------------------------------------------------
+   4. MORE COLOUR ON THE HEAVY TEXT
+   Body headings, card titles and row labels now carry a colour sweep too —
+   but on solid backgrounds only, never on a badge.
+   -------------------------------------------------------------------------- */
+.sec-head h2, .pf-h2, .pf-forge__line, .hero-title, .f-title,
+.card h3, .pf-row__title, .row h3, .track-head h3, .pkg h3,
+.faq summary, .dcard b {
+  background-image: linear-gradient(100deg, #ffffff 0%, #ffffff 44%, var(--pf-red) 50%, #ffffff 56%, #ffffff 100%);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: txtSweep 8s ease-in-out infinite;
+}
+/* the AI tier headings read purple */
+.track.elite h3, .track:has(.track-tag.ember) h3,
+.track.elite .trow b, .trow:has(.pwa-tag) b {
+  background-image: linear-gradient(100deg, #a855f7 0%, #a855f7 44%, #e9d5ff 50%, #a855f7 56%, #a855f7 100%) !important;
+}
+/* service row labels read green */
+.pf-row__title, .row h3 {
+  background-image: linear-gradient(100deg, #ffffff 0%, #ffffff 44%, #22c55e 50%, #ffffff 56%, #ffffff 100%);
+}
+
+/* --------------------------------------------------------------------------
+   5. MORE BACKGROUND EFFECTS
+   -------------------------------------------------------------------------- */
+
+/* a slowly rotating conic wash behind the hero */
+.hero, .pf-hero { position: relative; overflow: hidden; }
+.hero::after, .pf-hero .aura {
+  content: "";
+  position: absolute;
+  left: 50%; top: -30%;
+  width: 140vmax; height: 140vmax;
+  margin-left: -70vmax;
+  background: conic-gradient(from 0deg,
+    rgba(255,30,39,.10), transparent 22%, rgba(255,30,39,.06) 44%,
+    transparent 66%, rgba(255,30,39,.09) 88%, rgba(255,30,39,.10));
+  animation: auraSpin 46s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+@keyframes auraSpin { to { transform: rotate(360deg); } }
+.hero .wrap, .pf-hero > .pf-wrap { position: relative; z-index: 2; }
+
+/* a drifting dot matrix on the deep sections */
+.sec-alt::after, .pf-sec--alt::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255,30,39,.16) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, #000, transparent 78%);
+  animation: dotDrift 30s linear infinite;
+  opacity: .7;
+}
+@keyframes dotDrift { to { background-position: 26px 26px; } }
+
+/* a scan sweep across each section boundary */
+.sec::after {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,30,39,.8), transparent);
+  transform-origin: 0 50%;
+  animation: boundSweep 9s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes boundSweep {
+  0%, 100% { transform: scaleX(0);   opacity: 0; }
+  50%      { transform: scaleX(1);   opacity: .9; }
+}
+
+/* floating embers rising in the hero */
+.hero .ember, .pf-hero .ember {
+  position: absolute;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffb300, #ff1e27 60%, transparent 72%);
+  animation: emberRise linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes emberRise {
+  0%   { transform: translate3d(0, 0, 0) scale(.6);      opacity: 0; }
+  12%  { opacity: .9; }
+  100% { transform: translate3d(22px, -70vh, 0) scale(1.1); opacity: 0; }
+}
+
+/* the footer gets a rising heat wash */
+footer::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0; height: 220px;
+  pointer-events: none;
+  background: radial-gradient(ellipse 70% 100% at 50% 100%, rgba(255,30,39,.16), transparent 70%);
+  animation: heatPulse 7s ease-in-out infinite;
+}
+@keyframes heatPulse { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
+
+/* --------------------------------------------------------------------------
+   6. FIRE LOGO
+   -------------------------------------------------------------------------- */
+.f-brandmark img, .dcard img[src*="logo"] {
+  filter: drop-shadow(0 0 22px rgba(255,58,0,.55));
+}
+.brand-mark::after { animation-duration: 2.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sec-head h2, .pf-h2, .pf-forge__line, .hero-title, .f-title,
+  .card h3, .pf-row__title, .row h3, .track-head h3, .pkg h3,
+  .faq summary, .dcard b, .hero::after, .pf-hero .aura,
+  .sec-alt::after, .pf-sec--alt::after, .sec::after,
+  .hero .ember, .pf-hero .ember, footer::after {
+    animation: none !important;
+  }
+  .sec-head h2, .pf-h2, .pf-forge__line, .hero-title, .f-title,
+  .card h3, .pf-row__title, .row h3, .track-head h3, .pkg h3,
+  .faq summary, .dcard b {
+    -webkit-text-fill-color: currentColor !important;
+    background: none !important;
+  }
+  .hero .ember, .pf-hero .ember { display: none; }
+}
