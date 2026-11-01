@@ -4496,3 +4496,67 @@ header.nav, .nav, .site-header { background: #000 !important; }
   }
   .fab .fab-btn::before { opacity: .4; }
 }
+
+/* ==========================================================================
+   v97 — THE COLUMN SITS ON THE BOTTOM EDGE
+   Flush to the corner, with the safe-area inset respected so it clears the
+   home bar on an iPhone and the gesture pill on Android.
+   ========================================================================== */
+
+/* the old bottom bar is redundant now — the column already carries WhatsApp */
+.mbar { display: none !important; }
+
+/* one tight column, anchored to the bottom-left corner */
+.fab .fab-wa {
+  left: 8px !important;
+  right: auto !important;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+}
+.fab .fab-price {
+  left: 8px !important;
+  right: auto !important;
+  bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+}
+.fab .botbtn {
+  left: 8px !important;
+  right: auto !important;
+  bottom: calc(132px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+@media (max-width: 680px) {
+  .fab .fab-wa {
+    left: 8px !important;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .fab .fab-price {
+    left: 8px !important;
+    bottom: calc(66px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  .fab .botbtn {
+    left: 8px !important;
+    bottom: calc(124px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* the panel opens just above the top of the column */
+.botwrap {
+  left: 8px !important;
+  right: auto !important;
+  bottom: calc(196px + env(safe-area-inset-bottom, 0px)) !important;
+}
+@media (max-width: 680px) {
+  .botwrap {
+    left: 8px !important;
+    bottom: calc(188px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+/* the glow ring must not be clipped by the viewport edge */
+.fab .fab-btn { overflow: visible !important; }
+
+/* the page needs no reserved space at the bottom any more */
+@media (max-width: 680px) {
+  footer { padding-bottom: 24px !important; }
+  .f-legal { padding-bottom: 0 !important; }
+}
+body { padding-bottom: 0 !important; }
