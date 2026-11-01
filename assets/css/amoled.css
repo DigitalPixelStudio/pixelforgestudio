@@ -4857,3 +4857,85 @@ header.nav, .nav, .site-header {
 
 /* the burger stays clear of the wider logo */
 .burger { flex: none !important; }
+
+/* ==========================================================================
+   v100 — NO GLOW ON THE COMPANY MARK, BIGGER IN THE HEADER
+   The logo is a piece of art already. It does not need a halo, a pulse or a
+   drop shadow behind it. Just the artwork, larger.
+   ========================================================================== */
+
+/* --- kill every glow, halo and burn on the brand mark ------------------- */
+.brand-logo {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  mix-blend-mode: screen !important;   /* this only removes the dark card, it is not a glow */
+}
+.brand:hover .brand-logo {
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
+}
+.brand::before, .brand::after,
+.brand-mark::after, .brand-mark::before {
+  display: none !important;
+  animation: none !important;
+  content: none !important;
+}
+
+/* footer mark: no glow either */
+.f-brandmark img {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+.f-brandmark::after, .f-brandmark::before { display: none !important; content: none !important; }
+
+/* badge / inline logo: same */
+.dcard img[src*="logo"],
+.sec img[src*="logo-fire"] {
+  filter: none !important;
+  -webkit-filter: none !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* --- and make it big ---------------------------------------------------- */
+.nav-in {
+  height: 84px !important;
+  min-height: 84px !important;
+  max-height: 84px !important;
+}
+.pf-hero { padding-top: 84px !important; }
+
+.brand-logo {
+  height: 68px !important;          /* 68 x 1.792 = ~122px wide */
+  width: auto !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+}
+
+@media (max-width: 900px) {
+  .nav-in {
+    height: 68px !important;
+    min-height: 68px !important;
+    max-height: 68px !important;
+  }
+  .pf-hero { padding-top: 68px !important; }
+  .brand-logo { height: 52px !important; }
+}
+@media (max-width: 400px) {
+  .nav-in {
+    height: 60px !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
+  }
+  .pf-hero { padding-top: 60px !important; }
+  .brand-logo { height: 44px !important; }
+}
