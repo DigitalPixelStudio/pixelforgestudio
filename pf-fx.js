@@ -268,3 +268,30 @@
     /* decorative only — never break the page */
   }
 })();
+
+/* ==========================================================================
+   v88 — glass scroll rail
+   ========================================================================== */
+(function () {
+  try {
+    var rail = document.querySelector('.pf-progress');
+    if (!rail) {
+      rail = document.createElement('div');
+      rail.className = 'pf-progress';
+      rail.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(rail);
+    }
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      rail.style.setProperty('--p', p.toFixed(4));
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  } catch (e) {}
+})();
