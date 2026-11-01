@@ -2460,3 +2460,109 @@ main, footer, header, .sec, .pf-sec { transform: none !important; perspective: n
 
 /* the page must never scroll behind a fixed bar without room */
 @media (max-width: 680px) { footer { padding-bottom: 74px !important; } }
+
+/* ==========================================================================
+   v85 — FAB STACK, PANEL PLACEMENT, AND REMOVING THE JANK SOURCE
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. content-visibility was CAUSING the jank, not fixing it
+   With `contain-intrinsic-size: auto 700px` the browser guesses each section's
+   height wrong, then corrects it as you scroll — that correction is the
+   stutter, and the scrollbar jumps with it. Removed.
+   -------------------------------------------------------------------------- */
+img { content-visibility: visible !important; }
+.sec, .pf-sec, .pf-forge {
+  content-visibility: visible !important;
+  contain-intrinsic-size: auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. THE FAB STACK — three buttons, one column, always aligned
+   -------------------------------------------------------------------------- */
+.fab {
+  position: fixed !important;
+  right: 16px !important;
+  bottom: 20px !important;
+  z-index: 9990 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 10px !important;
+  pointer-events: auto !important;
+}
+.fab-btn {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 14px !important;
+  display: grid !important;
+  place-items: center !important;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.fab-btn:active { transform: scale(0.93) !important; }
+@media (hover: hover) {
+  .fab-btn:hover { transform: translateY(-2px) scale(1.05); }
+}
+.fab-price { background: #0a0a0a !important; border: 1px solid rgba(34,197,94,.55) !important; }
+.fab-wa    { background: #25D366 !important; border: 1px solid #25D366 !important; }
+
+/* on mobile the stack sits above the bottom bar */
+@media (max-width: 680px) {
+  .fab { right: 12px !important; bottom: 72px !important; gap: 8px !important; }
+  .fab-btn { width: 44px !important; height: 44px !important; border-radius: 12px !important; }
+}
+
+/* --------------------------------------------------------------------------
+   3. THE CHAT PANEL — anchored to the FAB, opens upward
+   -------------------------------------------------------------------------- */
+.botwrap {
+  position: fixed !important;
+  right: 16px !important;
+  bottom: 84px !important;
+  z-index: 9991 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+.botwrap .botpanel {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: min(360px, calc(100vw - 32px)) !important;
+  max-height: min(70vh, 560px) !important;
+  overflow-y: auto !important;
+  background: #070707 !important;
+  border: 1px solid rgba(255,30,39,.32) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 60px -28px rgba(255,30,39,.6) !important;
+  pointer-events: auto !important;
+  transform-origin: bottom right;
+}
+.botwrap .botpanel.on,
+.botwrap .botpanel.open,
+.botwrap .botpanel.is-open { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+
+@media (max-width: 680px) {
+  .botwrap { right: 12px !important; bottom: 128px !important; }
+  .botwrap .botpanel { width: calc(100vw - 24px) !important; max-height: 66vh !important; }
+}
+
+/* the bottom bar stays, but the stack clears it */
+.mbar { z-index: 9992 !important; }
+
+/* --------------------------------------------------------------------------
+   4. LAST SMOOTHNESS PASS — nothing left that repaints on scroll
+   -------------------------------------------------------------------------- */
+* { -webkit-tap-highlight-color: transparent; }
+html { overscroll-behavior-y: none; }
+body { overscroll-behavior-y: none; }
+
+/* the reveal elements: transform+opacity only, and never on a huge subtree */
+.rv { transition: opacity .45s ease, transform .45s cubic-bezier(.22,1,.36,1) !important; }
+
+/* no element may animate its own size */
+.pf-marquee__track, .tick-track, .marquee-track { contain: layout style; }
+
+/* the hero must not fight the fixed header */
+.pf-hero { padding-top: 74px !important; }
