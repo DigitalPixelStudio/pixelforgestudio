@@ -2,7 +2,7 @@
    Cache name is versioned. Bump V whenever any shell asset changes, otherwise
    returning visitors keep seeing the old build (that is exactly what happened
    between v74 and v76). */
-const V = 'pf-v92b';
+const V = 'pf-v93';
 const ASSETS = [
   './',
   './index.html',
