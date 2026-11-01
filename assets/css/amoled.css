@@ -4939,3 +4939,79 @@ header.nav, .nav, .site-header {
   .pf-hero { padding-top: 60px !important; }
   .brand-logo { height: 44px !important; }
 }
+
+/* ==========================================================================
+   v101 — THE CARD IS THE ARTWORK'S OWN FRAME, AND THE BLEND WAS BEING BROKEN
+   `mix-blend-mode: screen` only hides the dark card when the element blends
+   against a true-black backdrop. If any ancestor creates a stacking context
+   (transform, filter, isolation, will-change, opacity < 1) the blend resolves
+   against THAT instead, and the card comes back.
+   So: give .brand its own black plate and isolate it, and strip every
+   stacking-context trigger from the header chain.
+   ========================================================================== */
+
+header.nav, .nav, .nav-in, .brand, .wrap {
+  transform: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  perspective: none !important;
+  will-change: auto !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible !important;
+}
+
+header.nav, .nav {
+  background: #000 !important;
+}
+
+/* the plate the logo blends against */
+.brand {
+  background: #000 !important;
+  isolation: isolate !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.brand-logo {
+  display: block !important;
+  height: 68px !important;
+  width: auto !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+  mix-blend-mode: screen !important;
+  isolation: auto !important;
+}
+
+/* any decorative ring the old skin drew around the mark */
+.brand::before, .brand::after,
+.brand-mark, .brand-mark::before, .brand-mark::after,
+.nav-in::before, .nav-in::after {
+  display: none !important;
+  content: none !important;
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 900px) {
+  .brand-logo { height: 52px !important; }
+}
+@media (max-width: 400px) {
+  .brand-logo { height: 44px !important; }
+}
