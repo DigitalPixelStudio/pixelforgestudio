@@ -168,6 +168,23 @@
       { ico:'ai',     t:'Assistant',               d:'Answers pricing, warranty and turnaround questions at 11pm.' }
     ]);
 
+
+    /* -------------------------------------------------- v90 · embers in hero */
+    (function () {
+      var hero = document.querySelector('.hero, .pf-hero');
+      if (!hero || reduce || hero.querySelector('.ember')) return;
+      for (var i = 0; i < 16; i++) {
+        var e = document.createElement('span');
+        e.className = 'ember';
+        e.style.left = (Math.random() * 100) + '%';
+        e.style.bottom = (Math.random() * 45) + '%';
+        e.style.animationDuration = (7 + Math.random() * 9) + 's';
+        e.style.animationDelay = (-Math.random() * 12) + 's';
+        e.setAttribute('aria-hidden', 'true');
+        hero.appendChild(e);
+      }
+    })();
+
   } catch (e) {
     /* decorative only — never break the page */
   }
